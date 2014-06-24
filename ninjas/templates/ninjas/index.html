@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block site_title %} Ninja List {% endblock %}
+{% block body_title %} Ninja List {% endblock %}
+
+{% block content %}
+	{% if ninjas %}
+		<table class="table">
+			<thead>
+				<th>Name</th>
+				<th>Year</th>
+				<th>Laptop</th>
+				<th>General Knowledge</th>
+				<th>Scratch Knowledge</th>
+				<th>Codecademy Knowledge</th>
+				<th>Black Belt</th>
+				<th>Photo Release</th>
+				<th></th>
+			</thead>
+			<tbody>
+				{% for ninja in ninjas %}
+					<tr>
+						<td>{{ ninja.name }}</td>
+						<td>{{ ninja.school_year }}</td>
+						<td>{{ ninja.laptop }}</td>
+						<td>{{ ninja.get_general_knowledge_display }}</td>
+						<td>{{ ninja.get_scratch_knowledge_display }}</td>
+						<td>{{ ninja.get_codecademy_knowledge_display }}</td>
+						<td>{{ ninja.black_belt }}</td>
+						<td>{{ ninja.photo_release }}</td>
+						<td>
+							<a href="#">{% bootstrap_icon "user" %}</a>
+							<a href="#">{% bootstrap_icon "pencil" %}</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% endblock %}

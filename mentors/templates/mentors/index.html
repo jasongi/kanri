@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block site_title %} Mentor List {% endblock %}
+{% block body_title %} Mentor List {% endblock %}
+
+{% block content %}
+	{% if mentors %}
+		<table class="table">
+			<thead>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Number</th>
+				<th>Needs Shirt</th>
+				<th>Shirt Size</th>
+				<th>WWCC</th>
+				<th>Lead</th>
+				<th>Support</th>
+				<th></th>
+			</thead>
+			<tbody>
+				{% for mentor in mentors %}
+					<tr>
+						<td>{{ mentor.name }}</td>
+						<td>{{ mentor.user.email }}</td>
+						<td>{{ mentor.contact_number }}</td>
+						<td>{{ mentor.needs_shirt }}</td>
+						<td>{{ mentor.get_shirt_size_display }}</td>
+						<td>{{ mentor.wwcc_status }}</td>
+						<td>{{ mentor.wants_lead }}</td>
+						<td>{{ mentor.wants_support }}</td>
+						<td>
+							<a href="{% url 'detail' mentor.id %}">{% bootstrap_icon "user" %}</a>
+							{% bootstrap_icon "pencil" %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% endblock %}

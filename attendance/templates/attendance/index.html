@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block site_title %} Dojo Sign-off {% endblock %}
+{% block body_title %} Dojo Sign-off {% endblock %}
+
+{% block content %}
+	{% if sessions %}
+		{% for session in sessions %}
+			<div class="jumbotron row">
+				<h1>{{ session.date_time_start|date }}</h1>
+				<h2>{{ session.term }}</h2>
+				<a href="{% url 'attendance:signoff' session.id %}" class="btn btn-lg btn-primary">Start Dojo</a>
+			</div>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

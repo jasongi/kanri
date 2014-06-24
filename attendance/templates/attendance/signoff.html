@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block site_title %} {{ dojo }} {% endblock %}
+{% block body_title %} {{ dojo }} {% endblock %}
+
+{% block content %}
+	<div class="row jumbotron">
+	{% bootstrap_form %}
+	</div>
+{% endblock %}
