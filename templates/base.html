@@ -1,4 +1,5 @@
 {% load bootstrap3 %}
+{% load staticfiles %}
 
 <html lang="en">
 <head>
@@ -14,6 +15,9 @@
     	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- Page-specific CSS -->
+    {% block custom_css %}
+    {% endblock %}
 </head>
 <body>
 	<div class="container">
@@ -61,6 +65,11 @@
 	</div>
 	
 	<script src="{% bootstrap_jquery_url %}"></script>
+    <script src="{% static 'modernizr.js' %}"></script>
 	{% bootstrap_javascript %}
+
+    <!-- Page-specific Javascript -->
+    {% block custom_js %}
+    {% endblock %}
 </body>
 </html>
