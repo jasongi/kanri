@@ -6,6 +6,8 @@
 {% block body_title %} Mentor List {% endblock %}
 
 {% block content %}
+	<a href="{% url 'mentors:add' %}" class="btn btn-default">Add Mentor</a>
+	<hr />
 	{% if mentors %}
 		<table class="table">
 			<thead>
