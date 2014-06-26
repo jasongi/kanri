@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block site_title %} Add Ninja {% endblock %}
+{% block body_title %}<b>
+	{% if ninja %}
+		Edit
+	{% else %}
+		Add
+	{% endif %}
+	</b> Ninja
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<form action="" method="post" class="form form-horizontal">
+		{% csrf_token %}
+		{% bootstrap_form form layout="horizontal" %}
+		{% buttons %}
+			<div class="col-md-offset-2">
+				{% bootstrap_button "Add Ninja" button_type="submit" %}
+				{% bootstrap_button "Clear" button_type="reset" %}
+				{% if True %}
+					{% bootstrap_button "Delete" button_type="button" button_class="btn-danger" %}
+				{% endif %}
+			</div>		
+		{% endbuttons %}
+	</form>
+</div>
+{% endblock %}

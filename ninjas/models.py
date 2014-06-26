@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 class Contact(models.Model):
 	name = models.CharField(max_length = 30, blank = False, help_text = "What is the contact's name?")
@@ -48,6 +49,9 @@ class Ninja(models.Model):
 
 	def parent_required(self):
 		return self.school_year <= 6
+
+	def get_absolute_url(self):
+		return reverse('detail', current_app = 'ninjas', args = [self.id])
 
 	def __unicode__(self):
 		return self.name
