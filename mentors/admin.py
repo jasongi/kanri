@@ -11,8 +11,8 @@ class MentorAdmin(admin.ModelAdmin):
 		('Industry Information', {'fields': ['uni', 'student_number', 'industry']}),
 		('Qualifications', {'fields': ['wwcc', 'wwcc_receipt', 'first_aid']}),
 		('Knowledge and Experience', {'fields': ['coding_experience', 'children_experience', 'children_experience_freeform']}),
-		('Administration', {'fields': ['user']}),
 		('Aim', {'fields': ['aim', 'roles_desired', 'referral']}),
+		('Administration', {'fields': ['user', 'curtin_status', 'curtin_id']}),
 	]
 
 admin.site.register(Mentor, MentorAdmin)

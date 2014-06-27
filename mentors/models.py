@@ -34,6 +34,16 @@ class Mentor(models.Model):
 		))
 	)
 
+	ASSOCIATE = 'A'
+	STAFF = 'S'
+	NOTHING = 'N'
+
+	CURTIN_STATUS_CHOICES = (
+		(ASSOCIATE, 'Associate'),
+		(STAFF, 'Staff'),
+		(NOTHING, 'Neither/not sure')
+	)
+
 	NOTHING = 'NO'
 	SOMETHING = 'SO'
 	EVERYTHING = 'EV'
@@ -52,6 +62,8 @@ class Mentor(models.Model):
 	needs_shirt = models.BooleanField(default = True, help_text = "Does the mentor need to have a shirt provisioned for them?")
 	wwcc = models.CharField(max_length = 10, verbose_name = "WWCC card number", blank = True, null = True, help_text = "WWCC card number (if WWCC card holder)")
 	wwcc_receipt = models.CharField(max_length = 15, verbose_name = "WWCC receipt number", blank = True, null = True, help_text = "WWCC receipt number (if WWCC is processing)")
+	curtin_status = models.TextField(max_length = 1, verbose_name = "Current Curtin HR status", choices = CURTIN_STATUS_CHOICES, blank = False, help_text = "When possible, we recommend that all CoderDojo mentors are either Curtin University Associates or Staff members.")
+	curtin_id = models.TextField(max_length = 10, verbose_name = "Curtin Staff/Associate ID", blank = True, null = True, help_text = "Your Curtin Staff/Associate ID (if applicable)")
 	first_aid = models.BooleanField(default = False, help_text = "First-aid certificate holder")
 	referral = models.CharField(max_length = 50, blank = True, help_text = "How did you hear about us?")
 	aim = models.TextField(max_length = 255, blank = True, help_text = "What do you hope to get out of your mentoring experience?")
