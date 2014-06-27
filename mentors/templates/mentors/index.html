@@ -2,11 +2,29 @@
 
 {% load bootstrap3 %}
 
-{% block site_title %} Mentor List {% endblock %}
-{% block body_title %} Mentor List {% endblock %}
+{% block site_title %} List of Mentors {% endblock %}
+{% block body_title %} List of <b>Mentors</b> {% endblock %}
 
 {% block content %}
-	<a href="{% url 'mentors:add' %}" class="btn btn-default">Add Mentor</a>
+	<a href="{% url 'mentors:add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Mentor</a>
+	<button class="btn btn-default" onclick="loadMentorList();">{% bootstrap_icon "th-list" %} Import CSV</button>
+	<div class="hidden">
+		<form id="csv-form" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<input id="id_csv" name="csv" accept="text/csv" onchange="submitMentorList();" type="file" />
+			<input type="submit" class="btn btn-default" />
+		</form>
+	</div>
+	{% if form.errors or success == False %}
+		<div class="alert alert-danger">
+			{% if form.errors %}
+				<p>{{form.csv.errors|escape}}</p>
+			{% endif %}
+			{% if success == False %}
+				<p>The provided CSV was malformed.</p> 
+			{% endif %}
+		</div>
+	{% endif %}
 	<hr />
 	{% if mentors %}
 		<table class="table">
@@ -41,4 +59,19 @@
 			</tbody>
 		</table>
 	{% endif %}
+{% endblock %}
+
+{% block custom_js %}
+<script>
+	function loadMentorList()
+	{
+		console.log("Loading mentor list...");
+    	$("#id_csv").click();
+	}
+
+	function submitMentorList()
+	{
+    	$("#csv-form").submit();
+	}
+</script>
 {% endblock %}
