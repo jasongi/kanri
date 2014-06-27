@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Role(models.Model):
+	"""A role somebody can take in a CoderDojo term."""
+	name = models.CharField(max_length = 50, blank = False, help_text = "The name of the role.")
+	description = models.TextField(max_length = 1024, blank = False, help_text = "The role's long description.")
+
 class Mentor(models.Model):
 	MALE_SMALL = "MS"
 	MALE_MEDIUM = "MM"
@@ -53,9 +58,7 @@ class Mentor(models.Model):
 	coding_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much programming experience do you have?")
 	children_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much experience do you have with children?")
 	children_experience_freeform = models.TextField(max_length = 255, blank = True, null = True, help_text = "Please indicate any experience working with young people (eg. tutoring, babysitting, studying education)")
-	wants_champion = models.BooleanField(default = False, help_text = "Do you wish to apply for the Champion role?")
-	wants_lead = models.BooleanField(default = False, help_text = "Do you wish to apply for a Lead Mentor position?")
-	wants_support = models.BooleanField(default = False, help_text = "Do you wish to apply for a Support Mentor position?")
+	roles_desired = models.ManyToManyField(Role)
 	user = models.OneToOneField(User, unique = True)
 
 	def name(self):
