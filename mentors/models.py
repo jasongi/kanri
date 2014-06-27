@@ -68,6 +68,7 @@ class Mentor(models.Model):
 	referral = models.CharField(max_length = 50, blank = True, help_text = "How did you hear about us?")
 	aim = models.TextField(max_length = 255, blank = True, help_text = "What do you hope to get out of your mentoring experience?")
 	coding_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much programming experience do you have?")
+	coding_experience_freeform = models.TextField(max_length = 255, blank = True, null = True, help_text = "Please indicate any specific areas of coding knowledge/interest (eg. Python, HTML)")
 	children_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much experience do you have with children?")
 	children_experience_freeform = models.TextField(max_length = 255, blank = True, null = True, help_text = "Please indicate any experience working with young people (eg. tutoring, babysitting, studying education)")
 	roles_desired = models.ManyToManyField(Role)
