@@ -53,9 +53,7 @@ class Mentor(models.Model):
 		(SOMETHING, 'I know some basics'),
 		(EVERYTHING, 'I know a great deal')
 	)
-
 	uni = models.CharField(max_length = 50, null = True, blank = True, help_text = "University of study")
-	student_number = models.CharField(max_length = 15, null = True, blank = True, help_text = 'Student number (if studying)')
 	industry = models.CharField(max_length = 50, null = True, blank = True, help_text = "Industry (if any)")
 	contact_number = models.CharField(blank = False, max_length = 10, help_text = "Contact number (mobile preferred)")
 	shirt_size = models.CharField(max_length = 3, choices = SHIRT_SIZE_CHOICES, help_text = "T-shirt size (for uniform)")
