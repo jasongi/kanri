@@ -47,6 +47,7 @@
                         </div>
                     {% else %}
                         <form method="post" action="{% url 'accounts:login' %}" class="navbar-form navbar-right">
+                            {% csrf_token %}
                             <div class="form-group">
                                 <input type="text" placeholder="Username" class="form-control">
                             </div>
