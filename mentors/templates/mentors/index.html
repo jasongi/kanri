@@ -6,8 +6,28 @@
 {% block body_title %} List of <b>Mentors</b> {% endblock %}
 
 {% block content %}
+	{% if form.errors or success == False %}
+		<div class="alert alert-danger">
+			{% if form.errors %}
+				<p>{{form.csv.errors|escape}}</p>
+			{% endif %}
+			{% if success == False %}
+				<p>The provided spreadsheet was malformed.</p> 
+			{% endif %}
+		</div>
+		<hr />
+	{% endif %}
+
+	{% if success = True %}
+		<div class="alert alert-success">
+			<p>Spreadsheet added successfully.</p>
+		</div>
+		<hr />
+	{% endif %}
+
 	<a href="{% url 'mentors:add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Mentor</a>
-	<button class="btn btn-default" onclick="loadMentorList();">{% bootstrap_icon "th-list" %} Import CSV</button>
+	<button class="btn btn-default" onclick="loadMentorList();">{% bootstrap_icon "th-list" %} Import Spreadsheet</button>
+
 	<div class="hidden">
 		<form id="csv-form" method="post" enctype="multipart/form-data">
 			{% csrf_token %}
@@ -15,16 +35,6 @@
 			<input type="submit" class="btn btn-default" />
 		</form>
 	</div>
-	{% if form.errors or success == False %}
-		<div class="alert alert-danger">
-			{% if form.errors %}
-				<p>{{form.csv.errors|escape}}</p>
-			{% endif %}
-			{% if success == False %}
-				<p>The provided CSV was malformed.</p> 
-			{% endif %}
-		</div>
-	{% endif %}
 	<hr />
 	{% if mentors %}
 		<table class="table">
@@ -51,7 +61,7 @@
 						<td>{{ mentor.wants_lead }}</td>
 						<td>{{ mentor.wants_support }}</td>
 						<td>
-							<a href="{% url 'detail' mentor.id %}">{% bootstrap_icon "user" %}</a>
+							<a href="{% url 'mentors:detail' mentor.id %}">{% bootstrap_icon "user" %}</a>
 							{% bootstrap_icon "pencil" %}
 						</td>
 					</tr>
