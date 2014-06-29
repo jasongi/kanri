@@ -9,64 +9,79 @@
 
     <title>{% block site_title %}Example{% endblock %} — Kanri</title>
 
-	{% bootstrap_css %}
+    {% bootstrap_css %}
     <!--[if lt IE 9]>
-    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+
     <!-- Page-specific CSS -->
+
     {% block custom_css %}
     {% endblock %}
 </head>
 <body>
-	<div class="container">
-		<div class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-        	<div class="navbar-header">
-        		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        			<span class="sr-only">Toggle navigation</span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-        		</button>
-        		<a class="navbar-brand" href="#">Kanri</a>
-        	</div>
-        	<div class="navbar-collapse collapse">
-        		<ul class="nav navbar-nav">
-        			<li class="active"><a href="#">Dashboard</a></li>
-        		</ul>
-        		{% if request.user.is_authenticated %}
-        			<div class="nav navbar-right">
-        				Hi
-        			</div>
-        		{% else %}
-        			<form class="navbar-form navbar-right">
-            			<div class="form-group">
-            				<input type="text" placeholder="Username" class="form-control">
-            			</div>
-            			<div class="form-group">
-            				<input type="password" placeholder="Password" class="form-control">
-            			</div>
-            			<button type="submit" class="btn btn-success">Sign in</button>
-        			</form>
-        		{% endif %}
-        	</div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </div>
-	</div>
+<div id="wrap">
+        <div class="container">
+            <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Kanri</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Dashboard</a></li>
+                    </ul>
+                    {% if request.user.is_authenticated %}
+                        <div class="nav navbar-right">
+                            Hi
+                        </div>
+                    {% else %}
+                        <form method="post" action="{% url 'accounts:login' %}" class="navbar-form navbar-right">
+                            <div class="form-group">
+                                <input type="text" placeholder="Username" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="Password" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-success">Sign in</button>
+                        </form>
+                    {% endif %}
+                </div><!--/.nav-collapse -->
+            </div><!--/.container-fluid -->
+          </div>
+        </div>
+    
+        <div class="container">
+            <h1>{% block body_title %}Example{% endblock %}</h1>
+            <hr />
+            {% block content %}
+                <p>This needs to be changed.</p>
+            {% endblock %}
+        </div>
+        <div id="push"></div>
+    </div>
 
-	<div class="container">
-		<h1>{% block body_title %}Example{% endblock %}</h1>
-        <hr />
-		{% block content %}
-			<p>This needs to be changed.</p>
-		{% endblock %}
-	</div>
-	
-	<script src="{% bootstrap_jquery_url %}"></script>
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted credit text-center">Kanri &copy; 2014 <a href="https://kye.id.au">Kye Russell</a>. 
+                Made for CoderDojo @ Curtin in Western Australia. 
+                <a href="https://github.com/KyeRussell/Kanri">Available on GitHub</a>.
+            </p>
+        </div>
+    </div>
+
+    <script src="{% bootstrap_jquery_url %}"></script>
     <script src="{% static 'modernizr.js' %}"></script>
-	{% bootstrap_javascript %}
+    {% bootstrap_javascript %}
 
     <!-- Page-specific Javascript -->
     {% block custom_js %}
