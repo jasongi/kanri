@@ -20,5 +20,12 @@ def login(request):
 		'form': form
 		})
 
+@login_required
+def logout(request):
+	if request.method == "POST":
+		auth_logout(request)
+		return redirect('dashboard:index')
+	return render(request, 'accounts/logout.html')
+
 def cp(request):
 	return redirect('dashboard:index')
