@@ -112,7 +112,7 @@ def index(request):
 		form = CSVImportForm()
 
 	return render(request, 'mentors/index.html', {
-			'mentors': Mentor.objects.order_by('user__first_name')[:3],
+			'mentors': Mentor.objects.order_by('user__first_name'),
 			'form': form,
 			'success': success,
 		})
