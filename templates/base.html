@@ -39,7 +39,9 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Dashboard</a></li>
+                        <!--<li class="active"><a href="#">Dashboard</a></li>-->
+                        <li><a href="{% url 'mentors:index' %}">Mentors</a></li>
+                        <li><a href="{% url 'ninjas:index' %}">Ninjas</a></li>
                     </ul>
                     {% if user.is_authenticated %}
                         <div class="nav navbar-right">
