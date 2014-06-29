@@ -3,7 +3,7 @@ from mentors.models import Mentor, Role
 from forms import CSVImportForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User, BaseUserManager
+from django.contrib.auth.models import User, Group
 import csv
 
 def index(request):
@@ -98,12 +98,14 @@ def index(request):
 					elif children_xp == 'I know a great deal':
 						m.children_experience = Mentor.EVERYTHING
 
+					# Gotta save before you can do M2M relations.
 					m.save()
-
 					for role in Role.objects.all():
 						if role.name in row['Roles']:
 							m.roles_desired.add(role)
 
+					# Groups
+					m.user.groups.add(Group.objects.get_or_create(name='Mentors'))
 					m.save()
 			success = True
 		else:
