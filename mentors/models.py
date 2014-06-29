@@ -53,22 +53,19 @@ class Mentor(models.Model):
 		(SOMETHING, 'I know some basics'),
 		(EVERYTHING, 'I know a great deal')
 	)
+
 	uni = models.CharField(max_length = 50, null = True, blank = True, help_text = "University of study")
-	industry = models.CharField(max_length = 50, null = True, blank = True, help_text = "Industry (if any)")
+	uni_study = models.CharField(max_length = 75, null = True, blank = True, help_text = "If you're attending university, what are you studying?")
+	work = models.CharField(max_length = 75, null = True, blank = True, help_text = "If you work, what do you do?")
 	contact_number = models.CharField(blank = False, max_length = 10, help_text = "Contact number (mobile preferred)")
-	shirt_size = models.CharField(max_length = 3, choices = SHIRT_SIZE_CHOICES, help_text = "T-shirt size (for uniform)")
+	shirt_size = models.CharField(max_length = 3, blank = True, choices = SHIRT_SIZE_CHOICES, help_text = "T-shirt size (for uniform)")
 	needs_shirt = models.BooleanField(default = True, help_text = "Does the mentor need to have a shirt provisioned for them?")
 	wwcc = models.CharField(max_length = 10, verbose_name = "WWCC card number", blank = True, null = True, help_text = "WWCC card number (if WWCC card holder)")
 	wwcc_receipt = models.CharField(max_length = 15, verbose_name = "WWCC receipt number", blank = True, null = True, help_text = "WWCC receipt number (if WWCC is processing)")
 	curtin_status = models.TextField(max_length = 1, verbose_name = "Current Curtin HR status", choices = CURTIN_STATUS_CHOICES, blank = False, help_text = "When possible, we recommend that all CoderDojo mentors are either Curtin University Associates or Staff members.")
 	curtin_id = models.TextField(max_length = 10, verbose_name = "Curtin Staff/Associate ID", blank = True, null = True, help_text = "Your Curtin Staff/Associate ID (if applicable)")
-	first_aid = models.BooleanField(default = False, help_text = "First-aid certificate holder")
-	referral = models.CharField(max_length = 50, blank = True, help_text = "How did you hear about us?")
-	aim = models.TextField(max_length = 255, blank = True, help_text = "What do you hope to get out of your mentoring experience?")
 	coding_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much programming experience do you have?")
-	coding_experience_freeform = models.TextField(max_length = 255, blank = True, null = True, help_text = "Please indicate any specific areas of coding knowledge/interest (eg. Python, HTML)")
 	children_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much experience do you have with children?")
-	children_experience_freeform = models.TextField(max_length = 255, blank = True, null = True, help_text = "Please indicate any experience working with young people (eg. tutoring, babysitting, studying education)")
 	roles_desired = models.ManyToManyField(Role)
 	user = models.OneToOneField(User, unique = True)
 
@@ -76,9 +73,9 @@ class Mentor(models.Model):
 		return "%s %s" % (self.user.first_name, self.user.last_name)
 
 	def wwcc_status(self):
-		if (len(self.wwcc) > 0):
+		if self.wwcc:
 			return 'CARD ON RECORD'
-		elif len(self.wwcc_receipt) > 0:
+		elif self.wwcc_receipt:
 			return 'RECEIPT ON RECORD'
 		else:
 			return 'NOT ON RECORD'
