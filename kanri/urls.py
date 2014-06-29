@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^ninjas/', include('ninjas.urls', namespace = "ninjas")),
     url(r'^planner/', include('planner.urls', namespace = "planner")),
     url(r'^attendance/', include('attendance.urls', namespace = "attendance")),
+    url(r'^accounts/', include('accounts.urls', namespace = "accounts")),
 )

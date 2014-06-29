@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'mentors',
     'ninjas',
     'planner',
+    'accounts',
     'south',
     'bootstrap3'
 )
