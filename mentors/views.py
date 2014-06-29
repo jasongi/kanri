@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from mentors.models import Mentor
+from mentors.models import Mentor, Role
 from forms import CSVImportForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
