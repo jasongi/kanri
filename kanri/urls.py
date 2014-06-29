@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'osameru.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^dashboard/', include('dashboard.urls', namespace = "dashboard")),
     url(r'^mentors/', include('mentors.urls', namespace = "mentors")),
     url(r'^ninjas/', include('ninjas.urls', namespace = "ninjas")),
     url(r'^planner/', include('planner.urls', namespace = "planner")),
