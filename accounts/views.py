@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def login(request):
 	# check if user has logged in
-	if request.user.is_authenticated:
+	if request.user.is_authenticated():
 		return redirect('dashboard:index')
 
 	if request.method == "POST":
