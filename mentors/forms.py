@@ -7,7 +7,7 @@ class CSVImportForm(forms.Form):
 
 	def is_valid(self):
 		csvfile = self.files.get('csv')
-		dialect = csv.Sniffer().sniff(csvfile.read(1024))
+		dialect = csv.Sniffer().sniff(csvfile.read(2048))
 		csvfile.seek(0)
 		reader = csv.reader(csvfile, dialect=dialect)		
 		fields = (
@@ -31,7 +31,7 @@ class CSVImportForm(forms.Form):
 			"Study",
 			"Work",
 			"WWCC",
-			"WWCC number",
+			"WWCC Number",
 			"Curtin Status",
 			"Curtin Associate/Staff ID",
 			"Referral",
@@ -47,7 +47,7 @@ class CSVImportForm(forms.Form):
 		val.add_header_check('EX1', 'bad header')
 		val.add_record_length_check('EX2', 'unexpected record length')
 		status = val.validate(reader)
-		print status
+		csvfile.seek(0)
 		if len(status) is 0:
 			return True
 		else:
