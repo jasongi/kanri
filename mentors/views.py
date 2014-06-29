@@ -117,7 +117,7 @@ def index(request):
 			'success': success,
 		})
 
-def upload(request):
+def detail(request, blazeit):
 	return 1;
 
 def add(request):
