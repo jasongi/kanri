@@ -70,8 +70,8 @@
 								</td>
 						{% endfor %}
 						<td>
-							<a href="{% url 'mentors:detail' mentor.id %}">{% bootstrap_icon "user" %}</a>
-							{% bootstrap_icon "pencil" %}
+							<a href="{% url 'mentors:detail' mentor.id %}">{% bootstrap_icon "user" %}</a> 
+							<a href="{% url 'mentors:update' mentor.id %}">{% bootstrap_icon "pencil" %}</a>
 						</td>
 					</tr>
 				{% endfor %}
