@@ -27,6 +27,7 @@
 
 	<a href="{% url 'mentors:add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Mentor</a>
 	<button class="btn btn-default" onclick="loadMentorList();">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
+	<a href="{% url 'mentors:role-index' %}" class="btn btn-default">{% bootstrap_icon "tasks" %} Manage Roles</a>
 
 	<div class="hidden">
 		<form id="csv-form" method="post" enctype="multipart/form-data">
