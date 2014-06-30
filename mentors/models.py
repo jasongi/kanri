@@ -20,17 +20,17 @@ class Mentor(models.Model):
 
 	SHIRT_SIZE_CHOICES = (
 		('Male', (
-			(MALE_SMALL, "Male Small"),
-			(MALE_MEDIUM, "Male Medium"),
-			(MALE_LARGE, "Male Large"),
-			(MALE_EXTRA_LARGE, "Male Extra Large")
+			(MALE_SMALL, "Male S"),
+			(MALE_MEDIUM, "Male M"),
+			(MALE_LARGE, "Male L"),
+			(MALE_EXTRA_LARGE, "Male XL")
 		)),
 		('Female', (
-			(FEMALE_EXTRA_SMALL, "Female Extra Small"),
-			(FEMALE_SMALL, "Female Small"),
-			(FEMALE_MEDIUM, "Female Medium"),
-			(FEMALE_LARGE, "Female Large"),
-			(FEMALE_EXTRA_LARGE, "Female Extra Large")
+			(FEMALE_EXTRA_SMALL, "Female XS"),
+			(FEMALE_SMALL, "Female S"),
+			(FEMALE_MEDIUM, "Female M"),
+			(FEMALE_LARGE, "Female L"),
+			(FEMALE_EXTRA_LARGE, "Female XL")
 		))
 	)
 
