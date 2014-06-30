@@ -2,10 +2,14 @@
 
 {% load bootstrap3 %}
 
-{% block site_title %} List Ninjas {% endblock %}
-{% block body_title %} <b>List</b> Ninjas {% endblock %}
+{% block site_title %} List of Ninjas {% endblock %}
+{% block body_title %} List of <b>Ninjas</b> {% endblock %}
 
 {% block content %}
+	<a href="{% url 'ninjas:add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Ninja</a>
+	<button class="btn btn-default">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
+	<hr />
+
 	{% if ninjas %}
 		<table class="table">
 			<thead>

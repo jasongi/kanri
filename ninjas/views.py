@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from ninjas.models import Ninja
 from django.http import HttpResponse
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from kanri.views import KanriCreateView, KanriUpdateView
 from django.core.urlresolvers import reverse_lazy
 
-class NinjaCreate(CreateView):
+class NinjaCreate(KanriCreateView):
 	model = Ninja
 	#fields = ['name']
 
-class NinjaUpdate(UpdateView):
+class NinjaUpdate(KanriUpdateView):
 	model = Ninja
 
 # Create your views here.
