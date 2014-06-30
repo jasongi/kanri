@@ -40,12 +40,12 @@ class Mentor(models.Model):
 
 	ASSOCIATE = 'A'
 	STAFF = 'S'
-	NOTHING = 'N'
+	NEITHER = 'N'
 
 	CURTIN_STATUS_CHOICES = (
 		(ASSOCIATE, 'Associate'),
 		(STAFF, 'Staff'),
-		(NOTHING, 'Neither/not sure')
+		(NEITHER, 'Neither/not sure')
 	)
 
 	NOTHING = 'NO'
@@ -66,10 +66,10 @@ class Mentor(models.Model):
 	needs_shirt = models.BooleanField(default = True, help_text = "Does the mentor need to have a shirt provisioned for them?")
 	wwcc = models.CharField(max_length = 10, verbose_name = "WWCC card number", blank = True, null = True, help_text = "WWCC card number (if WWCC card holder)")
 	wwcc_receipt = models.CharField(max_length = 15, verbose_name = "WWCC receipt number", blank = True, null = True, help_text = "WWCC receipt number (if WWCC is processing)")
-	curtin_status = models.TextField(max_length = 1, verbose_name = "Current Curtin HR status", choices = CURTIN_STATUS_CHOICES, blank = False, help_text = "When possible, we recommend that all CoderDojo mentors are either Curtin University Associates or Staff members.")
-	curtin_id = models.TextField(max_length = 10, verbose_name = "Curtin Staff/Associate ID", blank = True, null = True, help_text = "Your Curtin Staff/Associate ID (if applicable)")
 	coding_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much programming experience do you have?")
 	children_experience = models.CharField(max_length = 2, choices = KNOWLEDGE_CHOICES, help_text = "How much experience do you have with children?")
+	curtin_status = models.CharField(max_length = 1, verbose_name = "Current Curtin HR status", choices = CURTIN_STATUS_CHOICES, default = NEITHER, blank = False, help_text = "When possible, we recommend that all CoderDojo mentors are either Curtin University Associates or Staff members.")
+	curtin_id = models.CharField(max_length = 10, verbose_name = "Curtin Staff/Associate ID", blank = True, null = True, help_text = "Your Curtin Staff/Associate ID (if applicable)")
 	roles_desired = models.ManyToManyField(Role)
 	user = models.OneToOneField(User, unique = True)
 
