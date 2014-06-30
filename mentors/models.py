@@ -78,11 +78,11 @@ class Mentor(models.Model):
 
 	def wwcc_status(self):
 		if self.wwcc:
-			return 'CARD ON RECORD'
+			return 'Recorded'
 		elif self.wwcc_receipt:
-			return 'RECEIPT ON RECORD'
+			return 'Processing'
 		else:
-			return 'NOT ON RECORD'
+			return 'None'
 	
 	def __unicode__(self):
 		return self.name()
