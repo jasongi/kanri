@@ -57,7 +57,7 @@
 						<td>{{ mentor.user.email }}</td>
 						<td>{{ mentor.contact_number }}</td>
 						<td>{{ mentor.needs_shirt }}</td>
-						<td>{{ mentor.get_shirt_size_display }}</td>
+						<td>{% firstof mentor.get_shirt_size_display "—" %}</td>
 						<td>{{ mentor.wwcc_status }}</td>
 						<td>{{ mentor.wants_lead }}</td>
 						<td>{{ mentor.wants_support }}</td>
