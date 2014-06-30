@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class Role(models.Model):
 	"""A role somebody can take in a CoderDojo term."""
 	name = models.CharField(max_length = 50, blank = False, help_text = "The name of the role.")
+	short_name = models.CharField(max_length = 10, blank = False, help_text = "A short name for this role. Used in spreadsheets.")
 	description = models.TextField(max_length = 1024, blank = False, help_text = "The role's long description.")
 
 class Mentor(models.Model):
