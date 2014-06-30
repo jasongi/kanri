@@ -7,6 +7,9 @@ class Role(models.Model):
 	short_name = models.CharField(max_length = 10, blank = False, help_text = "A short name for this role. Used in spreadsheets.")
 	description = models.TextField(max_length = 1024, blank = False, help_text = "The role's long description.")
 
+	def __unicode__(self):
+		return self.name
+	
 class Mentor(models.Model):
 	MALE_SMALL = "MS"
 	MALE_MEDIUM = "MM"
