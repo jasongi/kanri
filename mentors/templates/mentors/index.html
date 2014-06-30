@@ -26,7 +26,7 @@
 	{% endif %}
 
 	<a href="{% url 'mentors:add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Mentor</a>
-	<button class="btn btn-default" onclick="loadMentorList();">{% bootstrap_icon "th-list" %} Import Spreadsheet</button>
+	<button class="btn btn-default" onclick="loadMentorList();">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
 
 	<div class="hidden">
 		<form id="csv-form" method="post" enctype="multipart/form-data">
