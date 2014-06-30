@@ -17,4 +17,4 @@ class Migration(SchemaMigration):
         
     }
 
-    complete_apps = ['accounts']
+    complete_apps = ['dashboard']

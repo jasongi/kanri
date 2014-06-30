@@ -8,34 +8,53 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Adding model 'Role'
+        db.create_table(u'mentors_role', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('short_name', self.gf('django.db.models.fields.CharField')(max_length=10)),
+            ('description', self.gf('django.db.models.fields.TextField')(max_length=1024)),
+        ))
+        db.send_create_signal(u'mentors', ['Role'])
+
         # Adding model 'Mentor'
         db.create_table(u'mentors_mentor', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('uni', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('student_number', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('industry', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('uni_study', self.gf('django.db.models.fields.CharField')(max_length=75, null=True, blank=True)),
+            ('work', self.gf('django.db.models.fields.CharField')(max_length=75, null=True, blank=True)),
             ('contact_number', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('shirt_size', self.gf('django.db.models.fields.CharField')(max_length=3)),
+            ('shirt_size', self.gf('django.db.models.fields.CharField')(max_length=3, blank=True)),
             ('needs_shirt', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('wwcc', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
             ('wwcc_receipt', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('first_aid', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('referral', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
-            ('aim', self.gf('django.db.models.fields.TextField')(max_length=255, blank=True)),
+            ('curtin_status', self.gf('django.db.models.fields.CharField')(max_length=1)),
+            ('curtin_id', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
             ('coding_experience', self.gf('django.db.models.fields.CharField')(max_length=2)),
             ('children_experience', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('children_experience_freeform', self.gf('django.db.models.fields.TextField')(max_length=255, null=True, blank=True)),
-            ('wants_champion', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('wants_lead', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('wants_support', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
         ))
         db.send_create_signal(u'mentors', ['Mentor'])
 
+        # Adding M2M table for field roles_desired on 'Mentor'
+        m2m_table_name = db.shorten_name(u'mentors_mentor_roles_desired')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('mentor', models.ForeignKey(orm[u'mentors.mentor'], null=False)),
+            ('role', models.ForeignKey(orm[u'mentors.role'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['mentor_id', 'role_id'])
+
 
     def backwards(self, orm):
+        # Deleting model 'Role'
+        db.delete_table(u'mentors_role')
+
         # Deleting model 'Mentor'
         db.delete_table(u'mentors_mentor')
+
+        # Removing M2M table for field roles_desired on 'Mentor'
+        db.delete_table(db.shorten_name(u'mentors_mentor_roles_desired'))
 
 
     models = {
@@ -77,25 +96,28 @@ class Migration(SchemaMigration):
         },
         u'mentors.mentor': {
             'Meta': {'object_name': 'Mentor'},
-            'aim': ('django.db.models.fields.TextField', [], {'max_length': '255', 'blank': 'True'}),
             'children_experience': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
-            'children_experience_freeform': ('django.db.models.fields.TextField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'coding_experience': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
             'contact_number': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
-            'first_aid': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'curtin_id': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
+            'curtin_status': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'industry': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'needs_shirt': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'referral': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
-            'shirt_size': ('django.db.models.fields.CharField', [], {'max_length': '3'}),
-            'student_number': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
+            'roles_desired': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['mentors.Role']", 'symmetrical': 'False'}),
+            'shirt_size': ('django.db.models.fields.CharField', [], {'max_length': '3', 'blank': 'True'}),
             'uni': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'uni_study': ('django.db.models.fields.CharField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['auth.User']", 'unique': 'True'}),
-            'wants_champion': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'wants_lead': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'wants_support': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'work': ('django.db.models.fields.CharField', [], {'max_length': '75', 'null': 'True', 'blank': 'True'}),
             'wwcc': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'wwcc_receipt': ('django.db.models.fields.CharField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'})
+        },
+        u'mentors.role': {
+            'Meta': {'object_name': 'Role'},
+            'description': ('django.db.models.fields.TextField', [], {'max_length': '1024'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'short_name': ('django.db.models.fields.CharField', [], {'max_length': '10'})
         }
     }
 
