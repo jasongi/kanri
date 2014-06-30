@@ -1,14 +1,22 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load name %}
 
-{% block site_title %} Add Ninja {% endblock %}
-{% block body_title %}<b>
-	{% if ninja %}
+{% block site_title %}
+	{% if object %}
 		Edit
 	{% else %}
 		Add
 	{% endif %}
-	</b> Ninja
+	{{ object|name }}
+{% endblock %}
+{% block body_title %}<b>
+	{% if object %}
+		Edit
+	{% else %}
+		Add
+	{% endif %}
+	</b> {{ object|name }}
 {% endblock %}
 
 {% block content %}
@@ -18,7 +26,15 @@
 		{% bootstrap_form form layout="horizontal" %}
 		{% buttons %}
 			<div class="col-md-offset-2">
-				{% bootstrap_button "Add Ninja" button_type="submit" %}
+				{% if role %}
+					{% with "Add "|add:object|name as add_text %}
+						{% bootstrap_button add_text button_type="submit" %}
+					{% endwith %}
+				{% else %}
+					{% with "Update "|add:object|name as edit_text %}
+						{% bootstrap_button edit_text button_type="submit" %}
+						{% endwith %}
+				{% endif %}
 				{% bootstrap_button "Clear" button_type="reset" %}
 				{% if True %}
 					{% bootstrap_button "Delete" button_type="button" button_class="btn-danger" %}
