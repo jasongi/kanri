@@ -46,8 +46,9 @@
 				<th>Needs Shirt</th>
 				<th>Size</th>
 				<th>WWCC</th>
-				<th>Lead</th>
-				<th>Support</th>
+				{% for role in roles %}
+					<th>{{role.short_name}}</th>
+				{% endfor %}
 				<th></th>
 			</thead>
 			<tbody>
@@ -59,8 +60,15 @@
 						<td>{{ mentor.needs_shirt }}</td>
 						<td>{% firstof mentor.get_shirt_size_display "—" %}</td>
 						<td>{{ mentor.wwcc_status }}</td>
-						<td>{{ mentor.wants_lead }}</td>
-						<td>{{ mentor.wants_support }}</td>
+						{% for role in roles %}
+							<td class="text-center">
+								{% if role in mentor.roles_desired.all %}
+									{% bootstrap_icon "ok" %}
+								{% else %}
+									{% bootstrap_icon "remove" %}
+								{% endif %}
+								</td>
+						{% endfor %}
 						<td>
 							<a href="{% url 'mentors:detail' mentor.id %}">{% bootstrap_icon "user" %}</a>
 							{% bootstrap_icon "pencil" %}
