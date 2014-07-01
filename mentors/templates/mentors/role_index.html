@@ -1,33 +1,26 @@
-{% extends "base.html" %}
+{% extends "generic_list.html" %}
 
 {% load bootstrap3 %}
 
-{% block site_title %} List of Roles {% endblock %}
-{% block body_title %} List of <b>Roles</b> {% endblock %}
+{% block add_url %}{% url 'mentors:role-add' %}{% endblock %}
 
-{% block content %}
-	<a href="{% url 'mentors:role-add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Role</a>
-	<hr />
-	{% if roles %}
-		<table class="table">
-			<thead>
-				<th class="col-md-2">Name</th>
-				<th class="col-md-2">Short Name</th>
-				<th class="col-md-7">Description</th>
-				<th class="col-md-1"></th>
-			</thead>
-			<tbody>
-				{% for role in roles %}
-					<tr>
-						<td>{{ role.name }}</td>
-						<td>{{ role.short_name }}</td>
-						<td>{{ role.description }}</td>
-						<td>
-							<a href="{% url 'mentors:role-update' role.id %}">{% bootstrap_icon "pencil" %}</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	{% endif %}
+{% block list %}
+	<thead>
+		<th class="col-md-2">Name</th>
+		<th class="col-md-2">Short Name</th>
+		<th class="col-md-7">Description</th>
+		<th class="col-md-1"></th>
+	</thead>
+	<tbody>
+		{% for role in object_list %}
+			<tr>
+				<td>{{ role.name }}</td>
+				<td>{{ role.short_name }}</td>
+				<td>{{ role.description }}</td>
+				<td>
+					<a href="{% url 'mentors:role-update' role.id %}">{% bootstrap_icon "pencil" %}</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
 {% endblock %}

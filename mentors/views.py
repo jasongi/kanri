@@ -146,10 +146,6 @@ def upload(request):
 	else:
 		return render(request, 'mentors/upload/failure.html')
 
-def role_index(request):
-	return render(request, 'mentors/role_index.html', {
-		'roles': Role.objects.order_by('name'),
-	})
 class MentorList(KanriListView):
 	model = Mentor
 	template_name = 'mentors/index.html'
@@ -169,6 +165,10 @@ class MentorDetail(KanriDetailView):
 	model = Mentor
 	template_name = 'mentors/detail.html'
 
+class RoleList(KanriListView):
+	model = Role
+	template_name = 'mentors/role_index.html'
+
 class RoleCreate(KanriCreateView):
 	model = Role
 
@@ -179,6 +179,3 @@ class RoleUpdate(KanriUpdateView):
 class RoleDetail(KanriDetailView):
 	model = Role
 	template_name = 'mentors/role_detail.html'
-
-def detail(request, blazeit):
-	return 1;
