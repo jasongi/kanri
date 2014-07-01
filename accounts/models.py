@@ -21,7 +21,9 @@ class KanriUserManager(BaseUserManager):
             password = password
         )
 
-        user.is_admin = True
+        user.is_superuser = True
+        user.is_staff = True
+
         user.set_password(password)
         user.save(using = self._db)
         return user
@@ -52,7 +54,7 @@ class KanriUser(AbstractBaseUser, PermissionsMixin):
         default = True
     )
 
-    is_admin = models.BooleanField(
+    is_staff = models.BooleanField(
         default = False
     )
 
