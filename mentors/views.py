@@ -5,9 +5,11 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import permission_required
 from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView
 import csv
 
+@permission_required('mentors.view_mentor')
 def index(request):
 	success = None
 	if request.method == "POST":
