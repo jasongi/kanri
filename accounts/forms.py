@@ -34,3 +34,19 @@ class LoginForm(forms.Form):
             else:
                 print "invalid user"
                 raise forms.ValidationError('Invalid email/password combination.', code = 'invalid')
+
+class UserSelectionForm(forms.Form):
+    user = forms.ModelChoiceField(
+        get_user_model().objects.all(),
+        widget = forms.Select(attrs = {
+            'class': 'col-md-4'
+            })
+        )
+
+class ManagementSelectionForm(forms.Form):
+    user = forms.ModelChoiceField(
+        Group.objects.get_or_create(name = 'Management')[0].user_set.all(),
+        widget = forms.Select(attrs = {
+            'class': 'col-md-4'
+            })
+        )

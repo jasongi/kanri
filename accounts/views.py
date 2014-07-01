@@ -28,5 +28,13 @@ def logout(request):
 		return redirect('dashboard:index')
 	return render(request, 'accounts/logout.html')
 
+def permissions(request):
+	add_management_form = UserSelectionForm()
+	remove_management_form = ManagementSelectionForm()
+	return render(request, 'accounts/permissions.html', {
+		'add_management_form': add_management_form,
+		'remove_management_form': remove_management_form,
+		})
+
 def cp(request):
 	return redirect('dashboard:index')
