@@ -28,10 +28,10 @@ class Migration(SchemaMigration):
             ('needs_shirt', self.gf('django.db.models.fields.BooleanField')(default=True)),
             ('wwcc', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
             ('wwcc_receipt', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('curtin_status', self.gf('django.db.models.fields.CharField')(max_length=1)),
+            ('curtin_status', self.gf('django.db.models.fields.CharField')(default='N', max_length=1)),
             ('curtin_id', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('coding_experience', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('children_experience', self.gf('django.db.models.fields.CharField')(max_length=2)),
+            ('coding_experience', self.gf('django.db.models.fields.CharField')(default='NO', max_length=2)),
+            ('children_experience', self.gf('django.db.models.fields.CharField')(default='NO', max_length=2)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
         ))
         db.send_create_signal(u'mentors', ['Mentor'])
@@ -45,6 +45,15 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['mentor_id', 'role_id'])
 
+        # Adding M2M table for field availabilities on 'Mentor'
+        m2m_table_name = db.shorten_name(u'mentors_mentor_availabilities')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('mentor', models.ForeignKey(orm[u'mentors.mentor'], null=False)),
+            ('dojosession', models.ForeignKey(orm[u'planner.dojosession'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['mentor_id', 'dojosession_id'])
+
 
     def backwards(self, orm):
         # Deleting model 'Role'
@@ -55,6 +64,9 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field roles_desired on 'Mentor'
         db.delete_table(db.shorten_name(u'mentors_mentor_roles_desired'))
+
+        # Removing M2M table for field availabilities on 'Mentor'
+        db.delete_table(db.shorten_name(u'mentors_mentor_availabilities'))
 
 
     models = {
@@ -96,11 +108,12 @@ class Migration(SchemaMigration):
         },
         u'mentors.mentor': {
             'Meta': {'object_name': 'Mentor'},
-            'children_experience': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
-            'coding_experience': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
+            'availabilities': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['planner.DojoSession']", 'symmetrical': 'False'}),
+            'children_experience': ('django.db.models.fields.CharField', [], {'default': "'NO'", 'max_length': '2'}),
+            'coding_experience': ('django.db.models.fields.CharField', [], {'default': "'NO'", 'max_length': '2'}),
             'contact_number': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
             'curtin_id': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
-            'curtin_status': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
+            'curtin_status': ('django.db.models.fields.CharField', [], {'default': "'N'", 'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'needs_shirt': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'roles_desired': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['mentors.Role']", 'symmetrical': 'False'}),
@@ -118,6 +131,19 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'short_name': ('django.db.models.fields.CharField', [], {'max_length': '10'})
+        },
+        u'planner.dojosession': {
+            'Meta': {'object_name': 'DojoSession'},
+            'current': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'date_time_end': ('django.db.models.fields.DateTimeField', [], {'unique': 'True'}),
+            'date_time_start': ('django.db.models.fields.DateTimeField', [], {'unique': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'term': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['planner.DojoTerm']"})
+        },
+        u'planner.dojoterm': {
+            'Meta': {'object_name': 'DojoTerm'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
     }
 

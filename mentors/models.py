@@ -71,7 +71,7 @@ class Mentor(models.Model):
 	coding_experience = models.CharField(max_length = 2, blank = False, default = NOTHING, choices = KNOWLEDGE_CHOICES, help_text = "How much programming experience do you have?")
 	children_experience = models.CharField(max_length = 2, blank = False, default = NOTHING, choices = KNOWLEDGE_CHOICES, help_text = "How much experience do you have with children?")
 	roles_desired = models.ManyToManyField(Role)
-	user = models.OneToOneField(User, unique = True)
+	user = models.OneToOneField(settings.AUTH_USER_MODEL, unique = True)
 
 	def name(self):
 		return "%s %s" % (self.user.first_name, self.user.last_name)

@@ -6,7 +6,7 @@ class LoginForm(forms.Form):
     email = forms.EmailField(
         widget = forms.TextInput(attrs = {
             'class': 'form-control input-lg',
-            'placeholder': 'Username'}),
+            'placeholder': 'Email Address'}),
         max_length = 140,
         required = True
         )
@@ -22,7 +22,7 @@ class LoginForm(forms.Form):
         email = cleaned_data.get('email')
         password = cleaned_data.get('password')
         if email and password:
-            self.user = authenticate(username=email, password=password)
+            self.user = authenticate(email=email, password=password)
             if self.user is not None:
                 if self.user.is_active:
                     print "active user"

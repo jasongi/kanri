@@ -3,7 +3,8 @@ from mentors.models import Mentor, Role
 from forms import CSVImportForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from kanri.views import KanriCreateView, KanriUpdateView
 import csv
 
@@ -22,7 +23,7 @@ def index(request):
 			# Parse each row.
 			for row in reader:
 				# first, check if mentor already exists.
-				same = Mentor.objects.filter(user__username = row['Email address'])
+				same = Mentor.objects.filter(user__email = row['Email address'])
 				if (same):
 					m = same[0]
 					print "Existing mentor %s" % row['Full name']
@@ -31,16 +32,14 @@ def index(request):
 					m = Mentor()
 
 					# Check to see if a non-mentor user exists with the mentor's email
-					same = User.objects.filter(username = row['Email address'])
+					same = get_user_model().objects.filter(email = row['Email address'])
 					if (same):
 						m.user = same[0]
 					else:
-						pwd = User.objects.make_random_password()
+						pwd = get_user_model().objects.make_random_password()
 						print "Password for %s: %s" % (row['Full name'], pwd)
-						m.user = User.objects.create_user(row['Email address'], row['Email address'], pwd)
 						name_array = row['Full name'].split(' ', 1)
-						m.user.first_name = name_array[0]
-						m.user.last_name = name_array[1]
+						m.user = get_user_model().objects.create_user(row['Email address'], name_array[0], name_array[1], pwd)
 						m.user.save()
 
 				# Add new user to mentors group

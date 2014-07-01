@@ -18,8 +18,9 @@
     <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
 
-    <!-- Page-specific CSS -->
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}" />
 
+    <!-- Page-specific CSS -->
     {% block custom_css %}
     {% endblock %}
 </head>
@@ -51,7 +52,7 @@
                         <form method="post" action="{% url 'accounts:login' %}" class="navbar-form navbar-right">
                             {% csrf_token %}
                             <div class="form-group">
-                                <input type="text" name="email" placeholder="Username" class="form-control">
+                                <input type="text" name="email" placeholder="Email Address" class="form-control">
                             </div>
                             <div class="form-group">
                                 <input type="password" name="password" placeholder="Password" class="form-control">
