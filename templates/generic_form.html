@@ -3,20 +3,20 @@
 {% load name %}
 
 {% block site_title %}
-	{% if object %}
+	{% if model %}
 		Edit
 	{% else %}
 		Add
 	{% endif %}
-	{{ object|name }}
+	{{ view|name }}
 {% endblock %}
 {% block body_title %}<b>
-	{% if object %}
+	{% if model %}
 		Edit
 	{% else %}
 		Add
 	{% endif %}
-	</b> {{ object|name }}
+	</b> {{ view|name }}
 {% endblock %}
 
 {% block content %}
@@ -26,15 +26,17 @@
 		{% bootstrap_form form layout="horizontal" %}
 		{% buttons %}
 			<div class="col-md-offset-2">
+				{% with view|name as model_name %}
 				{% if role %}
-					{% with "Add "|add:object|name as add_text %}
-						{% bootstrap_button add_text button_type="submit" %}
-					{% endwith %}
-				{% else %}
-					{% with "Update "|add:object|name as edit_text %}
-						{% bootstrap_button edit_text button_type="submit" %}
+						{% with "Add "|add:model_name as add_text %}
+							{% bootstrap_button add_text button_type="submit" %}
 						{% endwith %}
-				{% endif %}
+					{% else %}
+						{% with "Update "|add:model_name as edit_text %}
+							{% bootstrap_button edit_text button_type="submit" %}
+							{% endwith %}
+					{% endif %}
+				{% endwith %}
 				{% bootstrap_button "Clear" button_type="reset" %}
 				{% if True %}
 					{% bootstrap_button "Delete" button_type="button" button_class="btn-danger" %}
