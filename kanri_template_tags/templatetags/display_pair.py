@@ -9,7 +9,7 @@ register = template.Library()
 @register.filter(needs_autoescape=True)
 def display_pair(field, name, autoescape = None):
 	if autoescape is not True:
-		raise ValueError("Auto escaping must be turned off for this filter to work")
+		raise ValueError("Auto escaping must be turned on for this filter to work")
 
 	if field is True or field is False:
 		field = nicebool(field, autoescape = True)
