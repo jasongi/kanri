@@ -33,6 +33,9 @@ class Ninja(models.Model):
 		(EVERYTHING, 'I know a great deal')
 	)
 
+	#class Meta():
+	#	verbose_name_plural = 'Ninjas'
+
 	name = models.CharField(max_length = 30, blank = False, help_text = 'What is the Ninja\'s name?')
 	school = models.CharField(max_length = 50, blank = False, help_text = 'What school does the Ninja attend?')
 	school_year = models.PositiveSmallIntegerField(blank = False, help_text = 'What school year is the Ninjas in?')

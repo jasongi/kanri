@@ -1,49 +1,44 @@
-{% extends "base.html" %}
+{% extends "generic_list.html" %}
 
 {% load bootstrap3 %}
 
-{% block site_title %} List of Ninjas {% endblock %}
-{% block body_title %} List of <b>Ninjas</b> {% endblock %}
+{% block add_url %}
+	{% url 'ninjas:add' %}
+{% endblock %}
 
-{% block content %}
-	<a href="{% url 'ninjas:add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Ninja</a>
+{% block custom_buttons_after %}
 	<button class="btn btn-default">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
-	<hr />
+{% endblock %}
 
-	{% if ninjas %}
-		<table class="table">
-			<thead>
-				<th>Name</th>
-				<th>Year</th>
-				<th>Laptop</th>
-				<th>General Knowledge</th>
-				<th>Scratch Knowledge</th>
-				<th>Codecademy Knowledge</th>
-				<th>Black Belt</th>
-				<th>Photo Release</th>
-				<th></th>
-			</thead>
-			<tbody>
-				{% for ninja in ninjas %}
-					<tr>
-						<td>{{ ninja.name }}</td>
-						<td>{{ ninja.school_year }}</td>
-						<td>{{ ninja.laptop }}</td>
-						<td>{{ ninja.get_general_knowledge_display }}</td>
-						<td>{{ ninja.get_scratch_knowledge_display }}</td>
-						<td>{{ ninja.get_codecademy_knowledge_display }}</td>
-						<td>{{ ninja.black_belt }}</td>
-						<td>{{ ninja.photo_release }}</td>
-						<td>
-							<a href="#">{% bootstrap_icon "user" %}</a>
-							<a href="#">{% bootstrap_icon "pencil" %}</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	{% else %}
-		<h2 class="text-center">Aah! No Ninjas!</h2>
-		<h2 class="text-center"><a href="{% url 'ninjas:add' %}">Add one</a> or <a>import a spreadsheet</a>!</h2>
-	{% endif %}
+{% block list %}
+biaze it lol
+	<thead>
+		<th>Name</th>
+		<th>Year</th>
+		<th>Laptop</th>
+		<th>General Knowledge</th>
+		<th>Scratch Knowledge</th>
+		<th>Codecademy Knowledge</th>
+		<th>Black Belt</th>
+		<th>Photo Release</th>
+		<th></th>
+	</thead>
+	<tbody>
+		{% for ninja in object_list %}
+			<tr>
+				<td>{{ ninja.name }}</td>
+				<td>{{ ninja.school_year }}</td>
+				<td>{{ ninja.laptop }}</td>
+				<td>{{ ninja.get_general_knowledge_display }}</td>
+				<td>{{ ninja.get_scratch_knowledge_display }}</td>
+				<td>{{ ninja.get_codecademy_knowledge_display }}</td>
+				<td>{{ ninja.black_belt }}</td>
+				<td>{{ ninja.photo_release }}</td>
+				<td>
+					<a href="#">{% bootstrap_icon "user" %}</a>
+					<a href="#">{% bootstrap_icon "pencil" %}</a>
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
 {% endblock %}
