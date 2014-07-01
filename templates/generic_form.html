@@ -8,7 +8,7 @@
 	{% else %}
 		Add
 	{% endif %}
-	{{ view|name }}
+	{{ view|model_name }}
 {% endblock %}
 {% block body_title %}<b>
 	{% if model %}
@@ -16,7 +16,7 @@
 	{% else %}
 		Add
 	{% endif %}
-	</b> {{ view|name }}
+	</b> {{ view|model_name }}
 {% endblock %}
 
 {% block content %}
@@ -26,7 +26,7 @@
 		{% bootstrap_form form layout="horizontal" %}
 		{% buttons %}
 			<div class="col-md-offset-2">
-				{% with view|name as model_name %}
+				{% with view|model_name as model_name %}
 				{% if role %}
 						{% with "Add "|add:model_name as add_text %}
 							{% bootstrap_button add_text button_type="submit" %}
