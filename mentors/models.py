@@ -1,12 +1,16 @@
 from django.db import models
 from planner.models import DojoSession
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 class Role(models.Model):
 	"""A role somebody can take in a CoderDojo term."""
 	name = models.CharField(max_length = 50, blank = False, help_text = "The name of the role.")
 	short_name = models.CharField(max_length = 10, blank = False, help_text = "A short name for this role. Used in spreadsheets.")
 	description = models.TextField(max_length = 1024, blank = False, help_text = "The role's long description.")
+
+	def get_absolute_url(self):
+		return reverse('mentors:role-detail', args = [self.id])
 
 	def __unicode__(self):
 		return self.name
