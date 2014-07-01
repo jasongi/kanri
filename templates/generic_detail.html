@@ -7,6 +7,9 @@
 
 {% block content %}
 	{% block nocontrols %}
+
+		{% block custom_buttons_before %} {% endblock %}
+
 		{% block noedit %}
 			<a href="{% block edit_url %}{% url 'dashboard' %}{% endblock %}"class="btn btn-default">
 				{% bootstrap_icon "pencil" %} Edit {{ object }}
@@ -24,6 +27,8 @@
 				{% bootstrap_icon "list" %} {{ object|class_name }} List</a>
 			</a>
 		{% endblock %}
+
+		{% block custom_buttons_after %} {% endblock %}
 
 		<hr />
 	{% endblock %}
