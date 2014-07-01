@@ -66,7 +66,7 @@ class Mentor(models.Model):
 
 	class Meta():
 		permissions = {
-			('view_mentor', "Can view a Mentor entry (either individually or a Mentor list."),
+			('view_mentor', "Can view a Mentor entry"),
 		}
 
 	uni = models.CharField(max_length = 50, null = True, blank = True, help_text = "University of study")
