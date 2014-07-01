@@ -2,6 +2,7 @@ from django.db import models
 from planner.models import DojoSession
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.utils import timezone
 
 class Role(models.Model):
 	"""A role somebody can take in a CoderDojo term."""
