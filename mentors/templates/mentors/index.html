@@ -50,17 +50,16 @@
 				{% for role in roles %}
 					<th>{{role.short_name}}</th>
 				{% endfor %}
-				<th></th>
 			</thead>
 			<tbody>
 				{% for mentor in mentors %}
 					<tr>
-						<td>{{ mentor.name }}</td>
-						<td>{{ mentor.user.email }}</td>
-						<td>{{ mentor.user.phone_number }}</td>
+						<td><a href="{% url 'mentors:detail' mentor.id %}">{{ mentor.name }}</a></td>
+						<td><a href="mailto:{{ mentor.user.email }}">{{ mentor.user.email }}</a></td>
+						<td><a href="tel:{{ mentor.user.phone_number }}">{{ mentor.user.phone_number }}</td>
 						<td class="text-center">{{ mentor.needs_shirt|nicebool }}</td>
 						<td>{{ mentor.get_shirt_size_display|default:"—" }}</td>
-						<td>{{ mentor.wwcc_status }}</td>
+						<td>{{ mentor.get_wwcc_status }}</td>
 						{% for role in roles %}
 							<td class="text-center">
 								{% if role in mentor.roles_desired.all %}
@@ -70,10 +69,6 @@
 								{% endif %}
 								</td>
 						{% endfor %}
-						<td>
-							<a href="{% url 'mentors:detail' mentor.id %}">{% bootstrap_icon "user" %}</a> 
-							<a href="{% url 'mentors:update' mentor.id %}">{% bootstrap_icon "pencil" %}</a>
-						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
