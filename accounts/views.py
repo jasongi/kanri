@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from forms import LoginForm
+from forms import LoginForm, UserSelectionForm, ManagementSelectionForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
@@ -14,7 +14,7 @@ def login(request):
 		if form.is_valid():
 			auth_login(request, form.user)
 			print "Logging in!"
-			return redirect("dashboard:index")
+			return redirect("dashboard")
 	else:
 		form = LoginForm()
 	return render(request, 'accounts/login.html', {
