@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from kanri.views import KanriCreateView, KanriUpdateView
+from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView
 import csv
 
 def index(request):
@@ -153,6 +153,11 @@ class RoleCreate(KanriCreateView):
 
 class RoleUpdate(KanriUpdateView):
 	model = Role
+	#success_url = reverse('mentors.index')
+
+class RoleDetail(KanriDetailView):
+	model = Role
+	template_name = 'mentors/role_detail.html'
 
 def detail(request, blazeit):
 	return 1;
