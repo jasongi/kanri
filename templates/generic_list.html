@@ -12,7 +12,7 @@
 
 		{% block noadd %}
 			<a href="{% block add_url %}{% url 'dashboard' %}{% endblock %}"class="btn btn-default">
-				{% bootstrap_icon "plus" %} Edit {{ object }}
+				{% bootstrap_icon "plus" %} Add {{ view|model_name }}
 			</a>
 		{% endblock %}
 
