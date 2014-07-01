@@ -7,7 +7,10 @@ class CSVImportForm(forms.Form):
 
 	def is_valid(self):
 		csvfile = self.files.get('csv')
-		dialect = csv.Sniffer().sniff(csvfile.read(2048))
+		try:
+			dialect = csv.Sniffer().sniff(csvfile.read(2048))
+		except csv.Error:
+			return False
 		csvfile.seek(0)
 		reader = csv.reader(csvfile, dialect=dialect)		
 		fields = (
