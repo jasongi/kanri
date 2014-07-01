@@ -1,0 +1,13 @@
+{% extends "generic_detail.html" %}
+{% load display_pair %}
+
+{% block list_url %}{% url 'mentors:role-index' %}{% endblock %}
+{% block edit_url %}{% url 'mentors:role-update' object.id %}{% endblock %}
+{% block delete_url %}{% endblock %}
+
+
+{% block detail %}
+	{{ object.name|display_pair:'Name' }}
+	{{ object.short_name|display_pair:'Short Name' }}
+	{{ object.description|display_pair:'Description' }}
+{% endblock %}
