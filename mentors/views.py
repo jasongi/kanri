@@ -6,12 +6,17 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
-from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView
+from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView, KanriListView
 import csv
 
 @permission_required('mentors.view_mentor')
-def index(request):
-	success = None
+def upload(request):
+	stats = {
+		'total': 0,
+		'new_mentors': 0,
+		'new_users': 0,
+	}
+
 	if request.method == "POST":
 		form = CSVImportForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -28,10 +33,11 @@ def index(request):
 				same = Mentor.objects.filter(user__email = row['Email address'])
 				if (same):
 					m = same[0]
-					print "Existing mentor %s" % row['Full name']
+					stats
 				else:
 					print "New mentor %s" % row['Full name']
 					m = Mentor()
+					stats['new_mentors'] += 1
 
 					# Check to see if a non-mentor user exists with the mentor's email
 					same = get_user_model().objects.filter(email = row['Email address'])
@@ -43,6 +49,7 @@ def index(request):
 						name_array = row['Full name'].split(' ', 1)
 						m.user = get_user_model().objects.create_user(row['Email address'], name_array[0], name_array[1], pwd)
 						m.user.save()
+						stats['new_users'] += 1
 
 				# Add contact number
 				m.user.phone_number = '0' + row['Mobile number']
@@ -129,22 +136,28 @@ def index(request):
 					if role.name in row['Roles'].decode('utf-8') and role not in m.roles_desired.all():
 						m.roles_desired.add(role)
 				m.save()
-			success = True
-		else:
-			success = False
-	else:
-		form = CSVImportForm()
-	return render(request, 'mentors/index.html', {
-			'mentors': Mentor.objects.order_by('user__first_name'),
-			'roles': Role.objects.all(),
-			'form': form,
-			'success': success,
+
+				stats['total'] += 1
+
+	if stats['total'] > 0:
+		return render(request, 'mentors/upload/success.html', {
+			'stats': stats,
 		})
+	else:
+		return render(request, 'mentors/upload/failure.html')
 
 def role_index(request):
 	return render(request, 'mentors/role_index.html', {
 		'roles': Role.objects.order_by('name'),
 	})
+class MentorList(KanriListView):
+	model = Mentor
+	template_name = 'mentors/index.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(MentorList, self).get_context_data(**kwargs)
+		context['roles'] = Role.objects.order_by('name')
+		return context
 
 class MentorCreate(KanriCreateView):
 	model = Mentor

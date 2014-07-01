@@ -1,92 +1,60 @@
-{% extends "base.html" %}
+{% extends "generic_list.html" %}
 
 {% load bootstrap3 %}
 {% load nicebool %}
+{% load staticfiles %}
 
-{% block site_title %} List of Mentors {% endblock %}
-{% block body_title %} List of <b>Mentors</b> {% endblock %}
-
-{% block content %}
-	{% if form.errors or success == False %}
-		<div class="alert alert-danger">
-			{% if form.errors %}
-				<p>{{form.csv.errors|escape}}</p>
-			{% endif %}
-			{% if success == False %}
-				<p>The provided spreadsheet was malformed.</p> 
-			{% endif %}
-		</div>
-		<hr />
-	{% endif %}
-
-	{% if success = True %}
-		<div class="alert alert-success">
-			<p>Spreadsheet added successfully.</p>
-		</div>
-		<hr />
-	{% endif %}
-
-	<a href="{% url 'mentors:add' %}" class="btn btn-default">{% bootstrap_icon "plus" %} Add Mentor</a>
-	<button class="btn btn-default" onclick="loadMentorList();">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
+{% block add_url %}{% url 'mentors:add' %}{% endblock %}
+{% block custom_buttons_after %}
+	<button class="btn btn-default" onclick="loadFile('#id_csv');">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
 	<a href="{% url 'mentors:role-index' %}" class="btn btn-default">{% bootstrap_icon "tasks" %} Manage Roles</a>
 
 	<div class="hidden">
-		<form id="csv-form" method="post" enctype="multipart/form-data">
+		<form id="csv-form" action="{% url 'mentors:upload' %}" method="post" enctype="multipart/form-data">
 			{% csrf_token %}
-			<input id="id_csv" name="csv" accept="text/csv" onchange="submitMentorList();" type="file" />
+			<input id="id_csv" name="csv" accept="text/csv" onchange="submitFile('#csv-form');" type="file" />
 			<input type="submit" class="btn btn-default" />
 		</form>
 	</div>
-	<hr />
-	{% if mentors %}
-		<table class="table">
-			<thead>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Number</th>
-				<th>Needs Shirt</th>
-				<th>Size</th>
-				<th>WWCC</th>
-				{% for role in roles %}
-					<th>{{role.short_name}}</th>
-				{% endfor %}
-			</thead>
-			<tbody>
-				{% for mentor in mentors %}
-					<tr>
-						<td><a href="{% url 'mentors:detail' mentor.id %}">{{ mentor.name }}</a></td>
-						<td><a href="{{ mentor.get_email_url }}">{{ mentor.user.email }}</a></td>
-						<td><a href="{{ mentor.get_call_url }}">{{ mentor.user.phone_number }}</td>
-						<td class="text-center">{{ mentor.needs_shirt|nicebool }}</td>
-						<td>{{ mentor.get_shirt_size_display|default:"—" }}</td>
-						<td>{{ mentor.get_wwcc_status }}</td>
-						{% for role in roles %}
-							<td class="text-center">
-								{% if role in mentor.roles_desired.all %}
-									{% bootstrap_icon "ok" %}
-								{% else %}
-									{% bootstrap_icon "remove" %}
-								{% endif %}
-								</td>
-						{% endfor %}
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	{% endif %}
+{% endblock %}
+
+{% block list %}
+<thead>
+	<th>Name</th>
+	<th>Email</th>
+	<th>Number</th>
+	<th>Needs Shirt</th>
+	<th>Size</th>
+	<th>WWCC</th>
+	{% for role in roles %}
+		<th>{{role.short_name}}</th>
+	{% endfor %}
+</thead>
+<tbody>
+	{% for mentor in object_list %}
+		<tr>
+			<td><a href="{% url 'mentors:detail' mentor.id %}">{{ mentor.name }}</a></td>
+			<td><a href="{{ mentor.get_email_url }}">{{ mentor.user.email }}</a></td>
+			<td><a href="{{ mentor.get_call_url }}">{{ mentor.user.phone_number }}</td>
+			<td class="text-center">{{ mentor.needs_shirt|nicebool }}</td>
+			<td>{{ mentor.get_shirt_size_display|default:"—" }}</td>
+			<td>{{ mentor.get_wwcc_status }}</td>
+			{% for role in roles %}
+				<td class="text-center">
+					{% if role in mentor.roles_desired.all %}
+						{% bootstrap_icon "ok" %}
+					{% else %}
+						{% bootstrap_icon "remove" %}
+					{% endif %}
+				</td>
+			{% endfor %}
+		</tr>
+	{% endfor %}
+</tbody>
 {% endblock %}
 
 {% block custom_js %}
-<script>
-	function loadMentorList()
-	{
-		console.log("Loading mentor list...");
-    	$("#id_csv").click();
-	}
+<script src="{% static 'js/Upload.js' %}">
 
-	function submitMentorList()
-	{
-    	$("#csv-form").submit();
-	}
 </script>
 {% endblock %}
