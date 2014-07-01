@@ -42,9 +42,14 @@ def index(request):
 						m.user = get_user_model().objects.create_user(row['Email address'], name_array[0], name_array[1], pwd)
 						m.user.save()
 
+				# Add contact number
+				m.user.phone_number = '0' + row['Mobile number']
+
 				# Add new user to mentors group
 				group = Group.objects.get_or_create(name='Mentors')
 				m.user.groups.add(group[0])
+
+				m.user.save()
 
 				# University
 				if 'University' in row:
@@ -57,9 +62,6 @@ def index(request):
 				# Work
 				if 'Work' in row:
 					m.work = row['Work']
-
-				# Mobile number
-				m.contact_number = '0' + row['Mobile number']
 				
 				# shirt size mapping
 				ts = row['T-shirt size']
