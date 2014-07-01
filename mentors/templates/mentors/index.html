@@ -58,7 +58,7 @@
 						<td>{{ mentor.user.email }}</td>
 						<td>{{ mentor.contact_number }}</td>
 						<td>{{ mentor.needs_shirt }}</td>
-						<td>{% firstof mentor.get_shirt_size_display "—" %}</td>
+						<td>{{ mentor.get_shirt_size_display|default:"—" }}</td>
 						<td>{{ mentor.wwcc_status }}</td>
 						{% for role in roles %}
 							<td class="text-center">
