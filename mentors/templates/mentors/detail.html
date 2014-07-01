@@ -4,8 +4,12 @@
 {% load bootstrap3 %}
 
 {% block custom_buttons_before %}
-	<a href="tel://{{ object.user.phone_number }}" class="btn btn-default">
+	<a href="{{ object.get_call_url }}" class="btn btn-default">
 		{% bootstrap_icon 'earphone' %} Call {{ object.user.get_short_name }}
+	</a>
+
+	<a href="{{ object.get_email_url }}" class="btn btn-default">
+		{% bootstrap_icon 'envelope' %} Email {{ object.user.get_short_name }}
 	</a>
 {% endblock %}
 

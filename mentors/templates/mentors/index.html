@@ -55,8 +55,8 @@
 				{% for mentor in mentors %}
 					<tr>
 						<td><a href="{% url 'mentors:detail' mentor.id %}">{{ mentor.name }}</a></td>
-						<td><a href="mailto:{{ mentor.user.email }}">{{ mentor.user.email }}</a></td>
-						<td><a href="tel:{{ mentor.user.phone_number }}">{{ mentor.user.phone_number }}</td>
+						<td><a href="{{ mentor.get_email_url }}">{{ mentor.user.email }}</a></td>
+						<td><a href="{{ mentor.get_call_url }}">{{ mentor.user.phone_number }}</td>
 						<td class="text-center">{{ mentor.needs_shirt|nicebool }}</td>
 						<td>{{ mentor.get_shirt_size_display|default:"—" }}</td>
 						<td>{{ mentor.get_wwcc_status }}</td>
