@@ -67,7 +67,6 @@ class Mentor(models.Model):
 	uni = models.CharField(max_length = 50, null = True, blank = True, help_text = "University of study")
 	uni_study = models.CharField(max_length = 75, null = True, blank = True, help_text = "If you're attending university, what are you studying?")
 	work = models.CharField(max_length = 75, null = True, blank = True, help_text = "If you work, what do you do?")
-	contact_number = models.CharField(blank = False, max_length = 10, help_text = "Contact number (mobile preferred)")
 	shirt_size = models.CharField(max_length = 3, blank = True, choices = SHIRT_SIZE_CHOICES, help_text = "T-shirt size (for uniform)")
 	needs_shirt = models.BooleanField(default = True, help_text = "Does the mentor need to have a shirt provisioned for them?")
 	wwcc = models.CharField(max_length = 10, verbose_name = "WWCC card number", blank = True, null = True, help_text = "WWCC card number (if WWCC card holder)")
