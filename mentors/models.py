@@ -80,16 +80,29 @@ class Mentor(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, unique = True)
 
 	def name(self):
-		return "%s %s" % (self.user.first_name, self.user.last_name)
+		return self.user.get_short_name()
 
-	def wwcc_status(self):
+	def get_wwcc_status(self):
 		if self.wwcc:
-			return 'Recorded'
+			return "Recorded (%s)" % self.wwcc
 		elif self.wwcc_receipt:
 			return 'Processing'
 		else:
 			return 'None'
+
+	def get_curtin_status(self):
+		if self.curtin_id:
+			return "%s (%s)" % (self.get_curtin_status_display(), self.curtin_id)
+		else:
+			return "%s" % self.get_curtin_status_display()
 	
+	def get_roles_desired(self):
+		return ', '.join(self.roles_desired.values_list('name', flat = True))
+
+
+	def get_future_availabilities(self):
+		return self.availabilities.filter(date_time_start__gt = timezone.now())
+
 	def __unicode__(self):
 		return self.name()
 
