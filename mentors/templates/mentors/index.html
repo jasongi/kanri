@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load bootstrap3 %}
+{% load nicebool %}
 
 {% block site_title %} List of Mentors {% endblock %}
 {% block body_title %} List of <b>Mentors</b> {% endblock %}
@@ -57,7 +58,7 @@
 						<td>{{ mentor.name }}</td>
 						<td>{{ mentor.user.email }}</td>
 						<td>{{ mentor.contact_number }}</td>
-						<td>{{ mentor.needs_shirt }}</td>
+						<td class="text-center">{{ mentor.needs_shirt|nicebool }}</td>
 						<td>{{ mentor.get_shirt_size_display|default:"—" }}</td>
 						<td>{{ mentor.wwcc_status }}</td>
 						{% for role in roles %}
