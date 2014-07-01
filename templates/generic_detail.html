@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load name %}
+
+{% block site_title %} Details for {{ object.name }} {% endblock %}
+{% block body_title %} Details for <b>{{ object.name }}</b> {% endblock %}
+
+{% block content %}
+	{% block nocontrols %}
+		{% block noedit %}
+			<a href="{% block edit_url %}{% url 'dashboard' %}{% endblock %}"class="btn btn-default">
+				{% bootstrap_icon "pencil" %} Edit {{ object|class_name }}
+			</a>
+		{% endblock %}
+	
+		{% block noremove %}
+			<a href="{% block remove_url %}{% url 'dashboard' %}{% endblock %}" class="btn btn-default">
+				{% bootstrap_icon "remove" %} Remove {{ object|class_name }}</a>
+			</a>
+		{% endblock %}
+	
+		{% block nolist %}
+			<a href="{% block list_url %}{% url 'dashboard' %}{% endblock %}" class="btn btn-default">
+				{% bootstrap_icon "list" %} {{ object|class_name }} List</a>
+			</a>
+		{% endblock %}
+
+		<hr />
+	{% endblock %}
+
+	<form class="form-horizontal" role="form">
+		{% block detail %} {% endblock %}
+	</form>
+{% endblock %}
