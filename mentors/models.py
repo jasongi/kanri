@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from planner.models import DojoSession
+from django.conf import settings
 
 class Role(models.Model):
 	"""A role somebody can take in a CoderDojo term."""
@@ -9,7 +10,7 @@ class Role(models.Model):
 
 	def __unicode__(self):
 		return self.name
-	
+
 class Mentor(models.Model):
 	MALE_SMALL = "MS"
 	MALE_MEDIUM = "MM"
@@ -71,6 +72,7 @@ class Mentor(models.Model):
 	coding_experience = models.CharField(max_length = 2, blank = False, default = NOTHING, choices = KNOWLEDGE_CHOICES, help_text = "How much programming experience do you have?")
 	children_experience = models.CharField(max_length = 2, blank = False, default = NOTHING, choices = KNOWLEDGE_CHOICES, help_text = "How much experience do you have with children?")
 	roles_desired = models.ManyToManyField(Role)
+	availabilities = models.ManyToManyField(DojoSession, help_text = "When are you available?")
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, unique = True)
 
 	def name(self):
