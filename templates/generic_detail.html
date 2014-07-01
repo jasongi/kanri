@@ -9,13 +9,13 @@
 	{% block nocontrols %}
 		{% block noedit %}
 			<a href="{% block edit_url %}{% url 'dashboard' %}{% endblock %}"class="btn btn-default">
-				{% bootstrap_icon "pencil" %} Edit {{ object|class_name }}
+				{% bootstrap_icon "pencil" %} Edit {{ object }}
 			</a>
 		{% endblock %}
 	
 		{% block noremove %}
 			<a href="{% block remove_url %}{% url 'dashboard' %}{% endblock %}" class="btn btn-default">
-				{% bootstrap_icon "remove" %} Remove {{ object|class_name }}</a>
+				{% bootstrap_icon "remove" %} Remove {{ object }}</a>
 			</a>
 		{% endblock %}
 	
