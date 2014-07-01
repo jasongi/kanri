@@ -150,6 +150,10 @@ class MentorCreate(KanriCreateView):
 class MentorUpdate(KanriUpdateView):
 	model = Mentor
 
+class MentorDetail(KanriDetailView):
+	model = Mentor
+	template_name = 'mentors/detail.html'
+
 class RoleCreate(KanriCreateView):
 	model = Role
 

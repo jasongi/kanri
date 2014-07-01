@@ -1,0 +1,42 @@
+{% extends "generic_detail.html" %}
+{% load display_pair %}
+{% load nicebool %}
+{% load bootstrap3 %}
+
+{% block custom_buttons_before %}
+	<a href="tel://{{ object.user.phone_number }}" class="btn btn-default">
+		{% bootstrap_icon 'earphone' %} Call {{ object.user.get_short_name }}
+	</a>
+{% endblock %}
+
+{% block list_url %}{% url 'mentors:index' %}{% endblock %}
+{% block edit_url %}{% url 'mentors:update' object.id %}{% endblock %}
+{% block delete_url %}{% endblock %}
+
+
+
+{% block detail %}
+	<h2>Personal Information</h2>
+	{{ object.user.first_name|display_pair:'First Name' }}
+	{{ object.user.last_name|display_pair:'Last Name' }}
+	{{ object.get_shirt_size_display|display_pair:"Shirt Size" }}
+	{{ object.needs_shirt|display_pair:"Needs Shirt"}}
+
+	<h2>Contact Information</h2>
+	{{ object.user.email|display_pair:'Email' }}
+	{{ object.user.phone_number|display_pair:'Phone Number' }}
+
+	<h2>Roles and Availability</h2>
+	{{ object.get_roles_desired|display_pair:"Desired Roles" }}
+	{{ object.get_future_availabilities|display_pair:"Future Availabilities"}}
+	<h2>Background</h2>
+	{{ object.uni|display_pair:'University' }}
+	{{ object.uni_study|display_pair:'Field of Study' }}
+	{{ object.work|display_pair:'Occupation' }}
+	{{ object.get_coding_experience_display|display_pair:'Coding Experience' }}
+	{{ object.get_children_experience_display|display_pair:'Children Experience' }}
+
+	<h2>Legal and HR</h2>
+	{{ object.get_wwcc_status|display_pair:'WWCC Status' }}
+	{{ object.get_curtin_status|display_pair:'Curtin Status' }}
+{% endblock %}
