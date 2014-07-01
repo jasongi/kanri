@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 def login(request):
 	# check if user has logged in
 	if request.user.is_authenticated():
-		return redirect('dashboard:index')
+		return redirect('dashboard')
 
 	if request.method == "POST":
 		form = LoginForm(request.POST)
