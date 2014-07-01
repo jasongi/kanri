@@ -6,7 +6,7 @@ def name(model, plural = False):
 	if plural:
 		return template.defaultfilters.title(model._meta.verbose_name_plural)
 	else:
-		return model._meta.verbose_name
+		return template.defaultfilters.title(model._meta.verbose_name)
 
 def model_name(view, plural = False):
 	return name(view.model, plural)
