@@ -82,6 +82,12 @@ class Mentor(models.Model):
 	def name(self):
 		return self.user.get_short_name()
 
+	def get_call_url(self):
+		return "tel:%s" % self.user.phone_number
+
+	def get_email_url(self):
+		return "mailto:%s" % self.user.email
+
 	def get_wwcc_status(self):
 		if self.wwcc:
 			return "Recorded (%s)" % self.wwcc
@@ -98,7 +104,6 @@ class Mentor(models.Model):
 	
 	def get_roles_desired(self):
 		return ', '.join(self.roles_desired.values_list('name', flat = True))
-
 
 	def get_future_availabilities(self):
 		return self.availabilities.filter(date_time_start__gt = timezone.now())
