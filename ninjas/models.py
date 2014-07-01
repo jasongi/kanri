@@ -28,9 +28,9 @@ class Ninja(models.Model):
 	EVERYTHING = 'EV'
 
 	KNOWLEDGE_CHOICES = (
-		(NOTHING, 'I know nothing but am keen to learn!'),
-		(SOMETHING, 'I know some basics'),
-		(EVERYTHING, 'I know a great deal')
+		(NOTHING, 'Beginner'),
+		(SOMETHING, 'Intermediary'),
+		(EVERYTHING, 'Advanced')
 	)
 
 	#class Meta():
