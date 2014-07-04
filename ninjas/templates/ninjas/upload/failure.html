@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block site_title %}Spreadsheet Upload Failed{% endblock %}
+{% block body_title %}Spreadsheet Upload <b>Failed</b>{% endblock %}
+
+{% block content %}
+	<div class="alert alert-danger text-center">
+	<h2>Failed to import spreadsheet</h2>
+	<p>Are you sure that this is a valid CoderDojo WA @ Curtin Google Forms spreadsheet?</p>
+	<p>Give it another shot?</p><br />
+	<button class="btn btn-default" onclick="loadFile('#id_csv');">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
+
+	<div class="hidden">
+		<form id="csv-form" action="{% url 'ninjas:upload' %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<input id="id_csv" name="csv" accept="text/csv" onchange="submitFile('#csv-form');" type="file" />
+			<input type="submit" class="btn btn-default" />
+		</form>
+	</div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="{% static 'js/Upload.js' %}"></script>
+{% endblock %}

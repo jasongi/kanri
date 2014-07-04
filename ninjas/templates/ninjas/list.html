@@ -1,0 +1,52 @@
+{% extends "generic_list.html" %}
+
+{% load staticfiles %}
+
+{% load bootstrap3 %}
+{% load nicebool %}
+
+{% block add_url %}
+	{% url 'ninjas:add' %}
+{% endblock %}
+
+{% block custom_buttons_after %}
+	<button class="btn btn-default" onclick="loadFile('#id_csv');">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
+
+	<div class="hidden">
+		<form id="csv-form" action="{% url 'ninjas:upload' %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<input id="id_csv" name="csv" accept="text/csv" onchange="submitFile('#csv-form');" type="file" />
+			<input type="submit" class="btn btn-default" />
+		</form>
+	</div>
+{% endblock %}
+
+{% block list %}
+	<thead>
+		<th>Name</th>
+		<th>Year</th>
+		<th>General Knowledge</th>
+		<th>Scratch Knowledge</th>
+		<th>Codecademy Knowledge</th>
+		<th>Been Before</th>
+		<th>Black Belt</th>
+	</thead>
+	<tbody>
+		{% for ninja in object_list %}
+			<tr>
+				<td>{{ ninja.name }}</td>
+				<td>{{ ninja.school_year }}</td>
+				<td>{{ ninja.get_general_knowledge_display }}</td>
+				<td>{{ ninja.get_scratch_knowledge_display }}</td>
+				<td>{{ ninja.get_codecademy_knowledge_display }}</td>
+				<td>{{ ninja.attended_workshop|nicebool }}</td>
+				<td>{{ ninja.black_belt|nicebool }}</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+{% endblock %}
+
+{% block custom_js %}
+<script src="{% static 'js/Upload.js' %}">
+</script>
+{% endblock %}

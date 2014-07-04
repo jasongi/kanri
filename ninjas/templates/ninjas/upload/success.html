@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block site_title %}Spreadsheet Upload Successful{% endblock %}
+{% block body_title %}Spreadsheet Upload <b>Successful</b>{% endblock %}
+
+{% block content %}
+<div class="alert alert-success text-center">
+	<h2>It just works!</h2>
+	<p>You've imported {{ stats.total }} records, of which there's {{ stats.new_mentors }} new mentor(s)
+	with {{ stats.new_users }} user(s) that haven't been logged before.</p>
+	<p><a href="{% url 'ninjas:index' %}">Back to the list...</a></p>
+</div>
+{% endblock %}

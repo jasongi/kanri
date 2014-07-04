@@ -1,37 +1,3 @@
-{% extends "generic_list.html" %}
+{% extends 'base.html' %}
 
-{% load bootstrap3 %}
-{% load nicebool %}
-
-{% block add_url %}
-	{% url 'ninjas:add' %}
-{% endblock %}
-
-{% block custom_buttons_after %}
-	<button class="btn btn-default">{% bootstrap_icon "cloud-upload" %} Import Spreadsheet</button>
-{% endblock %}
-
-{% block list %}
-	<thead>
-		<th>Name</th>
-		<th>Year</th>
-		<th>General Knowledge</th>
-		<th>Scratch Knowledge</th>
-		<th>Codecademy Knowledge</th>
-		<th>Been Before</th>
-		<th>Black Belt</th>
-	</thead>
-	<tbody>
-		{% for ninja in object_list %}
-			<tr>
-				<td>{{ ninja.name }}</td>
-				<td>{{ ninja.school_year }}</td>
-				<td>{{ ninja.get_general_knowledge_display }}</td>
-				<td>{{ ninja.get_scratch_knowledge_display }}</td>
-				<td>{{ ninja.get_codecademy_knowledge_display }}</td>
-				<td>{{ ninja.been_before|nicebool }}</td>
-				<td>{{ ninja.black_belt|nicebool }}</td>
-			</tr>
-		{% endfor %}
-	</tbody>
-{% endblock %}
+{% block site_title %}Ninjas{% endblock %}

@@ -1,9 +1,6 @@
 from django.contrib import admin
-from ninjas.models import Ninja, Contact
+from ninjas.models import Ninja
 
-class SecondaryContactsInline(admin.TabularInline):
-    model = Contact
-    extra = 1
 
 class NinjaAdmin(admin.ModelAdmin):
 	list_display = ('name', 'school', 'school_year', 'attended_workshop', 'referral', 'laptop', 'aim', 'general_knowledge',
@@ -17,6 +14,5 @@ class NinjaAdmin(admin.ModelAdmin):
 		('At CoderDojo', {'fields': ['referral', 'laptop', 'attended_workshop', 'aim', 'black_belt']}),
 		('Knowledge', {'fields': ['general_knowledge', 'scratch_knowledge', 'codecademy_knowledge', 'language_experience']}),
 	]
-	inlines = [SecondaryContactsInline]
 
 admin.site.register(Ninja, NinjaAdmin)
