@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import permission_required
 from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView, KanriListView
 import csv
 
-@permission_required('mentors.view_mentor')
 def upload(request):
 	stats = {
 		'total': 0,
