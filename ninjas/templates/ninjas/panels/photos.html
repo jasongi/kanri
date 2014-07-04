@@ -1,0 +1,23 @@
+{% extends 'generic_panel.html' %}
+
+{% block panel_title %}Photo Releases{% endblock %}
+
+{% block panel_content %}
+	{% if ninja_stats.photos %}
+		<div class="col-md-3 text-center">
+			<h2 class="notop">{{ ninja_stats.photos.count }}</h2>
+			ninjas without photo releases
+		</div>
+		<div class="col-md-9">
+			<ul>
+				{% for ninja in ninja_stats.photos %}
+					<li>{{ ninja.name }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% else %}
+		<div class="col-md-12 text-center">
+			<h2 class="notop">All ninjas have photo releases :)</h2>
+		</div>
+	{% endif %}
+{% endblock %}

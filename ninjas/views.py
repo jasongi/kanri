@@ -7,22 +7,21 @@ from django.core.urlresolvers import reverse_lazy
 from kanri import csv_tools, knowledge
 import csv
 
+def index(request):
+	return render(request, 'ninjas/index.html', {
+		'ninja_stats' : Ninja.get_stats(),
+		'parent_stats': Parent.get_stats()
+		})
+
 class NinjaCreate(KanriCreateView):
 	model = Ninja
-	#fields = ['name']
 
 class NinjaUpdate(KanriUpdateView):
 	model = Ninja
 
 class NinjaList(KanriListView):
 	model = Ninja
-	template_name = 'ninjas/index.html'
-
-# Create your views here.
-def index(request):
-	return render(request, 'ninjas/index.html', {
-			'ninjas': Ninja.objects.order_by('name')
-		})
+	template_name = 'ninjas/list.html'
 
 def upload(request):
 	if request.method == 'POST':

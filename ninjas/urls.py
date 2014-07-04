@@ -4,7 +4,7 @@ from ninjas import views
 
 urlpatterns = patterns('',
 	url(r'^$',
-		views.index(),
+		views.index,
 		name = 'index'
 	),
 	

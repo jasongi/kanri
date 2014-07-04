@@ -1,0 +1,27 @@
+{% extends 'generic_panel.html' %}
+
+{% block panel_title %}Codecademy Knowledge{% endblock %}
+
+{% block panel_content %}
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ ninja_stats.knowledge.codecademy.Nothing }}</h2>
+		know nothing
+	</div>
+
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ ninja_stats.knowledge.codecademy.Beginner }}</h2>
+		are beginners
+	</div>
+
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ ninja_stats.knowledge.codecademy.Intermediary }}</h2>
+		have intermediary knowledge
+	</div>
+
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ ninja_stats.knowledge.codecademy.Advanced }}</h2>
+		have advanced knowledge
+	</div>
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'generic_panel.html' %}
+
+{% block panel_title %}Black Belt Ninjas{% endblock %}
+
+{% block panel_content %}
+	{% if ninja_stats.knowledge.black_belts %}
+		<div class="col-md-3 text-center">
+			<h2 class="notop">{{ ninja_stats.knowledge.black_belts.count }}</h2>
+			black belt ninjas
+		</div>
+		<div class="col-md-9">
+			<ul>
+				{% for ninja in ninja_stats.knowledge.black_belts %}
+					<li>{{ ninja.name }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% else %}
+		<div class="col-md-12 text-center">
+			<h2 class="notop">No Black Belt Ninjas</h2>
+		</div>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'generic_panel.html' %}
+
+{% block panel_title %}General Information{% endblock %}
+
+{% block panel_content %}
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ ninja_stats.all }}</h2>
+		Ninjas
+	</div>
+
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ ninja_stats.new }}</h2>
+		New
+	</div>
+
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ ninja_stats.returning }}</h2>
+		Returning
+	</div>
+
+	<div class="col-md-3 text-center">
+		<h2 class="notop">{{ parent_stats.all }}</h2>
+		Parents
+	</div>
+
+{% endblock %}

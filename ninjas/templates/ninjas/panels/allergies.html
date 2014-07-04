@@ -1,0 +1,23 @@
+{% extends 'generic_panel.html' %}
+
+{% block panel_title %}Allergies{% endblock %}
+
+{% block panel_content %}
+	{% if ninja_stats.allergies %}
+		<div class="col-md-3 text-center">
+			<h2 class="notop">{{ ninja_stats.allergies.count }}</h2>
+			ninjas with allergies
+		</div>
+		<div class="col-md-9">
+			<ul>
+				{% for ninja in ninja_stats.allergies %}
+					<li>{{ ninja.name }}: {{ninja.allergies}}</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% else %}
+		<div class="col-md-12 text-center">
+			<h2 class="notop">No Allergies :)</h2>
+		</div>
+	{% endif %}
+{% endblock %}

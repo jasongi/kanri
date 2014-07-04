@@ -1,3 +1,30 @@
 {% extends 'base.html' %}
+{% load bootstrap3 %}
 
 {% block site_title %}Ninjas{% endblock %}
+{% block body_title %}Information about <b>Ninjas</b>{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'ninjas:list' %}" class="btn btn-default"> {% bootstrap_icon 'list' %} View Ninjas</a>
+<a href="{% url 'ninjas:add' %}" class="btn btn-default"> {% bootstrap_icon 'plus' %} Add Ninja</a>
+
+<hr />
+<h2>General</h2>
+{% include 'ninjas/panels/general_panel.html' %}
+<hr />
+
+<h2>Knowledge</h2>
+{% include 'ninjas/panels/knowledge/general.html' %}
+{% include 'ninjas/panels/knowledge/scratch.html' %}
+{% include 'ninjas/panels/knowledge/codecademy.html' %}
+{% include 'ninjas/panels/knowledge/black_belts.html' %}
+
+<h2>Misc.</h2>
+{% include 'ninjas/panels/allergies.html' %}
+{% include 'ninjas/panels/photos.html' %}
+
+<hr />
+
+
+{% endblock %}
