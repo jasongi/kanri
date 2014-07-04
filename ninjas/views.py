@@ -52,7 +52,7 @@ def upload(request):
 				ninja.school = row['School']
 				ninja.school_year = row['School Year']
 				ninja.postcode = row['Postcode']
-				ninja.allergies = row['Allergies/Dietary Restrictions']
+				ninja.allergies = csv_tools.none_catch(row['Allergies/Dietary Restrictions'])
 				ninja.attended_workshop = csv_tools.yes_no(row['Been Before?'])
 				print "\t Been before is: %s" % row['Been Before?']
 				print "\t We ended up with %s" % ninja.attended_workshop

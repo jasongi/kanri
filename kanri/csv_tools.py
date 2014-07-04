@@ -29,3 +29,9 @@ def knowledge_parse(text):
 		return knowledge.ADVANCED
 	else:
 		raise ValueError("Not a valid knowledge choice: %s" % text)
+
+def none_catch(text):
+	if text == '':
+		return None
+	else:
+		return text
