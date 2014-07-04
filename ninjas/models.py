@@ -22,6 +22,16 @@ class Parent(models.Model):
         help_text = 'Contact phone number (mobile preferred)'
     )
 
+    # Statistics Functions #
+    @classmethod
+    def get_stats(cls):
+        stats = {
+            'all': cls.objects.count()
+        }
+
+        return stats
+
+
 class Ninja(models.Model):
     name = models.CharField(
         max_length = 30,
@@ -55,6 +65,7 @@ class Ninja(models.Model):
     allergies = models.CharField(
         max_length = 140,
         blank = True,
+        null = True,
         help_text = 'Allergies/Dietary Restrictions'
     )
 
@@ -129,6 +140,47 @@ class Ninja(models.Model):
 
     def parent_required(self):
         return self.school_year <= 6
+
+    # Statistics Functions #
+    @classmethod
+    def get_new(self):
+        return self.objects.filter(attended_workshop = False).count()
+
+    @classmethod
+    def get_returning(self):
+        return self.objects.filter(attended_workshop = True).count()
+
+    @classmethod
+    def get_allergies(self):
+        return self.objects.exclude(allergies = None)
+
+    @classmethod
+    def get_photos(self):
+        return self.objects.exclude(photo_release = True)
+
+    @classmethod
+    def get_stats(cls):
+        stats = {
+            'all': cls.objects.count(),
+            'returning': cls.get_returning(),
+            'new': cls.get_new(),
+            'allergies': cls.get_allergies(),
+            'photos': cls.get_photos(),
+            'knowledge': {
+                'general': {},
+                'scratch': {},
+                'codecademy': {},
+            },
+            'black_belts': cls.objects.filter(black_belt = True),
+        }
+
+        # Do knowledge stats.
+        for choice in knowledge.KNOWLEDGE_CHOICES:
+            stats['knowledge']['general'][choice[1]] = cls.objects.filter(general_knowledge = choice[0]).count()
+            stats['knowledge']['scratch'][choice[1]] = cls.objects.filter(scratch_knowledge = choice[0]).count()
+            stats['knowledge']['codecademy'][choice[1]] = cls.objects.filter(codecademy_knowledge = choice[0]).count()
+
+        return stats
 
     def get_absolute_url(self):
         return reverse('detail', current_app = 'ninjas', args = [self.id])
