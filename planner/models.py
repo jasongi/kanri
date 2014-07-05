@@ -1,8 +1,15 @@
 from django.db import models
 from django.utils import timezone
+from ninjas.models import Ninja
 
 class DojoTerm(models.Model):
 	name = models.CharField(max_length = 50, blank = False)
+
+	def get_sessions(self):
+		return DojoSession.objects.filter(term = self).count()
+
+	def get_ninjas(self):
+		return Ninja.objects.filter(availabilities__term = self).count()
 
 	def __unicode__(self):
 		return self.name
