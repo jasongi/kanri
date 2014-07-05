@@ -173,6 +173,15 @@ class Ninja(models.Model):
         return self.objects.exclude(photo_release = True)
 
     @classmethod
+    def get_male(cls):
+        print cls.objects.filter(gender = cls.MALE)
+        return cls.objects.filter(gender = cls.MALE).count()
+
+    @classmethod
+    def get_female(cls):
+        return cls.objects.filter(gender = cls.FEMALE).count()
+
+    @classmethod
     def get_stats(cls):
         stats = {
             'all': cls.objects.count(),
@@ -180,6 +189,10 @@ class Ninja(models.Model):
             'new': cls.get_new(),
             'allergies': cls.get_allergies(),
             'photos': cls.get_photos(),
+            'gender': {
+                'male': cls.get_male(),
+                'female': cls.get_female(),
+            },
             'knowledge': {
                 'general': {},
                 'scratch': {},
