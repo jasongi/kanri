@@ -25,6 +25,7 @@
 	<thead>
 		<th>Name</th>
 		<th>Year</th>
+		<th>Gender</th>
 		<th>General Knowledge</th>
 		<th>Scratch Knowledge</th>
 		<th>Codecademy Knowledge</th>
@@ -36,6 +37,7 @@
 			<tr>
 				<td>{{ ninja.name }}</td>
 				<td>{{ ninja.school_year }}</td>
+				<td>{{ ninja.get_gender_display }}</td>
 				<td>{{ ninja.get_general_knowledge_display }}</td>
 				<td>{{ ninja.get_scratch_knowledge_display }}</td>
 				<td>{{ ninja.get_codecademy_knowledge_display }}</td>
