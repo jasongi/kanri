@@ -2,10 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from ninjas.models import Ninja, Parent
 from planner.models import DojoSession
 from django.http import HttpResponse
-from kanri.views import KanriCreateView, KanriUpdateView, KanriListView
 from ninjas.forms import CSVImportForm
 from django.core.urlresolvers import reverse_lazy
 from kanri import csv_tools, knowledge
+from kanri.views import *
 import datetime
 import csv
 
@@ -105,8 +105,6 @@ def upload(request):
 	else:		
 		return render(request, 'ninjas/upload/failure.html')
 
-def detail(request, ninja_id):
-	ninja = get_object_or_404(Ninja, pk = ninja_id)
-	return render(request, 'ninjas/detail.html', {
-			'ninja': ninja
-		})
+class NinjaDetail(KanriDetailView):
+	model = Ninja
+	template_name = 'ninjas/detail.html'

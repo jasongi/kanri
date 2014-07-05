@@ -1,0 +1,53 @@
+{% extends "generic_detail.html" %}
+{% load display_pair %}
+{% load nicebool %}
+{% load bootstrap3 %}
+
+{% block custom_buttons_before %}
+	<a href="{{ object.get_call_url }}" class="btn btn-default">
+		{% bootstrap_icon 'earphone' %} Call {{ object }}'s Parent/Guardian
+	</a>
+
+	<a href="{{ object.get_email_url }}" class="btn btn-default">
+		{% bootstrap_icon 'envelope' %} Email {{ object }}'s Parents
+	</a>
+{% endblock %}
+
+{% block list_url %}{% url 'ninjas:list' %}{% endblock %}
+{% block edit_url %}{% url 'ninjas:update' object.id %}{% endblock %}
+{% block delete_url %}{% endblock %}
+
+
+
+{% block detail %}
+	<h2>Personal Information</h2>
+	{{ object.name|display_pair:'Name' }}
+	{{ object.get_gender_display|display_pair:"Gender" }}
+	{{ object.parent.name|display_pair:"Parent's Name" }}
+	{{ object.postcode|display_pair:"Postcode" }}
+	{{ object.allergies|display_pair:"Allergies/Dietary Restrictions" }}
+
+	<h2>Contact Information</h2>
+	{{ object.parent.email|display_pair:"Parent's Email" }}
+	{{ object.email|display_pair:"Ninja's Email" }}
+	{{ object.parent.phone|display_pair:"Parent's Phone Number" }}
+
+	<h2>Knowledge</h2>
+	{{ object.attended_workshop|display_pair:'Been Before' }}
+	{{ object.get_general_knowledge_display|display_pair:'General Knowledge' }}
+	{{ object.get_scratch_knowledge_display|display_pair:'Scratch Knowledge' }}
+	{{ object.get_codecademy_knowledge_display|display_pair:'Codecademy Knowledge' }}
+	{{ object.language_experience|display_pair:'Language Experience' }}
+	{{ object.black_belt|display_pair:'Black Belt' }}
+
+	<h2>Availabilities</h2>
+	<label class='control-label col-md-2'>Availabilities</label>
+	<ul class="form-control-static col-md-10">
+		{% for session in object.availabilities.all %}
+			<li>{{ session }}</li>
+		{% endfor %}
+	</ul>
+
+	<h2>Legal</h2>
+	{{ object.photo_release|display_pair:'Photo Release' }}
+{% endblock %}
