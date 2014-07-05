@@ -33,6 +33,14 @@ class Parent(models.Model):
 
 
 class Ninja(models.Model):
+    MALE = 'M'
+    FEMALE = 'F'
+
+    GENDER_CHOICES = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+    )
+
     name = models.CharField(
         max_length = 30,
         blank = False,
@@ -42,6 +50,12 @@ class Ninja(models.Model):
     email = models.EmailField(
         max_length = 254,
         help_text = 'Ninja\'s email (if they have one)'
+    )
+
+    gender = models.CharField(
+        max_length = 1,
+        choices = GENDER_CHOICES,
+        blank = False
     )
 
     postcode = models.PositiveIntegerField(
