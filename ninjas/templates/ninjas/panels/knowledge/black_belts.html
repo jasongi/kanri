@@ -3,14 +3,14 @@
 {% block panel_title %}Black Belt Ninjas{% endblock %}
 
 {% block panel_content %}
-	{% if ninja_stats.knowledge.black_belts %}
+	{% if ninja_stats.black_belts %}
 		<div class="col-md-3 text-center">
-			<h2 class="notop">{{ ninja_stats.knowledge.black_belts.count }}</h2>
-			black belt ninjas
+			<h2 class="notop">{{ ninja_stats.black_belts.count }}</h2>
+			black belt ninja{{ ninja_stats.black_belts.count|pluralize }}
 		</div>
 		<div class="col-md-9">
 			<ul>
-				{% for ninja in ninja_stats.knowledge.black_belts %}
+				{% for ninja in ninja_stats.black_belts %}
 					<li>{{ ninja.name }}</li>
 				{% endfor %}
 			</ul>

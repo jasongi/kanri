@@ -3,24 +3,34 @@
 {% block panel_title %}General Information{% endblock %}
 
 {% block panel_content %}
-	<div class="col-md-3 text-center">
+	<div class="col-md-2 text-center">
 		<h2 class="notop">{{ ninja_stats.all }}</h2>
-		Ninjas
+		ninja{{ninja_stats.all|pluralize}} in total
 	</div>
 
-	<div class="col-md-3 text-center">
+	<div class="col-md-2 text-center">
 		<h2 class="notop">{{ ninja_stats.new }}</h2>
-		New
+		ninja{{ninja_stats.new|pluralize}} haven't been before
 	</div>
 
-	<div class="col-md-3 text-center">
+	<div class="col-md-2 text-center">
 		<h2 class="notop">{{ ninja_stats.returning }}</h2>
-		Returning
+		ninja{{ninja_stats.returning|pluralize}} have been before
 	</div>
 
-	<div class="col-md-3 text-center">
+	<div class="col-md-2 text-center">
 		<h2 class="notop">{{ parent_stats.all }}</h2>
-		Parents
+		parent{{parent_stats.all|pluralize}} must attend for the duration
+	</div>
+
+	<div class="col-md-2 text-center">
+		<h2 class="notop">{{ ninja_stats.gender.male }}</h2>
+		male ninja{{ ninja_stats.gender.male|pluralize }}
+	</div>
+
+	<div class="col-md-2 text-center">
+		<h2 class="notop">{{ ninja_stats.gender.female }}</h2>
+		female ninja{{ ninja_stats.gender.female|pluralize }}
 	</div>
 
 {% endblock %}

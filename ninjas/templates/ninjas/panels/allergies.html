@@ -6,7 +6,7 @@
 	{% if ninja_stats.allergies %}
 		<div class="col-md-3 text-center">
 			<h2 class="notop">{{ ninja_stats.allergies.count }}</h2>
-			ninjas with allergies
+			ninja{{ ninja_stats.allergies.count|pluralize }} with allergies
 		</div>
 		<div class="col-md-9">
 			<ul>

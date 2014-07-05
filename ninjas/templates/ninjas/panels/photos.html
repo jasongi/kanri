@@ -6,7 +6,7 @@
 	{% if ninja_stats.photos %}
 		<div class="col-md-3 text-center">
 			<h2 class="notop">{{ ninja_stats.photos.count }}</h2>
-			ninjas without photo releases
+			ninja{{ ninja_stats.photos.count|pluralize }} did not agree to a photo release
 		</div>
 		<div class="col-md-9">
 			<ul>
