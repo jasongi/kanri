@@ -19,7 +19,7 @@ class CSVImportForm(forms.Form):
 			"School",
 			"School Year",
 			"Email Address",
-			"Gender ",
+			"Gender",
 			"Been Before?",
 			"Black Belt",
 			"Referral",
