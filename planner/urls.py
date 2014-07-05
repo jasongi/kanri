@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^terms/(?P<pk>\d+)$',
         permission_required('planner.view_dojoterm')
         (views.DojoTermDetail.as_view()),
-        name = 'term-detail'
+        name = 'terms-detail'
     ),
 
     url(r'^terms/add$',
@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     url(r'^sessions/(?P<pk>\d+)$',
         permission_required('planner.view_dojosession')
         (views.DojoSessionDetail.as_view()),
-        name = 'session-detail'
+        name = 'sessions-detail'
     ),
 
     url(r'^sessions/add$',
