@@ -5,8 +5,21 @@ from ninjas.models import Ninja
 class DojoTerm(models.Model):
 	name = models.CharField(max_length = 50, blank = False)
 
-	def get_sessions(self):
+	def get_session_count(self):
 		return DojoSession.objects.filter(term = self).count()
+
+	def get_sessions(self):
+		return DojoSession.objects.filter(term = self)
+
+	def get_first_session(self):
+		sessions = DojoSession.objects.filter(term = self).order_by('date')
+		if sessions:
+			return sessions[0]
+
+	def get_last_session(self):
+		sessions = DojoSession.objects.filter(term = self).order_by('-date')
+		if sessions:
+			return sessions[0]
 
 	def get_ninjas(self):
 		return Ninja.objects.filter(availabilities__term = self).count()
