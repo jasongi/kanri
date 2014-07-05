@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from ninjas.models import Ninja, Parent
+from planner.models import DojoSession
 from django.http import HttpResponse
 from kanri.views import KanriCreateView, KanriUpdateView, KanriListView
 from ninjas.forms import CSVImportForm
 from django.core.urlresolvers import reverse_lazy
 from kanri import csv_tools, knowledge
+import datetime
 import csv
 
 def index(request):
@@ -30,6 +32,21 @@ def upload(request):
 			return render(request, 'ninjas/upload/failure.html')
 		else:
 			# form is valid, start parsing CSV.
+
+			# Load the sessions that we need.
+			sessions = {
+				'2 August': DojoSession.objects.get(date = datetime.date(2014, 8, 2)),
+				'9 August': DojoSession.objects.get(date = datetime.date(2014, 8, 9)),
+				'16 August': DojoSession.objects.get(date = datetime.date(2014, 8, 16)),
+				'23 August': DojoSession.objects.get(date = datetime.date(2014, 8, 23)),
+				'30 August': DojoSession.objects.get(date = datetime.date(2014, 8, 30)),
+				'6 September': DojoSession.objects.get(date = datetime.date(2014, 9, 6)),
+				'13 September': DojoSession.objects.get(date = datetime.date(2014, 9, 13)),
+				'20 September': DojoSession.objects.get(date = datetime.date(2014, 9, 20)),
+			}
+
+			print sessions
+
 			# First detect dialect
 			csvfile = request.FILES['csv']
 			dialect = csv.Sniffer().sniff(csvfile.read(2048))
@@ -66,6 +83,11 @@ def upload(request):
 				ninja.black_belt = csv_tools.yes_no(row['Black Belt'], fuzzy = True)
 				ninja.photo_release = csv_tools.yes_no(row['Photo Permission'], fuzzy = True)
 
+				# Availabilities
+				for session in sessions:
+					if row['Availability [Saturday %s]' % session] == 'Available':
+						ninja.availabilities.add(sessions[session])
+				
 				# Now for the parent/guardian
 				same = Parent.objects.filter(email = row['Parent/Guardian Email'])
 				if same:
