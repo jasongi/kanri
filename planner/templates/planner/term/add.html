@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block site_title %}
+	Add Dojo Term
+{% endblock %}
+
+{% block body_title %}
+	Add <b>Dojo Term</b>
+{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<form action="" method="post" class="form form-horizontal">
+		{% csrf_token %}
+
+		{% if form.errors %}
+			<div class="alert alert-danger">
+				{{ form.errors }}
+			</div>
+		{% endif %}
+
+		{% for field in form %}
+			{% bootstrap_field field layout="horizontal" %}
+		{% endfor %}
+
+		{% buttons %}
+			<div class="col-md-offset-2">
+				{% bootstrap_button "Add Dojo Term" button_type="submit" %}
+				{% bootstrap_button "Clear" button_type="reset" %}
+			</div>
+		{% endbuttons %}
+	</form>
+</div>
+{% endblock %}
+
+{% block custom_js %}
+
+		<script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#id_first_session_date').datetimepicker({
+                	pickTime: false
+                });
+
+                $('#id_first_session_start').datetimepicker({
+                	pickDate: false
+                });
+
+                $('#id_first_session_end').datetimepicker({
+                	pickDate: false
+                });
+            });
+
+        </script>
+{% endblock %}

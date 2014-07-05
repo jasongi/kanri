@@ -1,0 +1,24 @@
+{% extends 'generic_list.html' %}
+
+{% block list %}
+<thead>
+	<th>Name</th>
+	<th>Dates</th>
+	<th>Sessions</th>
+	<th>Ninjas</th>
+</thead>
+<tbody>
+{% for term in object_list %}
+	<tr>
+		<td>{{ term.name }}</td>
+		{% if term.get_session_count == 0 %}
+			<td>-</td>
+		{% else %}
+			<td>{{ term.get_first_session.date|date }} to {{ term.get_last_session.date|date }}</td>
+		{% endif %}
+		<td>{{ term.get_session_count }}</td>
+		<td>{{ term.get_ninjas }}</td>
+	</tr>
+{% endfor %}
+</tbody>
+{% endblock %}
