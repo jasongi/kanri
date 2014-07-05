@@ -64,8 +64,6 @@ def upload(request):
 				ninja.postcode = row['Postcode']
 				ninja.allergies = csv_tools.none_catch(row['Allergies/Dietary Restrictions'])
 				ninja.attended_workshop = csv_tools.yes_no(row['Been Before?'])
-				print "\tBeen before is: %s" % row['Been Before?']
-				print "\tWe ended up with %s" % ninja.attended_workshop
 				ninja.referral = row['Referral']
 				ninja.laptop = csv_tools.yes_no(row['Laptop'])
 				ninja.aim = row['aim'] = row['Aim']
@@ -74,18 +72,14 @@ def upload(request):
 				ninja.codecademy_knowledge = csv_tools.knowledge_parse(row['Codecademy Knowledge'])
 				ninja.language_experience = row['Programming Languages']
 				ninja.black_belt = csv_tools.yes_no(row['Black Belt'], fuzzy = True)
-				print "\tBlack Belt is: %s" % row['Black Belt']
-				print "\tWe ended up with %s" % ninja.black_belt
 				ninja.photo_release = csv_tools.yes_no(row['Photo Permission'], fuzzy = True)
 
 				# Now for the parent/guardian
 				same = Parent.objects.filter(email = row['Parent/Guardian Email'])
 				if same:
 					pa = same[0]
-					print "\tExisting parent: %s" % pa.name
 				else:
 					pa = Parent(email = row['Parent/Guardian Email'])
-					print "\tNew parent: %s" % pa.email
 
 				pa.name = row['Parent/Guardian Name']
 				pa.phone = row['Phone Number']
