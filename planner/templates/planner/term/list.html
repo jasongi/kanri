@@ -10,7 +10,7 @@
 <tbody>
 {% for term in object_list %}
 	<tr>
-		<td>{{ term.name }}</td>
+		<td><a href="{{ term.get_absolute_url }}">{{ term.name }}</a></td>
 		{% if term.get_session_count == 0 %}
 			<td>-</td>
 		{% else %}

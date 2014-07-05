@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 from ninjas.models import Ninja
 
 class DojoTerm(models.Model):
@@ -22,7 +23,10 @@ class DojoTerm(models.Model):
 			return sessions[0]
 
 	def get_ninjas(self):
-		return Ninja.objects.filter(availabilities__term = self).count()
+		return Ninja.objects.filter(availabilities__term = self).distinct().count()
+	
+	def get_absolute_url(self):
+		return reverse('planner:terms-detail', current_app = 'planner', args = [self.id])
 
 	def __unicode__(self):
 		return self.name
