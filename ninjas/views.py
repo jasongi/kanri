@@ -78,10 +78,10 @@ def upload(request):
 				same = Parent.objects.filter(email = row['Parent/Guardian Email'])
 				if same:
 					pa = same[0]
-					print "Existing parent: %s" % pa.name
+					print "\tExisting parent: %s" % pa.name
 				else:
 					pa = Parent(email = row['Parent/Guardian Email'])
-					print "New parent: %s" % pa.email
+					print "\tNew parent: %s" % pa.email
 
 				pa.name = row['Parent/Guardian Name']
 				pa.phone = row['Phone Number']
