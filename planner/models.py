@@ -11,7 +11,6 @@ class DojoSession(models.Model):
 	term = models.ForeignKey(DojoTerm, help_text = "Dojo Term")
 	date_time_start = models.DateTimeField(unique = True, help_text = "Start Time")
 	date_time_end = models.DateTimeField(unique = True, help_text = "End Time")
-	current = models.BooleanField(default = False, blank = False, null = False, help_text = "Currently Active")
 
 	def coming_up(self):
 		return abs((self.date_time_start - timezone.now).total_seconds()) < (2 * 60 * 60) # 2 hours
