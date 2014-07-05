@@ -52,6 +52,10 @@ def upload(request):
 					gender = ninja.MALE
 				elif gender == 'Female':
 					gender = ninja.FEMALE
+
+				print "\tGender was: %s" % row['Gender']
+				print "\tWe ended up with: %s" % gender
+
 				ninja.gender = gender
 
 				ninja.email = row['Email Address']
