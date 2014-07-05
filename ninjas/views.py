@@ -45,13 +45,10 @@ def upload(request):
 				else:
 					ninja = Ninja(name = row['Full Name'])
 
-				gender = row['Gender']
-				if gender == 'Male':
-					gender = ninja.MALE
-				elif gender == 'Female':
-					gender = ninja.FEMALE
-
-				ninja.gender = gender
+				if row['Gender'] == 'Male':
+					ninja.gender = ninja.MALE
+				elif row['Gender'] == 'Female':
+					ninja.gender = ninja.FEMALE
 
 				ninja.email = row['Email Address']
 				ninja.school = row['School']
