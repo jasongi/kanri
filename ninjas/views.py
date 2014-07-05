@@ -47,6 +47,13 @@ def upload(request):
 					ninja = Ninja(name = row['Full Name'])
 					print "New ninja: %s" % ninja.name
 
+				gender = row['Gender']
+				if gender == 'Male':
+					gender = ninja.MALE
+				elif gender == 'Female':
+					gender = ninja.FEMALE
+				ninja.gender = gender
+
 				ninja.email = row['Email Address']
 				ninja.school = row['School']
 				ninja.school_year = row['School Year']
