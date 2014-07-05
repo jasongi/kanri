@@ -42,19 +42,14 @@ def upload(request):
 
 				if same:
 					ninja = same[0]
-					print "Existing ninja: %s" % ninja.name
 				else:
 					ninja = Ninja(name = row['Full Name'])
-					print "New ninja: %s" % ninja.name
 
 				gender = row['Gender']
 				if gender == 'Male':
 					gender = ninja.MALE
 				elif gender == 'Female':
 					gender = ninja.FEMALE
-
-				print "\tGender was: %s" % row['Gender']
-				print "\tWe ended up with: %s" % gender
 
 				ninja.gender = gender
 
