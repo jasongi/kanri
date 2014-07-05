@@ -152,6 +152,15 @@ class Ninja(models.Model):
 
     availabilities = models.ManyToManyField('planner.DojoSession')
 
+    def get_short_name(self):
+        return self.name.split()[0]
+
+    def get_call_url(self):
+        return "tel:%s" % self.parent.phone
+
+    def get_email_url(self):
+        return "mailto:%s" % self.parent.email
+    
     def parent_required(self):
         return self.school_year <= 6
 
@@ -213,4 +222,4 @@ class Ninja(models.Model):
         return reverse('detail', current_app = 'ninjas', args = [self.id])
 
     def __unicode__(self):
-        return self.name
+        return self.get_short_name()

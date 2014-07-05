@@ -1,5 +1,4 @@
 from django.conf.urls import patterns, url
-
 from ninjas import views
 
 urlpatterns = patterns('',
@@ -13,8 +12,8 @@ urlpatterns = patterns('',
     	name = 'list'
     ),
 
-    url(r'^(?P<ninja_id>\d+)$',
-    	views.detail,
+    url(r'^(?P<pk>\d+)$',
+    	views.NinjaDetail.as_view(),
     	name = 'detail'
     ),
 
