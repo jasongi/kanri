@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from mentors.models import Mentor, Role
+from planner.models import DojoSession
 from forms import CSVImportForm
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -8,6 +9,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
 from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView, KanriListView
 from kanri import csv_tools
+import datetime
 import csv
 
 def upload(request):
@@ -21,6 +23,17 @@ def upload(request):
 		form = CSVImportForm(request.POST, request.FILES)
 		if form.is_valid():
 			# form is valid, start parsing CSV.
+			sessions = {
+				'2 August': DojoSession.objects.get(date = datetime.date(2014, 8, 2)),
+				'9 August': DojoSession.objects.get(date = datetime.date(2014, 8, 9)),
+				'16 August': DojoSession.objects.get(date = datetime.date(2014, 8, 16)),
+				'23 August': DojoSession.objects.get(date = datetime.date(2014, 8, 23)),
+				'30 August': DojoSession.objects.get(date = datetime.date(2014, 8, 30)),
+				'6 September': DojoSession.objects.get(date = datetime.date(2014, 9, 6)),
+				'13 September': DojoSession.objects.get(date = datetime.date(2014, 9, 13)),
+				'20 September': DojoSession.objects.get(date = datetime.date(2014, 9, 20)),
+			}
+
 			# First detect dialect
 			csvfile = request.FILES['csv']
 			dialect = csv.Sniffer().sniff(csvfile.read(2048))
@@ -120,9 +133,17 @@ def upload(request):
 
 				# Gotta save before you can do M2M relations.
 				m.save()
+
+				# Roles
 				for role in Role.objects.all():
 					if role.name in row['Roles'].decode('utf-8') and role not in m.roles_desired.all():
 						m.roles_desired.add(role)
+
+				# Shift Availabilities
+				for session in sessions:
+					if row['Availability [Saturday %s]' % session] == 'Available':
+						m.shift_availabilities.add(sessions[session])
+
 				m.save()
 
 				stats['total'] += 1
