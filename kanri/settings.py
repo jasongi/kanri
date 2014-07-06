@@ -17,18 +17,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6sw_7&@%z*z80)vq5@0*%a*uie&7x3(sh18ghc=v=k@o!wa$1s'
+SECRET_KEY = os.environ.get('KANRI_SECRET_KEY')
+AUSPOST_KEY = os.environ.get('KANRI_AUSPOST_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,12 +53,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'kanri.urls'
-
 WSGI_APPLICATION = 'kanri.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 # Try to config Heroku database (if we're on Heroku)
 import dj_database_url
