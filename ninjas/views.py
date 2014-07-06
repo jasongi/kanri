@@ -83,13 +83,6 @@ def upload(request):
 				ninja.black_belt = csv_tools.yes_no(row['Black Belt'], fuzzy = True)
 				ninja.photo_release = csv_tools.yes_no(row['Photo Permission'], fuzzy = True)
 
-				# Save before M2M
-				ninja.save()
-				# Availabilities
-				for session in sessions:
-					if row['Availability [Saturday %s]' % session] == 'Available':
-						ninja.availabilities.add(sessions[session])
-				
 				# Now for the parent/guardian
 				same = Parent.objects.filter(email = row['Parent/Guardian Email'])
 				if same:
@@ -103,6 +96,11 @@ def upload(request):
 				ninja.parent = pa
 				ninja.save()
 
+				# Availabilities
+				for session in sessions:
+					if row['Availability [Saturday %s]' % session] == 'Available':
+						ninja.availabilities.add(sessions[session])
+			
 			return render(request, 'ninjas/upload/success.html')
 	else:		
 		return render(request, 'ninjas/upload/failure.html')
