@@ -50,6 +50,9 @@ class DojoSession(models.Model):
 
 	def coming_up(self):
 		return abs((self.date_time_start - timezone.now).total_seconds()) < (2 * 60 * 60) # 2 hours
+	
+	def get_absolute_url(self):
+		return reverse('planner:sessions-detail', current_app = 'planner', args = [self.id])
 
 	def __unicode__(self):
 		return "%s (%s)" % (self.date.strftime("%d/%m"), self.term)
