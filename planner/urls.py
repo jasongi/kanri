@@ -38,10 +38,4 @@ urlpatterns = patterns('',
         (views.DojoSessionDetail.as_view()),
         name = 'sessions-detail'
     ),
-
-    url(r'^sessions/add$',
-        permission_required('planner.add_dojosession')
-        (views.DojoSessionCreate.as_view()),
-        name = 'sessions'
-    ),
 )

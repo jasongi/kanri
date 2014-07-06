@@ -55,9 +55,6 @@ class DojoTermDelete(KanriDeleteView):
 	model = DojoTerm
 	success_url = reverse_lazy('planner:terms', current_app = 'planner')
 
-class DojoSessionCreate(KanriCreateView):
-	model = DojoSession
-
 class DojoSessionDetail(KanriDetailView):
 	model = DojoSession
 	template_name = 'planner/session/detail.html'
