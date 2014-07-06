@@ -16,9 +16,9 @@
 			</a>
 		{% endblock %}
 	
-		{% block noremove %}
-			<a href="{% block remove_url %}{% url 'dashboard' %}{% endblock %}" class="btn btn-default">
-				{% bootstrap_icon "remove" %} Remove {{ object }}</a>
+		{% block nodelete %}
+			<a href="{% block delete_url %}{% url 'dashboard' %}{% endblock %}" class="btn btn-default">
+				{% bootstrap_icon "remove" %} Delete {{ object }}</a>
 			</a>
 		{% endblock %}
 	
