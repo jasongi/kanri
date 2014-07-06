@@ -1,7 +1,9 @@
+from __future__ import division
 from django.db import models
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from ninjas.models import Ninja
+from attendance.models import Attendance
 
 class DojoTerm(models.Model):
 	name = models.CharField(max_length = 50, blank = False)
@@ -84,6 +86,32 @@ class DojoSession(models.Model):
 		for room in self.rooms.all():
 			capacity += room.capacity
 		return capacity
+
+	def get_expected_attendance(self):
+		return Ninja.objects.filter(availabilities = self).count()
+
+	def get_expected_attendance_percentage(self):
+		ninja_count = Ninja.objects.count()
+		if ninja_count != 0:
+			return (int)((self.get_expected_attendance() / ninja_count) * 100)
+		else:
+			return 0
+
+	def get_attendance(self):
+		return Attendance.objects.filter(session = self).count()
+
+	def get_attendance_percentage(self):
+		ninja_count = Ninja.objects.count()
+		if ninja_count != 0:
+			return (int)((self.get_attendance() / ninja_count) * 100)
+		else:
+			return 0
+
+	def get_shifts(self):
+		return Shift.objects.filter(session = self)
+
+	def get_shifts_for_room(self, room):
+		return self.get_shifts().filter(room)
 
 	def get_absolute_url(self):
 		return reverse('planner:sessions-detail', current_app = 'planner', args = [self.id])
