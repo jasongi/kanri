@@ -1,12 +1,84 @@
-{% extends "base.html" %}
+{% extends "generic_list.html" %}
 
 {% load bootstrap3 %}
+{% load nicebool %}
 
-{% block site_title %} {{ dojo }} {% endblock %}
-{% block body_title %} {{ dojo }} {% endblock %}
+{% block nocontrols %}{% endblock %}
 
-{% block content %}
-	<div class="row jumbotron">
-	{% bootstrap_form %}
+{% block site_title %} {{ session }} {% endblock %}
+{% block body_title %} {{ session }} {% endblock %}
+
+{% block custom_css %}
+	<style>
+		.stats-percentage
+		{
+			padding-top: 10px;
+		}
+	</style>
+{% endblock %}
+{% block list %}
+	<h4>
+		<div class="col-md-6">
+			Expected attendance: {{ expected_attendance }}/{{ ninja_count }} ({{ expected_attendance_percentage }}%)
+		</div>
+		<div class="col-md-6 text-right">
+			Attendance: {{ attendance }}/{{ ninja_count }} ({{ attendance_percentage }}%)
+		</div>
+	</h4>
+
+	<div class="col-md-12 stats-percentage">
+		<div class="progress">
+			<div class="progress-bar progress-bar-success" style="width: {{ attendance_percentage }}%">
+			 	<span class="sr-only"></span>
+			</div>
+			<div class="progress-bar progress-bar-info" style="width: {{ attendance_gap }}%">
+			 	<span class="sr-only"></span>
+			</div>
+		</div>
 	</div>
+
+	<table class="table table-hover">
+		<thead>
+			<th>Name</th>
+			<th>Year</th>
+			<th>Gender</th>
+			<th>Laptop</th>
+			<th>Parent/Guardian Name</th>
+			<th>Parent Req.</th>
+			<th>Attending</th>
+			<th>Here</th>
+		</thead>
+		<tbody>
+			{% for row in object_list %}
+				<tr>
+					<td>{{ row.ninja.name }}</td>
+					<td>{{ row.ninja.school_year }}</td>
+					<td>{{ row.ninja.get_gender_display }}</td>
+					<td>{{ row.ninja.laptop|nicebool }}</td>
+					<td>{{ row.ninja.parent.name }}</td>
+					<td>{{ row.ninja.parent_required|nicebool }}</td>
+					<td>{{ row.attending|nicebool }}</td>
+					{% if row.here %}
+					 	<form method="post" action="{% url 'attendance:nothere' row.here.id %}">
+					 		{% csrf_token %}
+					 		<td>
+								<button class="btn btn-link"type="submit">
+									<span class="glyphicon glyphicon-check"></span>
+								</button>
+							</td>
+						</form>
+					{% else %}
+					 	<form method="post" action="{% url 'attendance:here' session.id row.ninja.id %}">
+					 		{% csrf_token %}
+					 		<td>
+								<button class="btn btn-link"type="submit">
+									<span class="glyphicon glyphicon-unchecked"></span>
+								</button>
+							</td>
+						</form>
+					{% endif %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
