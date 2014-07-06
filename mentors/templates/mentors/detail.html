@@ -32,7 +32,17 @@
 
 	<h2>Roles and Availability</h2>
 	{{ object.get_roles_desired|display_pair:"Desired Roles" }}
-	{{ object.get_future_availabilities|display_pair:"Future Availabilities"}}
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Future Availabilities</label>
+		<div class="col-sm-10">
+			<p class="form-control-static">
+				{% for session in object.get_future_availabilities %}
+					<a href="{{ session.get_absolute_url }}">{{ session }}</a><br />
+				{% endfor %}
+			</p>
+		</div>
+	</div>
+
 	<h2>Background</h2>
 	{{ object.uni|display_pair:'University' }}
 	{{ object.uni_study|display_pair:'Field of Study' }}
