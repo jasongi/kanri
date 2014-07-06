@@ -31,6 +31,19 @@ class DojoTerm(models.Model):
 	def __unicode__(self):
 		return self.name
 
+class Room(models.Model):
+	name = models.CharField(
+		blank = False,
+		unique = True,
+		max_length = 50,
+		help_text = 'The name of the room.'
+	)
+
+	capacity = models.PositiveIntegerField(
+		blank = False,
+		help_text = 'The number of ninjas that can fit into the room.'
+	)
+
 class DojoSession(models.Model):
 	term = models.ForeignKey(DojoTerm, help_text = "Dojo Term")
 	date = models.DateField(
@@ -46,6 +59,12 @@ class DojoSession(models.Model):
 	end = models.TimeField(
 		blank = False,
 		help_text = "End Time"
+	)
+
+	rooms = models.ManyToManyField(
+		Room,
+		blank = True,
+		help_text = "The rooms in which this session will be running."
 	)
 
 	def coming_up(self):
