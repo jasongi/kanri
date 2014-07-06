@@ -4,7 +4,11 @@ from django.contrib.auth.decorators import login_required, permission_required
 from planner import views
 
 urlpatterns = patterns('',
-    #url(r'^$', views.index, name = 'index'),
+    url(r'^$',
+        views.index,
+        name = 'index'
+    ),
+
     url(r'^terms$',
     	permission_required('planner.view_dojoterm')
     	(views.DojoTermList.as_view()),

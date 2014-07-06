@@ -7,6 +7,8 @@ from django.shortcuts import redirect
 import datetime
 import time
 
+def index(request):
+	return render(request, 'planner/index.html')
 def add_term(request):
 	if request.method == "POST":
 		form = DojoTermForm(request.POST)
