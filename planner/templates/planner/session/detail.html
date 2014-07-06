@@ -8,11 +8,26 @@
 {% block nodelete %}{% endblock %}
 
 {% block detail %}
+	<h2>General Information</h2>
 	{{ object.date|date|display_pair:'Date' }}
 	{{ object.start|display_pair:'Starts at' }}
 	{{ object.end|display_pair:'Ends at' }}
-	{{ object.ninja_set.count|display_pair:'Ninjas Attending' }}
 
+	<h2>Menors</h2>
+	{{ object.mentor_set.count|display_pair:'Mentors Available' }}
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Availability List</label>
+		<div class="col-sm-10">
+			<p class="form-control-static">
+				{% for mentor in object.mentor_set.all %}
+					<a href="{{ mentor.get_absolute_url }}">{{ mentor }}</a><br />
+				{% endfor %}
+			</p>
+		</div>
+	</div> 
+
+	<h2>Ninjas</h2>
+	{{ object.ninja_set.count|display_pair:'Ninjas Attending' }}
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Ninja List</label>
 		<div class="col-sm-10">
@@ -23,4 +38,5 @@
 			</p>
 		</div>
 	</div> 
+
 {% endblock %}
