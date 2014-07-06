@@ -219,7 +219,7 @@ class Ninja(models.Model):
         return stats
 
     def get_absolute_url(self):
-        return reverse('detail', current_app = 'ninjas', args = [self.id])
+        return reverse('ninjas:detail', current_app = 'ninjas', args = [self.id])
 
     def __unicode__(self):
         return self.get_short_name()
