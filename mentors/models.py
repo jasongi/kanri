@@ -153,7 +153,7 @@ class Mentor(models.Model):
 
     roles_desired = models.ManyToManyField(Role)
 
-    availabilities = models.ManyToManyField(
+    shift_availabilities = models.ManyToManyField(
         DojoSession,
         help_text = "When are you available?"
     )
