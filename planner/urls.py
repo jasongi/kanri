@@ -38,4 +38,11 @@ urlpatterns = patterns('',
         (views.DojoSessionDetail.as_view()),
         name = 'sessions-detail'
     ),
+
+
+    url(r'^rooms/add$',
+        permission_required('planner.add_room')
+        (views.RoomCreate.as_view()),
+        name = 'rooms-add',
+    )
 )

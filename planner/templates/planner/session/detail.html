@@ -13,6 +13,10 @@
 	{{ object.start|display_pair:'Starts at' }}
 	{{ object.end|display_pair:'Ends at' }}
 
+	<h2>Space</h2>
+	{{ object.get_capacity|display_pair:'Capacity' }}
+	{{ object.rooms.all|join:', '|display_pair:'Rooms' }}
+
 	<h2>People</h2>
 	{{ object.ninja_set.count|display_pair:'Ninjas Attending' }}
 	{{ object.mentor_set.count|display_pair:'Mentors Available' }}

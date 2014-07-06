@@ -44,6 +44,9 @@ class Room(models.Model):
 		help_text = 'The number of ninjas that can fit into the room.'
 	)
 
+	def __unicode__(self):
+		return self.name
+
 class DojoSession(models.Model):
 	term = models.ForeignKey(DojoTerm, help_text = "Dojo Term")
 	date = models.DateField(
@@ -71,10 +74,47 @@ class DojoSession(models.Model):
 		return abs((self.date_time_start - timezone.now).total_seconds()) < (2 * 60 * 60) # 2 hours
 	
 	def get_ratio(self):
-		return self.ninja_set.count() / self.mentor_set.count()
+		if self.mentor_set.count() == 0:
+			return None
+		else:
+			return self.ninja_set.count() / self.mentor_set.count()
+
+	def get_capacity(self):
+		capacity = 0
+		for room in self.rooms.all():
+			capacity += room.capacity
+		return capacity
 
 	def get_absolute_url(self):
 		return reverse('planner:sessions-detail', current_app = 'planner', args = [self.id])
 
+	def get_short_name(self):
+		return self.date.strftime("%d/%m")
+
 	def __unicode__(self):
-		return "%s (%s)" % (self.date.strftime("%d/%m"), self.term)
+		return "%s (%s)" % (self.get_short_name(), self.term)
+
+class Shift(models.Model):
+	mentor = models.ForeignKey(
+		'mentors.Mentor',
+		blank = False,
+		help_text = 'The mentor unergoing this shift.'
+	)
+
+	session = models.ForeignKey(
+		DojoSession,
+		blank = False,
+		help_text = 'The session during which this shift takes place.',
+	)
+
+	role = models.ForeignKey(
+		'mentors.Role',
+		blank = False,
+		help_text = "The role that the mentor will be undertaking during this shift.",
+	)
+
+	room = models.ForeignKey(
+		Room,
+		blank = True,
+		help_text = "The room, if any, that the mentor will be undertaking the shift in."
+	)

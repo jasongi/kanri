@@ -1,5 +1,5 @@
 from django import forms
-from planner.models import DojoTerm
+from planner.models import DojoTerm, Room
 
 class DojoTermForm(forms.Form):
 	name = forms.CharField(
@@ -19,6 +19,11 @@ class DojoTermForm(forms.Form):
 	first_session_end = forms.TimeField(
 		help_text = "The end time of the first session.",
 		input_formats = ['%I:%M %p']
+	)
+
+	rooms = forms.ModelMultipleChoiceField(
+		queryset = Room.objects.all(),
+		help_text = 'What rooms are available for use during this term?'
 	)
 
 	weeks = forms.IntegerField(
