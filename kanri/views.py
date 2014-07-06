@@ -13,3 +13,6 @@ class KanriDetailView(DetailView):
 
 class KanriListView(ListView):
 	template_name = 'generic_list.html'
+
+class KanriDeleteView(DeleteView):
+	template_name = 'generic_delete.html'
