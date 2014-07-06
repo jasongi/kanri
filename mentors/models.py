@@ -195,4 +195,4 @@ class Mentor(models.Model):
         return self.name()
 
     def get_absolute_url(self):
-        return reverse('detail', current_app = 'mentors', args = [self.id])
+        return reverse('mentors:detail', current_app = 'mentors', args = [self.id])
