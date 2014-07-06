@@ -13,10 +13,12 @@
 	{{ object.start|display_pair:'Starts at' }}
 	{{ object.end|display_pair:'Ends at' }}
 
-	<h2>Menors</h2>
+	<h2>People</h2>
+	{{ object.ninja_set.count|display_pair:'Ninjas Attending' }}
 	{{ object.mentor_set.count|display_pair:'Mentors Available' }}
+	{{ object.get_ratio|display_pair:'Ninja/Mentor Ratio' }}
 	<div class="form-group">
-		<label class="col-sm-2 control-label">Availability List</label>
+		<label class="col-sm-2 control-label">Mentors Available</label>
 		<div class="col-sm-10">
 			<p class="form-control-static">
 				{% for mentor in object.mentor_set.all %}
@@ -26,10 +28,8 @@
 		</div>
 	</div> 
 
-	<h2>Ninjas</h2>
-	{{ object.ninja_set.count|display_pair:'Ninjas Attending' }}
 	<div class="form-group">
-		<label class="col-sm-2 control-label">Ninja List</label>
+		<label class="col-sm-2 control-label">Ninjas Attending</label>
 		<div class="col-sm-10">
 			<p class="form-control-static">
 				{% for ninja in object.ninja_set.all %}
