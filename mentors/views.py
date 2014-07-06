@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
 from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView, KanriListView
+from kanri import csv_tools
 import csv
 
 def upload(request):
@@ -58,18 +59,9 @@ def upload(request):
 				m.user.groups.add(group[0])
 
 				m.user.save()
-
-				# University
-				if 'University' in row:
-					m.uni = row['University']
-
-				# Study
-				if 'Study' in row:
-					m.uni_study = row['Study']
-
-				# Work
-				if 'Work' in row:
-					m.work = row['Work']
+				m.uni = csv_tools.none_catch(row['University'])
+				m.uni_study = csv_tools.none_catch(row['Study'])
+				m.work = csv_tools.none_catch(row['Work'])
 				
 				# shirt size mapping
 				ts = row['T-shirt size']
@@ -95,8 +87,7 @@ def upload(request):
 					m.shirt_size = Mentor.FEMALE_EXTRA_LARGE
 
 				# WWCC
-				if 'WWCC Number' in row:
-					m.wwcc = row['WWCC Number']
+				m.wwcc = csv_tools.none_catch(row['WWCC Number'])
 
 				# Curtin status
 				curtin_status = row['Curtin Status']
@@ -107,9 +98,7 @@ def upload(request):
 				elif curtin_status == 'Neither/Not Sure':
 					m.curtin_status = Mentor.NEITHER
 
-				# Associate/Staff ID
-				if 'Curtin Associate/Staff ID' in row:
-					m.curtin_id = row['Curtin Associate/Staff ID']
+				m.curtin_id = csv_tools.none_catch(row['Curtin Associate/Staff ID'])
 
 				# Coding experience
 				coding_xp = row['Coding Experience']
