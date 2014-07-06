@@ -5,7 +5,7 @@
 
 {% block list_url %}{% url 'planner:terms' %}{% endblock %}
 {% block noedit %}{% endblock %}
-{% block nodelete %}{% endblock %}
+{% block delete_url %}{% url 'planner:terms-delete' object.id %}{% endblock %}
 
 {% block detail %}
 	<h2>General Information</h2>
@@ -13,7 +13,6 @@
 
 	<h2>Sessions</h2>
 	{{ object.get_session_count|display_pair:'Number of Sessions' }}
-
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Sessions</label>

@@ -27,6 +27,12 @@ urlpatterns = patterns('',
     	name = 'terms-add'
     ),
 
+    url(r'^terms/delete/(?P<pk>\d+)$',
+        permission_required('planner.delete_dojoterm')
+        (views.DojoTermDelete.as_view()),
+        name = 'terms-delete'
+    ),
+
     url(r'^sessions/(?P<pk>\d+)$',
         permission_required('planner.view_dojosession')
         (views.DojoSessionDetail.as_view()),

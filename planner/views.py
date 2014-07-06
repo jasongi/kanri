@@ -4,11 +4,13 @@ from planner.forms import DojoTermForm
 from kanri.views import *
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.core.urlresolvers import reverse_lazy
 import datetime
 import time
 
 def index(request):
 	return render(request, 'planner/index.html')
+
 def add_term(request):
 	if request.method == "POST":
 		form = DojoTermForm(request.POST)
@@ -48,6 +50,10 @@ class DojoTermList(KanriListView):
 class DojoTermDetail(KanriDetailView):
 	model = DojoTerm
 	template_name = 'planner/term/detail.html'
+
+class DojoTermDelete(KanriDeleteView):
+	model = DojoTerm
+	success_url = reverse_lazy('planner:terms', current_app = 'planner')
 
 class DojoSessionCreate(KanriCreateView):
 	model = DojoSession
