@@ -189,7 +189,7 @@ class Mentor(models.Model):
         return ', '.join(self.roles_desired.values_list('name', flat = True))
 
     def get_future_availabilities(self):
-        return self.availabilities.filter(date_time_start__gt = timezone.now())
+        return self.shift_availabilities.filter(date__gt = timezone.now())
 
     def __unicode__(self):
         return self.name()
