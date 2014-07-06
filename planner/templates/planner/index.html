@@ -2,3 +2,9 @@
 
 {% block site_title %}Planner{% endblock %}
 {% block body_title %}Planner{% endblock %}
+
+{% block content %}
+<div class="well text-center">
+	<a href="{% url 'planner:terms' %}" class="btn btn-primary btn-lg">Terms</a>
+</div>
+{% endblock %}
