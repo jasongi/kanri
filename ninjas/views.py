@@ -83,6 +83,8 @@ def upload(request):
 				ninja.black_belt = csv_tools.yes_no(row['Black Belt'], fuzzy = True)
 				ninja.photo_release = csv_tools.yes_no(row['Photo Permission'], fuzzy = True)
 
+				# Save before M2M
+				ninja.save()
 				# Availabilities
 				for session in sessions:
 					if row['Availability [Saturday %s]' % session] == 'Available':
