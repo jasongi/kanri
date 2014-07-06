@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from kanri import knowledge
+from django.conf import settings
+import auspost
 
 class Parent(models.Model):
     name = models.CharField(
@@ -151,6 +153,22 @@ class Ninja(models.Model):
     )
 
     availabilities = models.ManyToManyField('planner.DojoSession')
+
+    def get_suburb_list(self):
+        ap = auspost.API(settings.AUSPOST_KEY, debug = True)
+        locality_list = ap.postcode_search(self.postcode)['localities']['locality']
+        
+        if not isinstance(locality_list, list):
+            locality_list = [locality_list]
+        
+        locations = []
+        for locality in locality_list:
+            locations.append(locality['location'])
+
+        return locations
+
+    def get_suburb(self):
+        return self.get_suburb_list()[0]
 
     def get_short_name(self):
         return self.name.split()[0]

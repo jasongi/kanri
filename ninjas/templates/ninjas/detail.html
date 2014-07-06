@@ -24,7 +24,7 @@
 	{{ object.name|display_pair:'Name' }}
 	{{ object.get_gender_display|display_pair:"Gender" }}
 	{{ object.parent.name|display_pair:"Parent's Name" }}
-	{{ object.postcode|display_pair:"Postcode" }}
+	{{ object.get_suburb_list|join:', '|display_pair:"Suburb(s)" }}
 	{{ object.allergies|display_pair:"Allergies/Dietary Restrictions" }}
 
 	<h2>Contact Information</h2>
