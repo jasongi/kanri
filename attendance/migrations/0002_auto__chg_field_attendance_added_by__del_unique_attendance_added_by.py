@@ -8,14 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
+        # Removing unique constraint on 'Attendance', fields ['added_by']
+        db.delete_unique(u'attendance_attendance', ['added_by_id'])
+
 
         # Changing field 'Attendance.added_by'
-        db.alter_column(u'attendance_attendance', 'added_by_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['accounts.KanriUser'], unique=True))
+        db.alter_column(u'attendance_attendance', 'added_by_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['accounts.KanriUser']))
 
     def backwards(self, orm):
 
         # Changing field 'Attendance.added_by'
-        db.alter_column(u'attendance_attendance', 'added_by_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True))
+        db.alter_column(u'attendance_attendance', 'added_by_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['accounts.KanriUser'], unique=True))
+        # Adding unique constraint on 'Attendance', fields ['added_by']
+        db.create_unique(u'attendance_attendance', ['added_by_id'])
+
 
     models = {
         u'accounts.kanriuser': {
@@ -25,7 +31,7 @@ class Migration(SchemaMigration):
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'is_admin': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'last_name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
@@ -35,10 +41,10 @@ class Migration(SchemaMigration):
         },
         u'attendance.attendance': {
             'Meta': {'object_name': 'Attendance'},
-            'added_by': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['accounts.KanriUser']", 'unique': 'True'}),
-            'dojo': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['planner.DojoSession']"}),
+            'added_by': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['accounts.KanriUser']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'ninja': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['ninjas.Ninja']", 'symmetrical': 'False'}),
+            'ninja': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['ninjas.Ninja']"}),
+            'session': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['planner.DojoSession']"}),
             'time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'})
         },
         u'auth.group': {
@@ -62,34 +68,54 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         u'ninjas.ninja': {
-            'Meta': {'object_name': 'Ninja'},
+            'Meta': {'ordering': "['name']", 'object_name': 'Ninja'},
             'aim': ('django.db.models.fields.TextField', [], {'max_length': '255', 'blank': 'True'}),
+            'allergies': ('django.db.models.fields.CharField', [], {'max_length': '140', 'null': 'True', 'blank': 'True'}),
             'attended_workshop': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'availabilities': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['planner.DojoSession']", 'symmetrical': 'False'}),
             'black_belt': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'codecademy_knowledge': ('django.db.models.fields.CharField', [], {'default': "'NO'", 'max_length': '2'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '254'}),
+            'gender': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
             'general_knowledge': ('django.db.models.fields.CharField', [], {'default': "'NO'", 'max_length': '2'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'language_experience': ('django.db.models.fields.TextField', [], {'max_length': '140', 'null': 'True', 'blank': 'True'}),
             'laptop': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['ninjas.Parent']"}),
             'photo_release': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'referral': ('django.db.models.fields.CharField', [], {'default': "'OT'", 'max_length': '2'}),
+            'postcode': ('django.db.models.fields.PositiveIntegerField', [], {'max_length': '4'}),
+            'referral': ('django.db.models.fields.CharField', [], {'max_length': '140', 'blank': 'True'}),
             'school': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
-            'school_year': ('django.db.models.fields.PositiveSmallIntegerField', [], {}),
+            'school_year': ('django.db.models.fields.PositiveSmallIntegerField', [], {'default': '7'}),
             'scratch_knowledge': ('django.db.models.fields.CharField', [], {'default': "'NO'", 'max_length': '2'})
+        },
+        u'ninjas.parent': {
+            'Meta': {'object_name': 'Parent'},
+            'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '254'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'phone': ('django.db.models.fields.PositiveIntegerField', [], {'max_length': '10'})
         },
         u'planner.dojosession': {
             'Meta': {'object_name': 'DojoSession'},
-            'current': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'date_time_end': ('django.db.models.fields.DateTimeField', [], {'unique': 'True'}),
-            'date_time_start': ('django.db.models.fields.DateTimeField', [], {'unique': 'True'}),
+            'date': ('django.db.models.fields.DateField', [], {}),
+            'end': ('django.db.models.fields.TimeField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'rooms': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['planner.Room']", 'symmetrical': 'False', 'blank': 'True'}),
+            'start': ('django.db.models.fields.TimeField', [], {}),
             'term': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['planner.DojoTerm']"})
         },
         u'planner.dojoterm': {
             'Meta': {'object_name': 'DojoTerm'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        u'planner.room': {
+            'Meta': {'object_name': 'Room'},
+            'capacity': ('django.db.models.fields.PositiveIntegerField', [], {}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'})
         }
     }
 
