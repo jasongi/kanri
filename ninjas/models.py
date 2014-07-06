@@ -241,3 +241,6 @@ class Ninja(models.Model):
 
     def __unicode__(self):
         return self.get_short_name()
+
+    class Meta:
+        ordering = ['name']
