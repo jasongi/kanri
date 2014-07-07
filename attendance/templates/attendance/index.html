@@ -14,5 +14,7 @@
 				<a href="{% url 'attendance:signoff' session.id %}" class="btn btn-lg btn-primary">Start Dojo</a>
 			</div>
 		{% endfor %}
+	{% else %}
+		<h2 class="text-center">No upcomming sessions.</h2>
 	{% endif %}
 {% endblock %}
