@@ -17,8 +17,6 @@
 {% block edit_url %}{% url 'ninjas:update' object.id %}{% endblock %}
 {% block delete_url %}{% endblock %}
 
-
-
 {% block detail %}
 	<h2>Personal Information</h2>
 	{{ object.name|display_pair:'Name' }}
@@ -40,11 +38,18 @@
 	{{ object.language_experience|display_pair:'Language Experience' }}
 	{{ object.black_belt|display_pair:'Black Belt' }}
 
-	<h2>Availabilities</h2>
-	<label class='control-label col-md-2'>Availabilities</label>
+	<h2>Availability and Attendance</h2>
+	<label class='control-label col-md-2'>Availability</label>
 	<ul class="form-control-static col-md-10">
 		{% for session in object.availabilities.all %}
 			<li>{{ session }}</li>
+		{% endfor %}
+	</ul>
+
+	<label class='control-label col-md-2'>Attendance</label>
+	<ul class="form-control-static col-md-10">
+		{% for attendance in object.get_sessions_attended %}
+			<li>{{ attendance.session }}</li>
 		{% endfor %}
 	</ul>
 

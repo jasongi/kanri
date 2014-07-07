@@ -2,6 +2,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from kanri import knowledge
 from django.conf import settings
+from attendance.models import Attendance
 import auspost
 
 class Parent(models.Model):
@@ -153,6 +154,9 @@ class Ninja(models.Model):
     )
 
     availabilities = models.ManyToManyField('planner.DojoSession')
+
+    def get_sessions_attended(self):
+        return Attendance.objects.filter(ninja = self)
 
     def get_suburb_list(self):
         ap = auspost.API(settings.AUSPOST_KEY, debug = True)
