@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from planner.models import DojoTerm, DojoSession
+from planner.models import DojoTerm, DojoSession, Room
 from planner.forms import DojoTermForm
 from kanri.views import *
 from django.utils import timezone
@@ -23,14 +23,26 @@ def add_term(request):
 			first_date = form.cleaned_data['first_session_date']
 			start = form.cleaned_data['first_session_start']
 			end = form.cleaned_data['first_session_end']
+			rooms = form.cleaned_data['rooms']
 
 			curr_date = first_date
 			week_td = datetime.timedelta(days = 7)
 
 			for week in range(form.cleaned_data['weeks']):
-				print "Week %s: %s from %s to %s" % (week + 1, curr_date, start, end)
-				s = DojoSession(term = t, date = curr_date, start = start, end = end)
+				s = DojoSession(
+					term = t,
+					date = curr_date,
+					start = start,
+					end = end,
+				)
+
 				s.save()
+
+				for room in rooms:
+					s.rooms.add(room)
+
+				s.save()
+
 				curr_date += week_td
 
 			# We're done here.
@@ -55,6 +67,12 @@ class DojoTermDelete(KanriDeleteView):
 	model = DojoTerm
 	success_url = reverse_lazy('planner:terms', current_app = 'planner')
 
+
+
 class DojoSessionDetail(KanriDetailView):
 	model = DojoSession
 	template_name = 'planner/session/detail.html'
+
+
+class RoomCreate(KanriCreateView):
+	model = Room
