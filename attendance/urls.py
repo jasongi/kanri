@@ -5,25 +5,26 @@ from attendance import views
 
 urlpatterns = patterns('',
     url(r'^$',
-    	views.index,
-    	name = 'index'
+        permission_required('attendance.view_attendance')
+        (views.index),
+        name = 'index'
     ),
 
     url(r'^signoff/(?P<dojo_session_id>\d+)$',
         permission_required('attendance.view_attendance')
-    	(views.signoff),
-    	name = 'signoff'
+        (views.signoff),
+        name = 'signoff'
     ),
 
     url(r'^signoff/here/(?P<session_id>\d+)/(?P<ninja_id>\d+)',
         permission_required('attendance.add_attendance')
-    	(views.here),
-    	name = 'here'
+        (views.here),
+        name = 'here'
     ),
 
     url(r'^signoff/nothere/(?P<attendance_id>\d+)',
         permission_required('attendance.delete_attendance')
-    	(views.nothere),
-    	name = 'nothere'
+        (views.nothere),
+        name = 'nothere'
     )
 )
