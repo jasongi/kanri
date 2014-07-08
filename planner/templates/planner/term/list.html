@@ -1,5 +1,7 @@
 {% extends 'generic_list.html' %}
 
+{% block add_url %}{% url 'planner:terms-add' %}{% endblock %}
+
 {% block list %}
 <thead>
 	<th>Name</th>
