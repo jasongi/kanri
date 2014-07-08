@@ -160,3 +160,6 @@ class Shift(models.Model):
 		blank = True,
 		help_text = "The room, if any, that the mentor will be undertaking the shift in."
 	)
+
+	def __unicode__(self):
+		return "%s (%s)" % (self.mentor, self.role)
