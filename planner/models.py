@@ -27,6 +27,14 @@ class DojoTerm(models.Model):
 	def get_ninjas(self):
 		return Ninja.objects.filter(availabilities__term = self).distinct().count()
 	
+	def get_ratio(self):
+		sessions = self.get_sessions()
+		total = 0
+		for session in sessions:
+			total = total + session.get_ratio()
+		total /= len(sessions)
+		return round(total, 2)
+
 	def get_absolute_url(self):
 		return reverse('planner:terms-detail', current_app = 'planner', args = [self.id])
 
@@ -46,6 +54,8 @@ class Room(models.Model):
 		help_text = 'The number of ninjas that can fit into the room.'
 	)
 
+	def get_sessions(self):
+		return DojoSession.objects.filter(room = self)
 	def __unicode__(self):
 		return self.name
 

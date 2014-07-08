@@ -12,6 +12,7 @@
 	{{ object.name|display_pair:'Name' }}
 
 	<h2>Sessions</h2>
+	{{ object.get_ratio|display_pair:'Ninjas Per Mentor' }}
 	{{ object.get_session_count|display_pair:'Number of Sessions' }}
 
 	<div class="form-group">
