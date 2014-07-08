@@ -1,0 +1,26 @@
+{% extends "generic_detail.html" %}
+{% load display_pair %}
+{% load nicebool %}
+{% load bootstrap3 %}
+
+{% block list_url %}{% url 'planner:terms' %}{% endblock %}
+{% block noedit %}{% endblock %}
+{% block delete_url %}{% url 'planner:terms-delete' object.id %}{% endblock %}
+
+{% block detail %}
+	<h2>General Information</h2>
+	{{ object.name|display_pair:'Name' }}
+	{{ objet.capacity|display_pair:'Capacity' }}
+
+	<h2>Sessions</h2>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Sessions</label>
+		<div class="col-sm-10">
+			<p class="form-control-static">
+				{% for session in object.get_sessions %}
+					<a href="{{ session.get_absolute_url }}">{{ session }}</a><br />
+				{% endfor %}
+			</p>
+		</div>
+	</div> 
+{% endblock %}

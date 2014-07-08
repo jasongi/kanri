@@ -1,0 +1,18 @@
+{% extends 'generic_list.html' %}
+
+{% block add_url %}{% url 'planner:rooms-add' %}{% endblock %}
+
+{% block list %}
+<thead>
+	<th>Name</th>
+	<th>Capacity</th>
+</thead>
+<tbody>
+{% for room in object_list %}
+	<tr>
+		<td><a href="{{ room.get_absolute_url }}">{{ room.name }}</a></td>
+		<td>{{ room.capacity }}</td>
+	</tr>
+{% endfor %}
+</tbody>
+{% endblock %}

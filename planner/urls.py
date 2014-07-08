@@ -39,10 +39,21 @@ urlpatterns = patterns('',
         name = 'sessions-detail'
     ),
 
+    url(r'^rooms$',
+        permission_required('planner.view_room')
+        (views.RoomList.as_view()),
+        name = 'rooms-list',
+    ),
 
     url(r'^rooms/add$',
         permission_required('planner.add_room')
         (views.RoomCreate.as_view()),
         name = 'rooms-add',
-    )
+    ),
+
+    url(r'^rooms/(?P<pk>\d+)$',
+        permission_required('planner.view_room')
+        (views.RoomDetail.as_view()),
+        name = 'rooms-detail'
+    ),
 )

@@ -74,5 +74,14 @@ class DojoSessionDetail(KanriDetailView):
 	template_name = 'planner/session/detail.html'
 
 
+
 class RoomCreate(KanriCreateView):
 	model = Room
+
+class RoomDetail(KanriDetailView):
+	model = Room
+	template_name = 'planner/room/detail.html'
+
+class RoomList(KanriListView):
+	model = Room
+	template_name = 'planner/room/list.html'
