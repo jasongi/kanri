@@ -51,7 +51,7 @@
 		<tbody>
 			{% for row in object_list %}
 				<tr>
-					<td>{{ row.ninja.name }}</td>
+					<td><a href="{{ row.ninja.get_absolute_url }}">{{ row.ninja.name }}</a></td>
 					<td>{{ row.ninja.school_year }}</td>
 					<td>{{ row.ninja.get_gender_display }}</td>
 					<td>{{ row.ninja.laptop|nicebool }}</td>
