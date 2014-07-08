@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block site_title %}Roster{% endblock %}
+{% block body_title %}Roster{% endblock %}
+
+{% block content %}
+	<table class="table">
+		<thead>
+			<th>Rooms</th>
+		{% for session in sessions %}
+			<th class="text-center">{{ session.get_short_name }}</th>
+		{% endfor %}
+		</thead>
+		<tbody>
+			{% for room in roster %}
+				<tr>
+					<td>{{ room.room }}</td>
+					{% for session in room.usage %}
+						<td class="text-center">
+							{% for shift in session %}
+								{{ shift }}
+							{% endfor %}
+						</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

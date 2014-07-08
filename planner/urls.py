@@ -9,6 +9,12 @@ urlpatterns = patterns('',
         name = 'index'
     ),
 
+    url(r'^roster/(?P<term_id>\d+)$',
+        permission_required('planner.view_shift')
+        (views.roster),
+        name = 'roster'
+    ),
+
     url(r'^terms$',
     	permission_required('planner.view_dojoterm')
     	(views.DojoTermList.as_view()),

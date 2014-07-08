@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from planner.models import DojoTerm, DojoSession, Room
 from planner.forms import DojoTermForm
+from django.shortcuts import render, get_object_or_404
+from planner.models import DojoTerm, DojoSession, Room, Shift
 from kanri.views import *
 from django.utils import timezone
 from django.shortcuts import redirect
@@ -52,6 +52,47 @@ def add_term(request):
 		form = DojoTermForm()
 
 	return render(request, 'planner/term/add.html', {
+		'form': form,
+	})
+
+def roster(request, term_id):
+	term = DojoTerm.objects.get(pk = term_id)
+	sessions = DojoSession.objects.filter(term = term)
+
+	# Get list of used rooms.
+	# There's probably a distinct query I could use that'd be a lot cheaper.
+	rooms = []
+	for session in sessions:
+		for room in session.rooms.all():
+			if not room in rooms:
+				rooms.append(room)
+
+	roster = []
+	for room in rooms:
+		room_usage = []
+		for session in sessions:
+			room_usage.append(Shift.objects.filter(room = room, session = session))
+		roster.append({
+			'room': room,
+			'usage': room_usage
+		})
+
+	return render(request, 'planner/roster.html', {
+		'term': term,
+		'sessions': sessions,
+		'rooms': rooms,
+		'roster': roster,
+	})
+
+def allocate(request, session_id, role_id):
+	session = get_object_or_404(DojoSession, pk = session_id)
+	role = get_object_or_404(Role, pk = session_id)
+
+	form = ShiftAllocationForm(session = session, role = role)
+
+	return render(request, 'planner/allocate.html', {
+		'session': session,
+		'role': role,
 		'form': form,
 	})
 
