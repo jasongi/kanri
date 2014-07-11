@@ -1,5 +1,5 @@
 from django.db import models
-from planner.models import DojoSession
+from planner.models import DojoSession, Shift, DojoTerm
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils import timezone
@@ -190,6 +190,24 @@ class Mentor(models.Model):
 
     def get_future_availabilities(self):
         return self.shift_availabilities.filter(date__gt = timezone.now())
+
+    def get_rostered_hours_per_term(self):
+        terms = []
+        for term in DojoTerm.objects.all():
+            # Build a dict for each term to hold total hours.
+            term_info = {
+                'term': term,
+                'hours': datetime.timedelta()
+            }
+
+            # Get all shifts the mentor undertakes in the selected term and
+            # total up the starting and ending times for said shifts.
+            shifts = Shift.objects.filter(mentor = self, session__term = term)
+            for shift in shifts:
+                term_info['hours'] += shift.get_duration()
+
+            terms.append(term_info)
+        return terms
 
     def __unicode__(self):
         return self.name()

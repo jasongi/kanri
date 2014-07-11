@@ -7,6 +7,10 @@
 {% block noedit %}{% endblock %}
 {% block nodelete %}{% endblock %}
 
+{% block custom_buttons_after %}
+	Hi!
+{% endblock %}
+
 {% block detail %}
 	<h2>General Information</h2>
 	{{ object.date|date|display_pair:'Date' }}
@@ -16,6 +20,10 @@
 	<h2>Space</h2>
 	{{ object.get_capacity|display_pair:'Capacity' }}
 	{{ object.rooms.all|join:', '|display_pair:'Rooms' }}
+
+	{% for room in object.rooms.all %}
+		<h3>{{ room }}</h3>
+	{% endfor %}
 
 	<h2>People</h2>
 	{{ object.ninja_set.count|display_pair:'Ninjas Attending' }}
