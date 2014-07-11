@@ -189,6 +189,9 @@ class Mentor(models.Model):
     def get_roles_desired(self):
         return ', '.join(self.roles_desired.values_list('name', flat = True))
 
+    def get_future_shifts(self):
+        return Shift.objects.filter(mentor = self, session__date__gt = timezone.now())
+
     def get_future_availabilities(self):
         return self.shift_availabilities.filter(date__gt = timezone.now())
 

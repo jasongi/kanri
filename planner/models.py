@@ -181,5 +181,8 @@ class Shift(models.Model):
 	def get_absolute_url(self):
 		return reverse('planner:shifts-detail', current_app = 'planner', args = [self.id])
 
-	def __unicode__(self):
+	def roster_name(self):
 		return "%s (%s)" % (self.mentor, self.role)
+
+	def __unicode__(self):
+		return "%s (%s) for %s" % (self.mentor, self.role, self.session)
