@@ -26,9 +26,7 @@
 			</div>
 		{% endif %}
 
-		{% for field in form %}
-			{% bootstrap_field field layout="horizontal" %}
-		{% endfor %}
+		{% bootstrap_form form layout="horizontal" %}
 
 		{% buttons %}
 			<div class="col-md-offset-2">
