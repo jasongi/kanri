@@ -18,7 +18,7 @@
 					{% for session in room.usage %}
 						<td class="text-center">
 							{% for shift in session %}
-								<a href="{{ shift.get_absolute_url }}">{{ shift }}</a><br />
+								<a href="{{ shift.get_absolute_url }}">{{ shift.roster_name }}</a><br />
 							{% endfor %}
 						</td>
 					{% endfor %}

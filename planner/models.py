@@ -123,11 +123,24 @@ class DojoSession(models.Model):
 			return 0
 
 	def get_shifts(self):
-		return Shift.objects.filter(session = self)
+		s = Shift.objects.filter(session = self)
+		return s
 
 	def get_shifts_for_room(self, room):
-		return self.get_shifts().filter(room)
+		s = Shift.objects.filter(session = self, room = room)
+		return s
 
+	def get_shifts_per_room(self):
+		rooms = Room.objects.all()
+		l = []
+		for room in rooms:
+			room_details = {
+				'room': room,
+				'shifts': self.get_shifts_for_room(room)
+			}
+			l.append(room_details)
+		return l
+	
 	def get_duration(self):
 		return self.finish - self.start
 
@@ -182,7 +195,7 @@ class Shift(models.Model):
 		return reverse('planner:shifts-detail', current_app = 'planner', args = [self.id])
 
 	def roster_name(self):
-		return "%s (%s)" % (self.mentor, self.role)
+		return "%s (%s)" % (self.mentor, self.role.short_name)
 
 	def __unicode__(self):
 		return "%s (%s) for %s" % (self.mentor, self.role, self.session)
