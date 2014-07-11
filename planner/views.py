@@ -1,10 +1,12 @@
-from planner.forms import DojoTermForm
 from django.shortcuts import render, get_object_or_404
 from planner.models import DojoTerm, DojoSession, Room, Shift
+from planner.forms import DojoTermForm, ShiftAllocationForm
+from mentors.models import Role
 from kanri.views import *
 from django.utils import timezone
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
+from django.forms.formsets import formset_factory
 import datetime
 import time
 
