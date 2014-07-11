@@ -86,9 +86,25 @@ def roster(request, term_id):
 
 def allocate(request, session_id, role_id):
 	session = get_object_or_404(DojoSession, pk = session_id)
-	role = get_object_or_404(Role, pk = session_id)
+	role = get_object_or_404(Role, pk = role_id)
 
-	form = ShiftAllocationForm(session = session, role = role)
+	if request.method == 'POST':
+		form = ShiftAllocationForm(request.POST, session = session, role = role)
+
+		if form.is_valid():
+			s = Shift(
+				mentor = form.cleaned_data['mentor'],
+				session = session,
+				role = role,
+				room = form.cleaned_data['room'],
+				start = form.cleaned_data['start'],
+				end = form.cleaned_data['end']
+			)
+			
+			s.save()
+			return redirect('planner:roster', session.term.id)
+	else:
+		form = ShiftAllocationForm(session = session, role = role)
 
 	return render(request, 'planner/allocate.html', {
 		'session': session,

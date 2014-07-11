@@ -15,6 +15,12 @@ urlpatterns = patterns('',
         name = 'roster'
     ),
 
+    url(r'^roster/allocate/(?P<session_id>\d+)/(?P<role_id>\d+)$',
+        permission_required('planner.add_shift')
+        (views.allocate),
+        name = 'allocate'
+    ),
+
     url(r'^shifts/(?P<pk>\d+)$',
         permission_required('planner.view_shift')
         (views.ShiftDetail.as_view()),
@@ -50,6 +56,7 @@ urlpatterns = patterns('',
         (views.DojoTermDelete.as_view()),
         name = 'terms-delete'
     ),
+
 
     url(r'^sessions/(?P<pk>\d+)$',
         permission_required('planner.view_dojosession')
