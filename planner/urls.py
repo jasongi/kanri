@@ -15,6 +15,18 @@ urlpatterns = patterns('',
         name = 'roster'
     ),
 
+    url(r'^shifts/(?P<pk>\d+)$',
+        permission_required('planner.view_shift')
+        (views.ShiftDetail.as_view()),
+        name = 'shifts-detail'
+    ),
+
+    url(r'^shifts/delete/(?P<pk>\d+)$',
+        permission_required('planner.delete_shift')
+        (views.ShiftDelete.as_view()),
+        name = 'shifts-delete'
+    ),
+
     url(r'^terms$',
     	permission_required('planner.view_dojoterm')
     	(views.DojoTermList.as_view()),

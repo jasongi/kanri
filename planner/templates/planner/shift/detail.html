@@ -1,0 +1,21 @@
+{% extends "generic_detail.html" %}
+{% load display_pair %}
+{% load nicebool %}
+{% load bootstrap3 %}
+
+{% block nolist %}{% endblock %}
+{% block noupdate %}{% endblock %}
+{% block delete_url %}{% url 'planner:shifts-delete' object.id %}{% endblock %}
+
+{% block detail %}
+	<h2>General Information</h2>
+	{{ object.mentor|display_pair:'Mentor' }}
+	{{ object.role|display_pair:'Role' }}
+	{{ object.session|display_pair:'Session' }}
+	{{ object.room|display_pair:'Room' }}
+
+	<h2>Time</h2>
+	{{ object.start|display_pair:'Start' }}
+	{{ object.end|display_pair:'End' }}
+	{{ object.get_duration|display_pair:'Duration' }}
+{% endblock %}

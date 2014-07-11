@@ -177,5 +177,9 @@ class Shift(models.Model):
 
 	def get_duration(self):
 		return datetime.datetime.combine(datetime.datetime.now(), self.end) - datetime.datetime.combine(datetime.datetime.now(), self.start)
+
+	def get_absolute_url(self):
+		return reverse('planner:shifts-detail', current_app = 'planner', args = [self.id])
+
 	def __unicode__(self):
 		return "%s (%s)" % (self.mentor, self.role)

@@ -108,7 +108,13 @@ class DojoTermDelete(KanriDeleteView):
 	model = DojoTerm
 	success_url = reverse_lazy('planner:terms', current_app = 'planner')
 
+class ShiftDetail(KanriDetailView):
+	model = Shift
+	template_name = 'planner/shift/detail.html'
 
+class ShiftDelete(KanriDeleteView):
+	model = Shift
+	success_url = reverse_lazy('planner:index')
 
 class DojoSessionDetail(KanriDetailView):
 	model = DojoSession
