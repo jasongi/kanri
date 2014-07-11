@@ -55,6 +55,19 @@ def add_term(request):
 		'form': form,
 	})
 
+class DojoTermList(KanriListView):
+	model = DojoTerm
+	template_name = 'planner/term/list.html'
+
+class DojoTermDetail(KanriDetailView):
+	model = DojoTerm
+	template_name = 'planner/term/detail.html'
+
+class DojoTermDelete(KanriDeleteView):
+	model = DojoTerm
+	success_url = reverse_lazy('planner:terms', current_app = 'planner')
+
+
 def roster(request, term_id):
 	term = DojoTerm.objects.get(pk = term_id)
 	sessions = DojoSession.objects.filter(term = term)
@@ -111,18 +124,6 @@ def allocate(request, session_id, role_id):
 		'role': role,
 		'form': form,
 	})
-
-class DojoTermList(KanriListView):
-	model = DojoTerm
-	template_name = 'planner/term/list.html'
-
-class DojoTermDetail(KanriDetailView):
-	model = DojoTerm
-	template_name = 'planner/term/detail.html'
-
-class DojoTermDelete(KanriDeleteView):
-	model = DojoTerm
-	success_url = reverse_lazy('planner:terms', current_app = 'planner')
 
 class ShiftDetail(KanriDetailView):
 	model = Shift
