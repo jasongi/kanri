@@ -3,6 +3,11 @@
 {% load nicebool %}
 {% load bootstrap3 %}
 
+{% block custom_buttons_before %}
+	<a class="btn btn-default" href="{% url 'planner:roster' object.id %}"><span class="glyphicon glyphicon-th-large"></span> Roster</a>
+{% endblock %}
+
+
 {% block list_url %}{% url 'planner:terms' %}{% endblock %}
 {% block noedit %}{% endblock %}
 {% block delete_url %}{% url 'planner:terms-delete' object.id %}{% endblock %}
