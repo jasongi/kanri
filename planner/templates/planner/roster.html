@@ -8,13 +8,13 @@
 		<thead>
 			<th>Rooms</th>
 		{% for session in sessions %}
-			<th class="text-center">{{ session.get_short_name }}</th>
+			<th class="text-center"><a href="{{ session.get_absolute_url }}">{{ session.get_short_name }}</a></th>
 		{% endfor %}
 		</thead>
 		<tbody>
 			{% for room in roster %}
 				<tr>
-					<td>{{ room.room }}</td>
+					<td><a href="{{ room.room.get_absolute_url }}">{{ room.room }}</a></td>
 					{% for session in room.usage %}
 						<td class="text-center">
 							{% for shift in session %}
