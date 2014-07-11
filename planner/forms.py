@@ -1,5 +1,6 @@
 from django import forms
 from planner.models import DojoTerm, Room
+from mentors.models import Mentor
 
 class DojoTermForm(forms.Form):
 	name = forms.CharField(
@@ -30,3 +31,38 @@ class DojoTermForm(forms.Form):
 		min_value = 1,
 		help_text = "The number of weeks the term will run.",
 	)
+
+class ShiftAllocationForm(forms.Form):	
+	def __init__(self, *args, **kwargs):
+		# Grab the custom kwargs out before we call super init.
+		# I'm gross, but it stops the strict super.__init__ from crying.
+		session = kwargs.pop('session', None)
+		role = kwargs.pop('role', None)
+		super(ShiftAllocationForm, self).__init__(*args, **kwargs)
+		
+		self.fields['mentor'] = forms.ModelChoiceField(
+			queryset = Mentor.objects.filter(
+				shift_availabilities = session,
+				roles_desired = role
+			)
+		)
+
+		self.fields['room'] = forms.ModelChoiceField(
+			queryset = session.rooms.all()
+		)
+
+		self.fields['start'] = forms.TimeField(
+			input_formats = ['%I:%M %p'],
+			initial = session.start,
+			widget = forms.TimeInput(
+				format = '%I:%M %p'
+			)
+		)
+
+		self.fields['end'] = forms.TimeField(
+			input_formats = ['%I:%M %p'],
+			initial = session.end,
+			widget = forms.TimeInput(
+				format = '%I:%M %p'
+			)
+		)
