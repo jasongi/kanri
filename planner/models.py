@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.core.urlresolvers import reverse
 from ninjas.models import Ninja
 from attendance.models import Attendance
+import datetime
 
 class DojoTerm(models.Model):
 	name = models.CharField(max_length = 50, blank = False)
@@ -127,6 +128,9 @@ class DojoSession(models.Model):
 	def get_shifts_for_room(self, room):
 		return self.get_shifts().filter(room)
 
+	def get_duration(self):
+		return self.finish - self.start
+
 	def get_absolute_url(self):
 		return reverse('planner:sessions-detail', current_app = 'planner', args = [self.id])
 
@@ -161,5 +165,17 @@ class Shift(models.Model):
 		help_text = "The room, if any, that the mentor will be undertaking the shift in."
 	)
 
+	start = models.TimeField(
+		blank = False,
+		help_text = "Start Time"
+	)
+
+	end = models.TimeField(
+		blank = False,
+		help_text = "End Time"
+	)
+
+	def get_duration(self):
+		return datetime.datetime.combine(datetime.datetime.now(), self.end) - datetime.datetime.combine(datetime.datetime.now(), self.start)
 	def __unicode__(self):
 		return "%s (%s)" % (self.mentor, self.role)
