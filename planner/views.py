@@ -133,7 +133,7 @@ class ShiftDetail(KanriDetailView):
 
 class ShiftDelete(KanriDeleteView):
 	model = Shift
-	success_url = reverse_lazy('planner:index')
+	success_url = reverse_lazy('planner:terms')
 
 class DojoSessionDetail(KanriDetailView):
 	model = DojoSession
