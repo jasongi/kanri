@@ -5,13 +5,13 @@ from attendance import views
 
 urlpatterns = patterns('',
     url(r'^$',
-        permission_required('attendance.view_attendance')
+        permission_required('attendance.read_attendance')
         (views.index),
         name = 'index'
     ),
 
     url(r'^signoff/(?P<dojo_session_id>\d+)$',
-        permission_required('attendance.view_attendance')
+        permission_required('attendance.read_attendance')
         (views.signoff),
         name = 'signoff'
     ),
