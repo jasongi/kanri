@@ -97,6 +97,8 @@ def sync(request):
                 'add_ninja',
                 'read_ninja',
                 'change_ninja',
+
+                'read_shift',
             ]
         }
     ]
