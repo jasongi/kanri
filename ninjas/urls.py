@@ -35,7 +35,7 @@ urlpatterns = patterns('',
     ),
 
     url(r'^update/(?P<pk>\d+)$',
-        permission_required('ninjas.update_ninja')
+        permission_required('ninjas.change_ninja')
     	(views.NinjaUpdate.as_view()),
     	name = 'update'
     ),
