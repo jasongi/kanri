@@ -190,6 +190,7 @@ class Shift(models.Model):
     room = models.ForeignKey(
         Room,
         blank = True,
+        null = True,
         help_text = "The room, if any, that the mentor will be undertaking the shift in."
     )
 
