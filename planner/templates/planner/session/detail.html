@@ -5,7 +5,7 @@
 
 {% block nolist %}{% endblock %}
 {% block noedit %}{% endblock %}
-{% block nodelete %}{% endblock %}
+{% block delete_url %}{% url 'planner:sessions-delete' object.id %}{% endblock %}
 
 {% block detail %}
 	<h2>General Information</h2>

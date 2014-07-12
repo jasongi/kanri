@@ -33,6 +33,12 @@ urlpatterns = patterns('',
         name = 'sessions-detail'
     ),
 
+    url(r'^sessions/delete/(?P<pk>\d+)$',
+        permission_required('planner.delete_dojosession')
+        (views.DojoSessionDelete.as_view()),
+        name = 'sessions-delete'
+    ),
+
     url(r'^terms/delete/(?P<pk>\d+)$',
         permission_required('planner.delete_dojoterm')
         (views.DojoTermDelete.as_view()),

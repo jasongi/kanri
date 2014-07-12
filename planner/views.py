@@ -150,6 +150,10 @@ class DojoSessionDetail(KanriDetailView):
 		context['roles'] = Role.objects.order_by('name')
 		return context
 
+class DojoSessionDelete(KanriDeleteView):
+	model = DojoSession
+	success_url = reverse_lazy('planner:terms')
+
 ## Room ##
 class RoomCreate(KanriCreateView):
 	model = Room
