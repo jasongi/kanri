@@ -181,7 +181,7 @@ class Mentor(models.Model):
             return 'None'
 
     def get_curtin_status(self):
-        if self.curtin_id:
+        if self.curtin_id and self.curtin_status != self.NEITHER:
             return "%s (%s)" % (self.get_curtin_status_display(), self.curtin_id)
         else:
             return "%s" % self.get_curtin_status_display()
