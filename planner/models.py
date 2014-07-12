@@ -104,7 +104,7 @@ class DojoSession(models.Model):
         if self.mentor_set.count() == 0:
             return None
         else:
-            return self.ninja_set.count() / self.mentor_set.count()
+            return round(self.ninja_set.count() / self.mentor_set.count(), 2)
 
     def get_capacity(self):
         capacity = 0
