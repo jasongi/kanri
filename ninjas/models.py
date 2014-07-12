@@ -205,7 +205,6 @@ class Ninja(models.Model):
 
     @classmethod
     def get_male(cls):
-        print cls.objects.filter(gender = cls.MALE)
         return cls.objects.filter(gender = cls.MALE).count()
 
     @classmethod
