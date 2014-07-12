@@ -25,10 +25,10 @@ Heroku, in which case it'll use Heroku's Postgres stack.
 ## ARUD
 It's like CRUD, but it sounds less terrible.
 
-- **A**dd
-- **R**emove
-- **U**pdate
-- **D**elete
+- **A** dd
+- **R** emove
+- **U** pdate
+- **D** elete
 
 ## Permission conventions:
 Django's default permissions scheme is funky. It's based around having ARUD access to certain models. It's weird, but it
