@@ -13,6 +13,7 @@ import time
 def index(request):
 	return render(request, 'planner/index.html')
 
+## Term ##
 def add_term(request):
 	if request.method == "POST":
 		form = DojoTermForm(request.POST)
@@ -69,6 +70,35 @@ class DojoTermDelete(KanriDeleteView):
 	model = DojoTerm
 	success_url = reverse_lazy('planner:terms', current_app = 'planner')
 
+## Shifts ##
+def allocate(request, session_id, role_id):
+	session = get_object_or_404(DojoSession, pk = session_id)
+	role = get_object_or_404(Role, pk = role_id)
+
+	if request.method == 'POST':
+		form = ShiftAllocationForm(request.POST, session = session, role = role)
+
+		if form.is_valid():
+			s = Shift(
+				mentor = form.cleaned_data['mentor'],
+				session = session,
+				role = role,
+				room = form.cleaned_data['room'],
+				start = form.cleaned_data['start'],
+				end = form.cleaned_data['end']
+			)
+			
+			s.save()
+			return redirect('planner:roster', session.term.id)
+	else:
+		form = ShiftAllocationForm(session = session, role = role)
+
+	return render(request, 'planner/allocate.html', {
+		'session': session,
+		'role': role,
+		'form': form,
+	})
+
 
 def roster(request, term_id):
 	term = DojoTerm.objects.get(pk = term_id)
@@ -99,33 +129,7 @@ def roster(request, term_id):
 		'roster': roster,
 	})
 
-def allocate(request, session_id, role_id):
-	session = get_object_or_404(DojoSession, pk = session_id)
-	role = get_object_or_404(Role, pk = role_id)
 
-	if request.method == 'POST':
-		form = ShiftAllocationForm(request.POST, session = session, role = role)
-
-		if form.is_valid():
-			s = Shift(
-				mentor = form.cleaned_data['mentor'],
-				session = session,
-				role = role,
-				room = form.cleaned_data['room'],
-				start = form.cleaned_data['start'],
-				end = form.cleaned_data['end']
-			)
-			
-			s.save()
-			return redirect('planner:roster', session.term.id)
-	else:
-		form = ShiftAllocationForm(session = session, role = role)
-
-	return render(request, 'planner/allocate.html', {
-		'session': session,
-		'role': role,
-		'form': form,
-	})
 
 class ShiftDetail(KanriDetailView):
 	model = Shift
@@ -135,12 +139,15 @@ class ShiftDelete(KanriDeleteView):
 	model = Shift
 	success_url = reverse_lazy('planner:terms')
 
+
+
+## Dojo Sessions ##
 class DojoSessionDetail(KanriDetailView):
 	model = DojoSession
 	template_name = 'planner/session/detail.html'
 
 
-
+## Room ##
 class RoomCreate(KanriCreateView):
 	model = Room
 
