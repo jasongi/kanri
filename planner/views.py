@@ -128,8 +128,6 @@ def roster(request, term_id):
 		'rooms': rooms,
 		'roster': roster,
 	})
-	})
-
 
 
 class ShiftDetail(KanriDetailView):
