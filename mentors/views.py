@@ -68,7 +68,7 @@ def upload(request):
 				m.user.phone_number = '0' + row['Mobile number']
 
 				# Add new user to mentors group
-				group = Group.objects.get_or_create(name='Mentors')
+				group = Group.objects.get_or_create(name = 'Mentors')
 				m.user.groups.add(group[0])
 
 				m.user.save()

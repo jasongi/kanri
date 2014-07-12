@@ -17,6 +17,11 @@ class Role(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta():
+        permissions = {
+            ('read_role', "Can view a Role entry"),
+        }
+
 class Mentor(models.Model):
     MALE_SMALL = "MS"
     MALE_MEDIUM = "MM"
@@ -64,11 +69,6 @@ class Mentor(models.Model):
         (SOMETHING, 'I know some basics'),
         (EVERYTHING, 'I know a great deal')
     )
-
-    class Meta():
-        permissions = {
-            ('view_mentor', "Can view a Mentor entry"),
-        }
 
     uni = models.CharField(
         max_length = 50,
@@ -218,3 +218,8 @@ class Mentor(models.Model):
 
     def get_absolute_url(self):
         return reverse('mentors:detail', current_app = 'mentors', args = [self.id])
+
+    class Meta():
+        permissions = {
+            ('read_mentor', "Can view a Mentor entry"),
+        }

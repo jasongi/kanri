@@ -34,7 +34,6 @@ class Parent(models.Model):
 
         return stats
 
-
 class Ninja(models.Model):
     MALE = 'M'
     FEMALE = 'F'
@@ -248,3 +247,6 @@ class Ninja(models.Model):
 
     class Meta:
         ordering = ['name']
+        permissions = {
+            ('read_ninja', "Can view a Ninja entry"),
+        }

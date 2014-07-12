@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     ),
     
     url(r'^update/(?P<pk>\d+)$',
-        permission_required('mentors.update_mentor')
+        permission_required('mentors.change_mentor')
         (views.MentorUpdate.as_view()),
         name = 'update'
     ),
@@ -61,7 +61,7 @@ urlpatterns = patterns('',
     ),
     
     url(r'^role/update/(?P<pk>\d+)$',
-        permission_required('mentors.update_role')
+        permission_required('mentors.change_role')
         (views.RoleUpdate.as_view()),
         name = 'role-update'
     ),
