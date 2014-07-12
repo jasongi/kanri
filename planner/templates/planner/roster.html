@@ -14,7 +14,11 @@
 		<tbody>
 			{% for room in roster %}
 				<tr>
-					<td><a href="{{ room.room.get_absolute_url }}">{{ room.room }}</a></td>
+					{% if room.room == None %}
+						<td>Global</td>
+					{% else %}
+						<td><a href="{{ room.room.get_absolute_url }}">{{ room.room }}</a></td>
+					{% endif %}
 					{% for session in room.usage %}
 						<td class="text-center">
 							{% for shift in session %}

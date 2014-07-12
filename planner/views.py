@@ -113,10 +113,24 @@ def roster(request, term_id):
 				rooms.append(room)
 
 	roster = []
+
+	# Roomless Roles
+	roomless = []
+	for session in sessions:
+		roomless.append(Shift.objects.filter(room = None, session = session))
+
+	roster.append({
+			'room': None,
+			'usage': roomless
+	})
+
+	# Room Roles
 	for room in rooms:
 		room_usage = []
+
 		for session in sessions:
 			room_usage.append(Shift.objects.filter(room = room, session = session))
+		
 		roster.append({
 			'room': room,
 			'usage': room_usage
