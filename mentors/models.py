@@ -78,14 +78,14 @@ class Mentor(models.Model):
     )
 
     uni_study = models.CharField(
-        max_length = 75,
+        max_length = 256,
         null = True,
         blank = True,
         help_text = "If you're attending university, what are you studying?"
     )
    
     work = models.CharField(
-        max_length = 75,
+        max_length = 256,
         null = True,
         blank = True,
         help_text = "If you workwhat do you do?"
