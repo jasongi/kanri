@@ -48,7 +48,8 @@ class ShiftAllocationForm(forms.Form):
 		)
 
 		self.fields['room'] = forms.ModelChoiceField(
-			queryset = session.rooms.all()
+			queryset = session.rooms.all(),
+			required = False
 		)
 
 		self.fields['start'] = forms.TimeField(
