@@ -1,5 +1,6 @@
 # Kanri
 [![Build Status](https://travis-ci.org/KyeRussell/kanri.svg?branch=master)](https://travis-ci.org/KyeRussell/kanri)
+[![Coverage Status](https://coveralls.io/repos/KyeRussell/kanri/badge.png?branch=master)](https://coveralls.io/r/KyeRussell/kanri?branch=master)
 
 Kanri is a custom-built management system for CoderDojo @ Curtin. Chances are it's useless to you, but y'know...open-source is good.
 
