@@ -41,58 +41,79 @@ def sync(request):
     #for p in Permission.objects.all():
     #   print p
 
-    permissions = [
-        'add_attendance',
-        'read_attendance',
-        'change_attendance',
-        'delete_attendance',
-
-        'add_mentor',
-        'read_mentor',
-        'change_mentor',
-        'delete_mentor',
-
-        'add_role',
-        'read_role',
-        'change_role',
-        'delete_role',
-
-        'add_ninja',
-        'read_ninja',
-        'change_ninja',
-        'delete_ninja',
-
-        'add_dojoterm',
-        'read_dojoterm',
-        'change_dojoterm',
-        'delete_dojoterm',
-
-        'add_dojosession',
-        'read_dojosession',
-        'change_dojosession',
-        'delete_dojosession',
-
-        'add_dojosession',
-        'read_dojosession',
-        'change_dojosession',
-        'delete_dojosession',
-
-        'add_shift',
-        'read_shift',
-        'change_shift',
-        'delete_shift',
-
-        'add_room',
-        'read_room',
-        'change_room',
-        'delete_room',
+    sync = [
+        {
+            'group': 'Management',
+            'permissions': [
+                'add_attendance',
+                'read_attendance',
+                'change_attendance',
+                'delete_attendance',
+        
+                'add_mentor',
+                'read_mentor',
+                'change_mentor',
+                'delete_mentor',
+        
+                'add_role',
+                'read_role',
+                'change_role',
+                'delete_role',
+        
+                'add_ninja',
+                'read_ninja',
+                'change_ninja',
+                'delete_ninja',
+        
+                'add_dojoterm',
+                'read_dojoterm',
+                'change_dojoterm',
+                'delete_dojoterm',
+        
+                'add_dojosession',
+                'read_dojosession',
+                'change_dojosession',
+                'delete_dojosession',
+        
+                'add_dojosession',
+                'read_dojosession',
+                'change_dojosession',
+                'delete_dojosession',
+        
+                'add_shift',
+                'read_shift',
+                'change_shift',
+                'delete_shift',
+        
+                'add_room',
+                'read_room',
+                'change_room',
+                'delete_room',
+            ]
+        },
+        {
+            'group': 'Mentors',
+            'permissions': [
+                'add_attendance',
+                'read_attendance',
+                'change_attendance',
+                'delete_attendance',
+        
+                'add_ninja',
+                'read_ninja',
+                'change_ninja',
+            ]
+        }
     ]
+    
 
     group = Group.objects.get_or_create(name = 'Management')[0]
-
-    for permission in permissions:
-        perm = Permission.objects.get(codename = permission)
-        group.permissions.add(perm)
+    for s in sync:
+        group = Group.objects.get_or_create(name = s['group'])[0]
+        for permission in s['permissions']:
+            perm = Permission.objects.get(codename = permission)
+            group.permissions.add(perm)
+            print "Added %s to %s" % (perm, group)
 
     return redirect('accounts:permissions')
     
