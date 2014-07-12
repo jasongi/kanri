@@ -9,21 +9,8 @@ from kanri.views import *
 import datetime
 import csv
 
-def index(request):
-	return render(request, 'ninjas/index.html', {
-		'ninja_stats' : Ninja.get_stats(),
-		'parent_stats': Parent.get_stats()
-		})
-
 class NinjaCreate(KanriCreateView):
 	model = Ninja
-
-class NinjaUpdate(KanriUpdateView):
-	model = Ninja
-
-class NinjaList(KanriListView):
-	model = Ninja
-	template_name = 'ninjas/list.html'
 
 def upload(request):
 	if request.method == 'POST':
@@ -105,6 +92,22 @@ def upload(request):
 	else:		
 		return render(request, 'ninjas/upload/failure.html')
 
+def index(request):
+	return render(request, 'ninjas/index.html', {
+		'ninja_stats' : Ninja.get_stats(),
+		'parent_stats': Parent.get_stats()
+		})
+
 class NinjaDetail(KanriDetailView):
 	model = Ninja
 	template_name = 'ninjas/detail.html'
+
+class NinjaList(KanriListView):
+	model = Ninja
+	template_name = 'ninjas/list.html'
+
+class NinjaUpdate(KanriUpdateView):
+	model = Ninja
+
+class NinjaDelete(KanriDeleteView):
+	model = Ninja
