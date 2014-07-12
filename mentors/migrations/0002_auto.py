@@ -8,64 +8,19 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Role'
-        db.create_table(u'mentors_role', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('short_name', self.gf('django.db.models.fields.CharField')(max_length=10)),
-            ('description', self.gf('django.db.models.fields.TextField')(max_length=1024, blank=True)),
-        ))
-        db.send_create_signal(u'mentors', ['Role'])
-
-        # Adding model 'Mentor'
-        db.create_table(u'mentors_mentor', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('uni', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
-            ('uni_study', self.gf('django.db.models.fields.CharField')(max_length=256, null=True, blank=True)),
-            ('work', self.gf('django.db.models.fields.CharField')(max_length=256, null=True, blank=True)),
-            ('shirt_size', self.gf('django.db.models.fields.CharField')(max_length=3, blank=True)),
-            ('needs_shirt', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('wwcc', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('wwcc_receipt', self.gf('django.db.models.fields.CharField')(max_length=15, null=True, blank=True)),
-            ('curtin_status', self.gf('django.db.models.fields.CharField')(default='N', max_length=1)),
-            ('curtin_id', self.gf('django.db.models.fields.CharField')(max_length=10, null=True, blank=True)),
-            ('coding_experience', self.gf('django.db.models.fields.CharField')(default='NO', max_length=2)),
-            ('children_experience', self.gf('django.db.models.fields.CharField')(default='NO', max_length=2)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['accounts.KanriUser'], unique=True)),
-        ))
-        db.send_create_signal(u'mentors', ['Mentor'])
-
-        # Adding M2M table for field roles_desired on 'Mentor'
-        m2m_table_name = db.shorten_name(u'mentors_mentor_roles_desired')
+        # Adding M2M table for field shift_availabilities on 'Mentor'
+        m2m_table_name = db.shorten_name(u'mentors_mentor_shift_availabilities')
         db.create_table(m2m_table_name, (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('mentor', models.ForeignKey(orm[u'mentors.mentor'], null=False)),
-            ('role', models.ForeignKey(orm[u'mentors.role'], null=False))
+            ('dojosession', models.ForeignKey(orm[u'planner.dojosession'], null=False))
         ))
-        db.create_unique(m2m_table_name, ['mentor_id', 'role_id'])
-
-        # Adding M2M table for field shift_availabilities on 'Mentor'
-        # m2m_table_name = db.shorten_name(u'mentors_mentor_shift_availabilities')
-        # db.create_table(m2m_table_name, (
-        #     ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-        #     ('mentor', models.ForeignKey(orm[u'mentors.mentor'], null=False)),
-        #     ('dojosession', models.ForeignKey(orm[u'planner.dojosession'], null=False))
-        # ))
-        # db.create_unique(m2m_table_name, ['mentor_id', 'dojosession_id'])
+        db.create_unique(m2m_table_name, ['mentor_id', 'dojosession_id'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Role'
-        db.delete_table(u'mentors_role')
-
-        # Deleting model 'Mentor'
-        db.delete_table(u'mentors_mentor')
-
-        # Removing M2M table for field roles_desired on 'Mentor'
-        db.delete_table(db.shorten_name(u'mentors_mentor_roles_desired'))
-
         # Removing M2M table for field shift_availabilities on 'Mentor'
-        # db.delete_table(db.shorten_name(u'mentors_mentor_shift_availabilities'))
+        db.delete_table(db.shorten_name(u'mentors_mentor_shift_availabilities'))
 
 
     models = {
@@ -113,7 +68,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'needs_shirt': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'roles_desired': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['mentors.Role']", 'symmetrical': 'False'}),
-            # 'shift_availabilities': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['planner.DojoSession']", 'symmetrical': 'False'}),
+            'shift_availabilities': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['planner.DojoSession']", 'symmetrical': 'False'}),
             'shirt_size': ('django.db.models.fields.CharField', [], {'max_length': '3', 'blank': 'True'}),
             'uni': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'uni_study': ('django.db.models.fields.CharField', [], {'max_length': '256', 'null': 'True', 'blank': 'True'}),
