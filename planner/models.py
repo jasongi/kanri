@@ -61,7 +61,7 @@ class Room(models.Model):
     )
 
     def get_sessions(self):
-        return DojoSession.objects.filter(room = self)
+        return DojoSession.objects.filter(rooms = self)
 
     def get_absolute_url(self):
         return reverse_lazy('planner:rooms-detail', self.id)
