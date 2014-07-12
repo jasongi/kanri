@@ -158,6 +158,9 @@ class RoomList(KanriListView):
 	model = Room
 	template_name = 'planner/room/list.html'
 
+class RoomUpdate(KanriUpdateView):
+	model = Room
+
 class RoomDelete(KanriDeleteView):
 	model = Room
 	success_url = reverse_lazy('planner:rooms-list')

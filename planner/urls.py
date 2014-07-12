@@ -86,6 +86,13 @@ urlpatterns = patterns('',
         (views.RoomDetail.as_view()),
         name = 'rooms-detail'
     ),
+
+    url(r'^rooms/update/(?P<pk>\d+)$',
+        permission_required('planner.update_room')
+        (views.RoomUpdate.as_view()),
+        name = 'rooms-update'
+    ),
+
     url(r'^rooms/delete/(?P<pk>\d+)$',
         permission_required('planner.delete_room')
         (views.RoomDelete.as_view()),
