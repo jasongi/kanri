@@ -64,7 +64,7 @@ class Room(models.Model):
         return DojoSession.objects.filter(room = self)
 
     def get_absolute_url(self):
-        return reverse('planner:rooms-detail', pk = self.id)
+        return reverse('planner:rooms-detail', self.id)
 
     def __unicode__(self):
         return self.name
