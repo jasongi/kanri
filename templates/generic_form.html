@@ -3,7 +3,7 @@
 {% load name %}
 
 {% block site_title %}
-	{% if model %}
+	{% if object %}
 		Edit
 	{% else %}
 		Add
@@ -11,7 +11,7 @@
 	{{ view|model_name }}
 {% endblock %}
 {% block body_title %}<b>
-	{% if model %}
+	{% if object %}
 		Edit
 	{% else %}
 		Add
