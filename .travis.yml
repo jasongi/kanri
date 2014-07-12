@@ -1,13 +1,13 @@
 python:
-- '2.7'
+  - '2.7'
 install:
-- sudo pip install -r requirements.txt
+  - sudo pip install -r requirements.txt
 env:
-- KANRI_SECRET_KEY=testing
+  - KANRI_SECRET_KEY=testing
 script:
-- coverage run --source='.' manage.py test
+  - coverage run --source='.' manage.py test
 after_success:
-- coveralls
+  - coveralls
 deploy:
   provider: heroku
   api_key:
@@ -15,6 +15,6 @@ deploy:
   app: kanri
   on:
     repo: KyeRussell/kanri
-   run:
-   - manage.py syncdb
-   - manage.py migrate
+  run:
+    - manage.py syncdb
+    - manage.py migrate
