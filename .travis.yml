@@ -8,3 +8,10 @@ script:
   - coverage run --source='.' manage.py test
 after_success:
   - coveralls
+deploy:
+  provider: heroku
+  api_key:
+    secure: ExC2Tn6AruacSXSxJ7TBuBTtT/NKTs7DSCMf/jXHXrNtnwD4LzAwfjZiKplkFA+72/hq90GFQet2y4T/tyicYAvSdBsFl0Ar3mUJodfhbVt3cVJkx1GAfeMpRB6vpix3asH7qKyfYfjc6zZ5y9hFcGCIpD662iS5YFw77gwHpDk=
+  app: kanri
+  on:
+    repo: KyeRussell/kanri
