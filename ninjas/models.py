@@ -175,7 +175,8 @@ class Ninja(models.Model):
         return self.get_suburb_list()[0]
 
     def get_short_name(self):
-        return self.name.split()[0]
+        split = self.name.split()
+        return "%s %s" % (split[0], split[1][0])
 
     def get_call_url(self):
         return "tel:%s" % self.parent.phone
