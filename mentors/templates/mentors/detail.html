@@ -15,7 +15,7 @@
 
 {% block list_url %}{% url 'mentors:index' %}{% endblock %}
 {% block edit_url %}{% url 'mentors:update' object.id %}{% endblock %}
-{% block delete_url %}{% endblock %}
+{% block delete_url %}{% url 'mentors:delete' object.id %}{% endblock %}
 
 {% block detail %}
 	<h2>Personal Information</h2>

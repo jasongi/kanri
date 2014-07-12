@@ -3,15 +3,15 @@ from mentors.models import Mentor, Role
 from planner.models import DojoSession
 from forms import CSVImportForm
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import permission_required
-from kanri.views import KanriCreateView, KanriUpdateView, KanriDetailView, KanriListView
-from kanri import csv_tools
+from kanri.views import *
 import datetime
 import csv
 
+## Mentor ## 
 def upload(request):
 	stats = {
 		'total': 0,
@@ -155,6 +155,9 @@ def upload(request):
 	else:
 		return render(request, 'mentors/upload/failure.html')
 
+class MentorCreate(KanriCreateView):
+	model = Mentor
+
 class MentorList(KanriListView):
 	model = Mentor
 	template_name = 'mentors/index.html'
@@ -164,27 +167,32 @@ class MentorList(KanriListView):
 		context['roles'] = Role.objects.order_by('name')
 		return context
 
-class MentorCreate(KanriCreateView):
+class MentorDetail(KanriDetailView):
 	model = Mentor
+	template_name = 'mentors/detail.html'
 
 class MentorUpdate(KanriUpdateView):
 	model = Mentor
 
-class MentorDetail(KanriDetailView):
+class MentorDelete(KanriDeleteView):
 	model = Mentor
-	template_name = 'mentors/detail.html'
+	success_url = reverse_lazy('mentors:index')
+
+## Role ##
+class RoleCreate(KanriCreateView):
+	model = Role
+
+class RoleDetail(KanriDetailView):
+	model = Role
+	template_name = 'mentors/role_detail.html'
 
 class RoleList(KanriListView):
 	model = Role
 	template_name = 'mentors/role_index.html'
 
-class RoleCreate(KanriCreateView):
-	model = Role
-
 class RoleUpdate(KanriUpdateView):
 	model = Role
-	#success_url = reverse('mentors.index')
 
-class RoleDetail(KanriDetailView):
+class RoleDelete(KanriDeleteView):
 	model = Role
-	template_name = 'mentors/role_detail.html'
+	success_url = reverse_lazy('mentors:role-index')
