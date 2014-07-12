@@ -176,7 +176,7 @@ class Mentor(models.Model):
         if self.wwcc:
             return "Recorded (%s)" % self.wwcc
         elif self.wwcc_receipt:
-            return 'Processing'
+            return 'Processing (%s)' % self.wwcc_receipt
         else:
             return 'None'
 
