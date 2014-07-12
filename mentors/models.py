@@ -223,3 +223,4 @@ class Mentor(models.Model):
         permissions = {
             ('read_mentor', "Can view a Mentor entry"),
         }
+        ordering = ['user__first_name']
