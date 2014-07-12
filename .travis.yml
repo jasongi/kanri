@@ -2,10 +2,10 @@ python:
   - "2.7"
 
 install:
-	- pip install -r requirements.txt
+    - pip install -r requirements.txt
 
 env:
-	- KANRI_SECRET_KEY=testing
+    - KANRI_SECRET_KEY=testing
 
 script:
-	- python manage.py test
+    - python manage.py test
