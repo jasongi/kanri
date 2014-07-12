@@ -8,13 +8,3 @@ script:
   - coverage run --source='.' manage.py test
 after_success:
   - coveralls
-deploy:
-  provider: heroku
-  api_key:
-    secure: aABu+3NglV/PG2NQmtk7S4dJiTC4g50rgKq4XEBSaM/YTXNmunw9Bf3ceKyByXTSnZYKN8CR4hy67JUoUF7vTEhfN4Unb7v16Ss1TOutk88twGMzMCRzB0WWHlVGdn974zsa198e1dFG55Ou/kaBjRNXOz68jVmXemUAEgC7fZc=
-  app: kanri
-  on:
-    repo: KyeRussell/kanri
-  run:
-    - manage.py syncdb
-    - manage.py migrate
