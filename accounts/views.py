@@ -75,11 +75,6 @@ def sync(request):
                 'change_dojosession',
                 'delete_dojosession',
         
-                'add_dojosession',
-                'read_dojosession',
-                'change_dojosession',
-                'delete_dojosession',
-        
                 'add_shift',
                 'read_shift',
                 'change_shift',
