@@ -1,7 +1,7 @@
 from django.db import models
 from planner.models import DojoSession, Shift, DojoTerm
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils import timezone
 import datetime
 
@@ -12,7 +12,7 @@ class Role(models.Model):
     description = models.TextField(max_length = 1024, blank = True, help_text = "The role's long description.")
 
     def get_absolute_url(self):
-        return reverse('mentors:role-detail', args = [self.id])
+        return reverse_lazy('mentors:role-detail', args = [self.id])
 
     def __unicode__(self):
         return self.name
@@ -217,7 +217,7 @@ class Mentor(models.Model):
         return self.name()
 
     def get_absolute_url(self):
-        return reverse('mentors:detail', current_app = 'mentors', args = [self.id])
+        return reverse_lazy('mentors:detail', current_app = 'mentors', args = [self.id])
 
     class Meta():
         permissions = {

@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from kanri import knowledge
 from django.conf import settings
 from attendance.models import Attendance
@@ -240,7 +240,7 @@ class Ninja(models.Model):
         return stats
 
     def get_absolute_url(self):
-        return reverse('ninjas:detail', current_app = 'ninjas', args = [self.id])
+        return reverse(_lazy'ninjas:detail', current_app = 'ninjas', args = [self.id])
 
     def __unicode__(self):
         return self.get_short_name()

@@ -1,7 +1,7 @@
 from __future__ import division
 from django.db import models
 from django.utils import timezone
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from ninjas.models import Ninja
 from attendance.models import Attendance
 import datetime
@@ -37,7 +37,7 @@ class DojoTerm(models.Model):
         return round(total, 2)
 
     def get_absolute_url(self):
-        return reverse('planner:terms-detail', current_app = 'planner', args = [self.id])
+        return reverse_lazy('planner:terms-detail', current_app = 'planner', args = [self.id])
 
     def __unicode__(self):
         return self.name
@@ -64,7 +64,7 @@ class Room(models.Model):
         return DojoSession.objects.filter(room = self)
 
     def get_absolute_url(self):
-        return reverse('planner:rooms-detail', self.id)
+        return reverse_lazy('planner:rooms-detail', self.id)
 
     def __unicode__(self):
         return self.name
@@ -155,7 +155,7 @@ class DojoSession(models.Model):
         return self.finish - self.start
 
     def get_absolute_url(self):
-        return reverse('planner:sessions-detail', current_app = 'planner', args = [self.id])
+        return reverse_lazy('planner:sessions-detail', current_app = 'planner', args = [self.id])
 
     def get_short_name(self):
         return self.date.strftime("%d/%m")
@@ -207,7 +207,7 @@ class Shift(models.Model):
         return datetime.datetime.combine(datetime.datetime.now(), self.end) - datetime.datetime.combine(datetime.datetime.now(), self.start)
 
     def get_absolute_url(self):
-        return reverse('planner:shifts-detail', current_app = 'planner', args = [self.id])
+        return reverse_lazy('planner:shifts-detail', current_app = 'planner', args = [self.id])
 
     def roster_name(self):
         return "%s (%s)" % (self.mentor, self.role.short_name)
