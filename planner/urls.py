@@ -86,4 +86,9 @@ urlpatterns = patterns('',
         (views.RoomDetail.as_view()),
         name = 'rooms-detail'
     ),
+    url(r'^rooms/delete/(?P<pk>\d+)$',
+        permission_required('planner.delete_room')
+        (views.RoomDelete.as_view()),
+        name = 'rooms-delete'
+    ),
 )

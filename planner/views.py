@@ -128,6 +128,7 @@ def roster(request, term_id):
 		'rooms': rooms,
 		'roster': roster,
 	})
+	})
 
 
 
@@ -158,3 +159,7 @@ class RoomDetail(KanriDetailView):
 class RoomList(KanriListView):
 	model = Room
 	template_name = 'planner/room/list.html'
+
+class RoomDelete(KanriDeleteView):
+	model = Room
+	success_url = reverse_lazy('planner:rooms-list')
