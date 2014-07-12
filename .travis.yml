@@ -15,3 +15,4 @@ deploy:
   app: kanri
   on:
     repo: KyeRussell/kanri
+  run: python manage.py migrate
