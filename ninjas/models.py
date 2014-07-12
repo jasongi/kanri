@@ -19,7 +19,7 @@ class Parent(models.Model):
         help_text = 'Contact email address'
     )
 
-    phone = models.PositiveIntegerField(
+    phone = models.CharField(
         blank = False,
         max_length = 10,
         help_text = 'Contact phone number (mobile preferred)'
