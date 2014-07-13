@@ -49,7 +49,7 @@
                     </ul>
                     {% if user.is_authenticated %}
                         <div class="nav navbar-right">
-                            <a class="navbar-text navbar-right" href="{% url 'accounts:cp' %}">Konichiwa, {{ user.first_name }}</a>
+                            <a class="navbar-text navbar-right" href="{% url 'accounts:logout' %}">Konichiwa, {{ user.first_name }}</a>
                         </div>
                     {% else %}
                         <form method="post" action="{% url 'accounts:login' %}" class="navbar-form navbar-right">
