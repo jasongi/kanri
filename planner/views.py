@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from planner.models import DojoTerm, DojoSession, Room, Shift
-from planner.forms import DojoTermForm, ShiftAllocationForm
+from planner.models import *
+from planner.forms import *
 from mentors.models import Role
 from kanri.views import *
 from django.utils import timezone
@@ -104,13 +104,41 @@ def roster(request, term_id):
 	term = DojoTerm.objects.get(pk = term_id)
 	sessions = DojoSession.objects.filter(term = term)
 	roles = Role.objects.all()
+	jobs = Job.objects.all
 
 	return render(request, 'planner/roster.html', {
 		'term': term,
 		'sessions': sessions,
 		'roles': roles,
+		'jobs': jobs,
 	})
 
+def allocate_job(request, session_id, job_id):
+	session = get_object_or_404(DojoSession, pk = session_id)
+	job = get_object_or_404(Job, pk = job_id)
+
+	if request.method == 'POST':
+		form = JobAllocationForm(request.POST, session = session, job = job)
+
+		if form.is_valid():
+			for mentor in form.cleaned_data['mentors']:
+				j = JobAllocation(
+					job = job,
+					session = session,
+					mentor = mentor
+				)
+
+				j.save()
+
+			return redirect('planner:roster', session.term.id)
+	else:
+		form = JobAllocationForm(session = session, job = job)
+
+	return render(request, 'planner/job/allocate.html', {
+		'session': session,
+		'job': job,
+		'form': form,
+	})
 
 class ShiftDetail(KanriDetailView):
 	model = Shift

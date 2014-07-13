@@ -74,6 +74,8 @@ class Room(models.Model):
             ('read_room', "Can view a Room entry"),
         }
 
+
+
 class DojoSession(models.Model):
     term = models.ForeignKey(DojoTerm, help_text = "Dojo Term")
     date = models.DateField(
@@ -163,6 +165,14 @@ class DojoSession(models.Model):
     def get_duration(self):
         return datetime.datetime.combine(datetime.datetime.now(), self.end) - datetime.datetime.combine(datetime.datetime.now(), self.start)
 
+    def get_jobs_before(self):
+        j = JobAllocation.objects.filter(
+            session = self,
+            job__time = Job.BEFORE
+        )
+
+        return j
+
     def get_absolute_url(self):
         return reverse_lazy('planner:sessions-detail', current_app = 'planner', args = [self.id])
 
@@ -176,6 +186,55 @@ class DojoSession(models.Model):
         permissions = {
             ('read_dojosession', "Can view a DojoSession entry"),
         }
+
+
+class Job(models.Model):
+    BEFORE = 'B'
+    DURING = 'D'
+    AFTER = 'A'
+
+    TIME_CHOICES = (
+        (BEFORE, 'Before session'),
+        (DURING, 'During session'),
+        (AFTER, 'After session'),
+    )
+
+    name = models.CharField(
+        max_length = 50,
+        help_text = "The job's name."
+    )
+
+    location = models.CharField(
+        max_length = 50,
+        help_text = "The job's location."
+    )
+
+    time = models.CharField(
+        max_length = 1,
+        choices = TIME_CHOICES,
+        help_text = "The time during a session at which this job can be carried out."
+    )
+
+    def __unicode__(self):
+        return self.name
+
+
+class JobAllocation(models.Model):
+    job = models.ForeignKey(Job,
+        help_text = "The job the mentor will be performing."
+    )
+
+    mentor = models.ForeignKey('mentors.Mentor',
+        help_text = "The mentor that'll be undertaking the job."
+    )
+
+    session = models.ForeignKey('planner.DojoSession',
+        help_text = "The session during which this job allocation will take place."
+    )
+
+    def __unicode__(self):
+        return "%s on %s" % (self.mentor, self.job)
+
 
 class Shift(models.Model):
     mentor = models.ForeignKey(
@@ -229,3 +288,33 @@ class Shift(models.Model):
         permissions = {
             ('read_shift', "Can view a Shift entry"),
         }
+
+class Job(models.Model):
+    BEFORE = 'B'
+    DURING = 'D'
+    AFTER = 'A'
+
+    TIME_CHOICES = (
+        (BEFORE, 'Before session'),
+        (DURING, 'During session'),
+        (AFTER, 'After session'),
+    )
+
+    name = models.CharField(
+        max_length = 50,
+        help_text = "The job's name."
+    )
+
+    location = models.CharField(
+        max_length = 50,
+        help_text = "The job's location."
+    )
+
+    time = models.CharField(
+        max_length = 1,
+        choices = TIME_CHOICES,
+        help_text = "The time during a session at which this job can be carried out."
+    )
+
+    def __unicode__(self):
+        return self.name

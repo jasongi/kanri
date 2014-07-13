@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block site_title %} Add {{ job }} allocation to {{ session }} {% endblock %}
+{% block body_title %} Add <b>{{ job }}</b> allocation to <b>{{ session }}</b>{% endblock %}
+
+{% block content %}
+	<form action="" method="post" class="form form-horizontal">
+		{% csrf_token %}
+
+		{% if form.errors %}
+			<div class="alert alert-danger">
+				{{ form.errors }}
+			</div>
+		{% endif %}
+		
+		{% bootstrap_form form layout='horizontal' %}
+
+		{% buttons %}
+			{% bootstrap_button 'Add Job Allocation' button_type='submit' %}
+		{% endbuttons %}
+	</form>
+{% endblock %}

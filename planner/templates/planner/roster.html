@@ -19,21 +19,37 @@
 						{% if perms.planner.add_shift %}
 							<a data-toggle="dropdown" href="#">+</a>
 							<ul class="dropdown-menu" role="menu">
+							 	<li role="presentation" class="dropdown-header">Add Shift Allocation</li>
 								{% for role in roles %}
     								<li role="presentation"><a role="menuitem" href="{% url 'planner:allocate' session.id role.id %}">{{ role }}</a></li>
+								{% endfor %}
+
+							 	<li role="presentation" class="dropdown-header">Add Job Allocation</li>
+								{% for job in jobs %}
+    								<li role="presentation"><a role="menuitem" href="{% url 'planner:allocate-job' session.id job.id %}">{{ job }}</a></li>
 								{% endfor %}
 							</ul>
 						{% endif %}
 					</div>
 				</h2>
+				<h3>Jobs</h3>
+				{% if session.get_jobs_before %}
+					<ul>
+						{% for allocation in session.get_jobs_before %}
+							<li>{{ allocation }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+
+				<h3>Shifts</h3>
 				{% for room in session.get_shifts_per_room %}
-					<h3>
+					<h4>
 						{% if room.room %}
 							{{ room.room }}
 						{% else %}
 							Global
 						{% endif %}
-					</h3>
+					</h4>
 					{% if room.shifts %}
 						<ul>
 							{% for shift in room.shifts %}
