@@ -152,7 +152,7 @@ class DojoSession(models.Model):
         return l
     
     def get_duration(self):
-        return self.finish - self.start
+        return datetime.datetime.combine(datetime.datetime.now(), self.end) - datetime.datetime.combine(datetime.datetime.now(), self.start)
 
     def get_absolute_url(self):
         return reverse_lazy('planner:sessions-detail', current_app = 'planner', args = [self.id])
