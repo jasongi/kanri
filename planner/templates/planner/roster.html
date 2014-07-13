@@ -29,9 +29,11 @@
 				{% for room in session.get_shifts_per_room %}
 					<h3>{{ room.room }}</h3>
 					{% if room.shifts %}
-						{% for shift in room.shifts %}
-							{{ shift.roster_name }}
-						{% endfor %}
+						<ul>
+							{% for shift in room.shifts %}
+								<li><a href="{{ shift.get_absolute_url }}">{{ shift.roster_name }}</a></li>
+							{% endfor %}
+						</ul>
 					{% else %}
 						<p>No shifts in this room.</p>
 					{% endif %}
