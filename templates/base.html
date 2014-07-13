@@ -42,10 +42,24 @@
                     <ul class="nav navbar-nav">
                         <!--<li class="active"><a href="#">Dashboard</a></li>-->
                         <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                        <li><a href="{% url 'attendance:index' %}">Attendance</a></li>
-                        <li><a href="{% url 'mentors:index' %}">Mentors</a></li>
-                        <li><a href="{% url 'ninjas:index' %}">Ninjas</a></li>
-                        <li><a href="{% url 'planner:index' %}">Planner</a></li>
+                        {% if perms.attendance.read_attendance %}
+                            <li><a href="{% url 'attendance:index' %}">Attendance</a></li>
+                        {% endif %}
+                        {% if perms.mentors.read_mentor %}
+                            <li><a href="{% url 'mentors:index' %}">Mentors</a></li>
+                        {% endif %}
+                        {% if perms.ninjas.read_ninja %}
+                            <li><a href="{% url 'ninjas:index' %}">Ninjas</a></li>
+                        {% endif %}
+                        {% if perms.planner.read_dojoterm %}
+                        <li><a href="{% url 'planner:terms' %}">Terms</a></li>
+                        {% endif %}
+                        {% if perms.planner.read_room %}
+                        <li><a href="{% url 'planner:rooms-list' %}">Rooms</a></li>
+                        {% endif %}
+                        {% if user.is_staff %}
+                            <li><a href="{% url 'accounts:admin' %}">Admin</a></li>
+                        {% endif %}
                     </ul>
                     {% if user.is_authenticated %}
                         <div class="nav navbar-right">
