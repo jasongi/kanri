@@ -101,6 +101,11 @@ def sync(request):
                 'change_ninja',
 
                 'read_shift',
+
+                'read_dojoterm',
+                'read_dojosession',
+
+                'read_room',
             ]
         }
     ]
