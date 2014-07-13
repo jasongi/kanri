@@ -103,44 +103,12 @@ def allocate(request, session_id, role_id):
 def roster(request, term_id):
 	term = DojoTerm.objects.get(pk = term_id)
 	sessions = DojoSession.objects.filter(term = term)
-
-	# Get list of used rooms.
-	# There's probably a distinct query I could use that'd be a lot cheaper.
-	rooms = []
-	for session in sessions:
-		for room in session.rooms.all():
-			if not room in rooms:
-				rooms.append(room)
-
-	roster = []
-
-	# Roomless Roles
-	roomless = []
-	for session in sessions:
-		roomless.append(Shift.objects.filter(room = None, session = session))
-
-	roster.append({
-			'room': None,
-			'usage': roomless
-	})
-
-	# Room Roles
-	for room in rooms:
-		room_usage = []
-
-		for session in sessions:
-			room_usage.append(Shift.objects.filter(room = room, session = session))
-		
-		roster.append({
-			'room': room,
-			'usage': room_usage
-		})
+	roles = Role.objects.all()
 
 	return render(request, 'planner/roster.html', {
 		'term': term,
 		'sessions': sessions,
-		'rooms': rooms,
-		'roster': roster,
+		'roles': roles,
 	})
 
 

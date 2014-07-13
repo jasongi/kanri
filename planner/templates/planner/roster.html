@@ -4,32 +4,40 @@
 {% block body_title %}Roster for <b>{{ term }}</b>{% endblock %}
 
 {% block content %}
-	<table class="table table-condensed">
-		<thead>
-			<th>Rooms</th>
+	<ul class="nav nav-tabs" role="tablist">
 		{% for session in sessions %}
-			<th class="text-center"><a href="{{ session.get_absolute_url }}">{{ session.get_short_name }}</a></th>
+		<li><a href="#session_{{ session.id }}" role="tab" data-toggle="tab">{{ session.get_short_name }}</a></li>
 		{% endfor %}
-		</thead>
-		<tbody>
-			{% for room in roster %}
-				<tr>
-					{% if room.room == None %}
-						<td>Global</td>
+	</ul>
+
+	<div class="tab-content">
+		{% for session in sessions %}
+			<div class="tab-pane" id="session_{{ session.id }}">
+				<h2>
+					<div class="dropdown">
+						{{ session }}
+						{% if perms.planner.add_shift %}
+							<a data-toggle="dropdown" href="#">+</a>
+							<ul class="dropdown-menu" role="menu">
+								{% for role in roles %}
+    								<li role="presentation"><a role="menuitem" href="{% url 'planner:allocate' session.id role.id %}">{{ role }}</a></li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					</div>
+				</h2>
+				{% for room in session.get_shifts_per_room %}
+					<h3>{{ room.room }}</h3>
+					{% if room.shifts %}
+						{% for shift in room.shifts %}
+							{{ shift.roster_name }}
+						{% endfor %}
 					{% else %}
-						<td><a href="{{ room.room.get_absolute_url }}">{{ room.room }}</a></td>
+						<p>No shifts in this room.</p>
 					{% endif %}
-					{% for session in room.usage %}
-						<td class="text-center">
-							{% for shift in session %}
-								<a href="{{ shift.get_absolute_url }}">{{ shift.roster_name }}</a>
-								{% if shift.mentor.user == user %}<span style="color: #FF0000">*</span>{% endif %}
-								<br />
-							{% endfor %}
-						</td>
-					{% endfor %}
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</div>
+
 {% endblock %}
