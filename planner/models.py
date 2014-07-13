@@ -101,10 +101,11 @@ class DojoSession(models.Model):
         return abs((self.date_time_start - timezone.now).total_seconds()) < (2 * 60 * 60) # 2 hours
     
     def get_ratio(self):
-        if self.mentor_set.count() == 0:
+        mentoring = self.get_shifts().exclude(room = None)
+        if mentoring.count() == 0:
             return None
         else:
-            return round(self.ninja_set.count() / self.mentor_set.count(), 2)
+            return round(self.ninja_set.count() / mentoring.count(), 2)
 
     def get_capacity(self):
         capacity = 0
