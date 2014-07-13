@@ -27,7 +27,13 @@
 					</div>
 				</h2>
 				{% for room in session.get_shifts_per_room %}
-					<h3>{{ room.room }}</h3>
+					<h3>
+						{% if room.room %}
+							{{ room.room }}
+						{% else %}
+							Global
+						{% endif %}
+					</h3>
 					{% if room.shifts %}
 						<ul>
 							{% for shift in room.shifts %}

@@ -141,8 +141,16 @@ class DojoSession(models.Model):
         return s
 
     def get_shifts_per_room(self):
-        rooms = Room.objects.all()
         l = []
+
+        # Get global shifts.
+        l.append({
+            'room': None,
+            'shifts': self.get_shifts_for_room(None)
+        })
+
+        # Get roomed shifts
+        rooms = Room.objects.all()
         for room in rooms:
             room_details = {
                 'room': room,
