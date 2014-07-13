@@ -20,6 +20,11 @@ urlpatterns = patterns('',
     	name = 'admin'
     ),
 
+    url(r'^admin/pass$',
+        views.change_password_admin,
+        name = 'admin-password'
+    ),
+
     url(r'^admin/sync$',
     	views.sync,
     	name = 'permissions-sync'

@@ -48,5 +48,18 @@ class ManagementSelectionForm(forms.Form):
         Group.objects.get_or_create(name = 'Management')[0].user_set.all(),
         widget = forms.Select(attrs = {
             'class': 'col-md-4'
-            })
-        )
+        })
+    )
+
+class ChangePasswordForm(forms.Form):
+    user = forms.ModelChoiceField(
+        get_user_model().objects.all(),
+        widget = forms.Select(attrs = {
+            'class': 'col-md-4'
+        })
+    )
+    password = forms.CharField(
+        widget = forms.PasswordInput(attrs = {
+            'class': 'col-md-4'
+        })
+    )

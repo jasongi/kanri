@@ -32,10 +32,11 @@ def logout(request):
 def admin(request):
     add_management_form = UserSelectionForm()
     remove_management_form = ManagementSelectionForm()
-    return render(request, 'accounts/permissions.html', {
+    change_password_form = ChangePasswordForm()
     return render(request, 'accounts/admin.html', {
         'add_management_form': add_management_form,
         'remove_management_form': remove_management_form,
+        'password_form': change_password_form,
         })
 
 def sync(request):
@@ -131,6 +132,17 @@ def management_remove(request):
         if form.is_valid():
             group = Group.objects.get_or_create(name = 'Management')[0]
             group.user_set.remove(form.cleaned_data['user'])
+            return redirect('accounts:admin')
+    else:
+        return redirect('accounts:admin')
+
+def change_password_admin(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            u = form.cleaned_data['user']
+            u.set_password(form.cleaned_data['password'])
+            u.save()
             return redirect('accounts:admin')
     else:
         return redirect('accounts:admin')
