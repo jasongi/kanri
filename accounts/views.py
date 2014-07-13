@@ -8,14 +8,14 @@ from django.contrib.auth.models import Group, Permission
 def login(request):
     # check if user has logged in
     if request.user.is_authenticated():
-        return redirect('dashboard')
+        return redirect('home')
 
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
             auth_login(request, form.user)
             print "Logging in!"
-            return redirect("dashboard")
+            return redirect("home")
     else:
         form = LoginForm()
     return render(request, 'accounts/login.html', {
