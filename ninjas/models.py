@@ -34,6 +34,9 @@ class Parent(models.Model):
 
         return stats
 
+    def __unicode__(self):
+        return self.name
+
 class Ninja(models.Model):
     MALE = 'M'
     FEMALE = 'F'
