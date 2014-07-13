@@ -18,16 +18,18 @@
 	{{ object.rooms.all|join:', '|display_pair:'Rooms' }}
 
 	<h2>People</h2>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Add Shifts</label>
-		<div class="col-sm-10">
-			<p class="form-control-static">
-				{% for role in roles %}
-					<a href="{% url 'planner:allocate' object.id role.id %}">{{ role }}</a><br />
-				{% endfor %}
-			</p>
+	{% if perms.planner.add_shift %}
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Add Shifts</label>
+			<div class="col-sm-10">
+				<p class="form-control-static">
+					{% for role in roles %}
+						<a href="{% url 'planner:allocate' object.id role.id %}">{{ role }}</a><br />
+					{% endfor %}
+				</p>
+			</div>
 		</div>
-	</div>
+	{% endif %}
 
 	{{ object.ninja_set.count|display_pair:'Ninjas Attending' }}
 	{{ object.get_shifts.count|display_pair:'Mentors Attending' }}
