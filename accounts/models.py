@@ -69,5 +69,14 @@ class KanriUser(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return "%s %s" % (self.first_name, self.last_name[0])
 
+    class Meta():
+        permissions = {
+            ('see_admin', "User can see the admin page"),
+            ('change_user_passowrd', "Can change any user's password"),
+            ('add_management', "Can add a user to the Management group"),
+            ('remove_management', "Can remove a user from the Management group"),
+            ('sync_permissions', "Can sync permissions"),
+        }
+
     def __unicode__(self):
         return self.get_full_name()

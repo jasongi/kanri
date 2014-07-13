@@ -86,6 +86,12 @@ def sync(request):
                 'read_room',
                 'change_room',
                 'delete_room',
+
+                'see_admin',
+                'change_user_passowrd',
+                'add_management',
+                'remove_management',
+                'sync_permissions'
             ]
         },
         {
