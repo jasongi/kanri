@@ -11,19 +11,19 @@
 		{% block custom_buttons_before %} {% endblock %}
 
 		{% block noedit %}
-			<a href="{% block edit_url %}{% url 'dashboard' %}{% endblock %}"class="btn btn-default">
+			<a href="{% block edit_url %}{% url 'home' %}{% endblock %}"class="btn btn-default">
 				{% bootstrap_icon "pencil" %} Update {{ object }}
 			</a>
 		{% endblock %}
 	
 		{% block nodelete %}
-			<a href="{% block delete_url %}{% url 'dashboard' %}{% endblock %}" class="btn btn-default">
+			<a href="{% block delete_url %}{% url 'home' %}{% endblock %}" class="btn btn-default">
 				{% bootstrap_icon "remove" %} Delete {{ object }}</a>
 			</a>
 		{% endblock %}
 	
 		{% block nolist %}
-			<a href="{% block list_url %}{% url 'dashboard' %}{% endblock %}" class="btn btn-default">
+			<a href="{% block list_url %}{% url 'home' %}{% endblock %}" class="btn btn-default">
 				{% bootstrap_icon "list" %} {{ object|class_name }} List</a>
 			</a>
 		{% endblock %}
