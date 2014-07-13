@@ -37,7 +37,12 @@
 					{% if room.shifts %}
 						<ul>
 							{% for shift in room.shifts %}
-								<li><a href="{{ shift.get_absolute_url }}">{{ shift.roster_name }}</a></li>
+								<li>
+									<a href="{{ shift.get_absolute_url }}">{{ shift.roster_name }}</a>
+									{% if shift.mentor.user == user %}
+										<span style="color: #f00">*</span>
+									{% endif %}
+								</li>
 							{% endfor %}
 						</ul>
 					{% else %}
