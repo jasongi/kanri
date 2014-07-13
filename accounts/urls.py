@@ -15,22 +15,22 @@ urlpatterns = patterns('',
     ),
     
 
-    url(r'^permissions$',
-    	views.permissions,
-    	name = 'permissions'
+    url(r'^admin$',
+    	views.admin,
+    	name = 'admin'
     ),
 
-    url(r'^permissions/sync$',
+    url(r'^admin/sync$',
     	views.sync,
     	name = 'permissions-sync'
     ),
 
-    url(r'^permissions/management/add$',
+    url(r'^admin/management/add$',
     	views.management_add,
     	name = 'management-add',
     ),
 
-    url(r'^permissions/management/remove$',
+    url(r'^admin/management/remove$',
     	views.management_remove,
     	name = 'management-remove',
     ),

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block site_title %}Administration Portal{% endblock %}
+{% block body_title %}Administration Portal{% endblock %}
+
+{% block content %}
+<h2>Create User</h2>
+<p>Use this form to create users that aren't linked to a Mentor or Ninja record.</p>
+<p>You should almost always not need to do this. If you want to add a new mentor, do it
+<a href="{% url 'ninjas:add' %}">here</a>. If you want to add a new ninja, do it
+<a href="{% url 'ninjas:add' %}">here</a>.
+
+<h2>Add User to Management</h2>
+<p>A management account is required when a user wishes to access mangement functions. For example, Champions or Outreach staff.</p>
+
+<form action="{% url 'accounts:management-add' %}" method="post" class="form-inline">
+	{% csrf_token %}
+	{% bootstrap_form add_management_form layout='inline' %}
+	{% buttons %}
+		{% bootstrap_button 'Add to Management' button_type='submit' %}
+	{% endbuttons %}
+</form>
+
+<h2>Remove User from Management</h2>
+<p>Use this form to remove a user from management. They will no longer be able to access managemtn
+functionality.</p>
+<p><b>Warning:</b> if the user is a Champion, they will still be able to access resources which are
+granted to Champions.</p>
+
+<form action="{% url 'accounts:management-remove' %}" method="post" class="form-inline">
+	{% csrf_token %}
+	{% bootstrap_form remove_management_form layout='inline' %}
+	{% buttons %}
+		{% bootstrap_button 'Remove from Management' button_type='submit' %}
+	{% endbuttons %}
+</form>
+
+<h2>Sync Permissions</h2>
+<p>Syncing permissions to harcoded policies. This should only be required when you first install Kanri. This will ensure that only the right people can access certain restricted resources.</p>
+
+<a href="{% url 'accounts:permissions-sync' %}" class="btn btn-primary">Sync Permissions</a>
+
+{% endblock %}
