@@ -2,16 +2,10 @@
 
 {% load staticfiles %}
 
-{% block site_title %}Dashboard{% endblock %}
-{% block body_title %}Dashboard{% endblock %}
+{% block site_title %}Home{% endblock %}
+{% block body_title %}Welcome to <b>Kanri!</b>{% endblock %}
 
 {% block content %}
-	{% if perms.mentors.view_mentor %}
-		{% include 'dashboard/partial_mentors.html' %}
-	{% endif %}
-{% endblock %}
 
-{% block custom_js %}
-<script src="{% static 'highcharts/js/highcharts.js' %}" />
 
 {% endblock %}

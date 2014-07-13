@@ -5,7 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'dashboard.views.index', name='dashboard'),
+    url(r'^$', 'dashboard.views.index', name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^ninjas/', include('ninjas.urls', namespace = "ninjas")),
     url(r'^planner/', include('planner.urls', namespace = "planner")),
