@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     	name = 'login'
     ),
     
-    url(r'^logout?/$',
+    url(r'^logout/?$',
     	views.logout,
     	name = 'logout'
     ),
