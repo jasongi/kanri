@@ -78,7 +78,7 @@ def upload(request):
 					pa = Parent(email = row['Parent/Guardian Email'])
 
 				pa.name = row['Parent/Guardian Name']
-				pa.phone = row['Phone Number']
+				pa.phone = '0' + row['Phone Number']
 				pa.save()
 				ninja.parent = pa
 				ninja.save()
