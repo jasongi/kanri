@@ -48,9 +48,13 @@
 
 	<label class='control-label col-md-2'>Attendance</label>
 	<ul class="form-control-static col-md-10">
-		{% for attendance in object.get_sessions_attended %}
-			<li>{{ attendance.session }}</li>
-		{% endfor %}
+		{% if object.get_sessions_attended %}
+			{% for attendance in object.get_sessions_attended %}
+				<li>{{ attendance.session }}</li>
+			{% endfor %}
+		{% else %}
+			Ninja has not attended any sessions.
+		{% endif %}
 	</ul>
 
 	<h2>Legal</h2>
