@@ -110,6 +110,7 @@ def sync(request):
                 'read_room',
 
                 'read_job',
+                'register_for_job',
 
                 'view_mentor_dashboard',
             ]
