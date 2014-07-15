@@ -42,6 +42,7 @@ class Job(models.Model):
     class Meta():
         permissions = {
             ('read_job', "Can view a Job entry"),
+            ('register_for_job', 'Can register themselves a job'),
         }
 
 class JobAllocation(models.Model):

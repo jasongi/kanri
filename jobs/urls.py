@@ -46,4 +46,17 @@ urlpatterns = patterns('',
         (views.JobAllocationDelete.as_view()),
         name = 'allocate-delete'
     ),
+
+    # Job Registration
+    url(r'^register/(?P<pk>\d+)$',
+        permission_required('job.register_for_job')
+        (views.register),
+        name = 'register'
+    ),
+
+    url(r'^unregister/(?P<pk>\d+)$',
+        permission_required('job.register_for_job')
+        (views.unregister),
+        name = 'unregister'
+    ),
 )

@@ -14,6 +14,9 @@
 		<th>Description</th>
 		<th>Location</th>
 		<th>Time</th>
+		{% if perms.job.register_for_job %}
+			<th>Register</th>
+		{% endif %}
 	</thead>
 	<tbody>
 		{% for job in object_list %}
@@ -22,6 +25,19 @@
 				<td>{{ job.description }}</td>
 				<td>{{ job.location }}</td>
 				<td>{{ job.get_time_display }}</td>
+				{% if perms.job.register_for_job %}
+					{% if job in mentor.jobs_desired.all %}
+						<form action="{% url 'jobs:unregister' job.id %}" method="post">
+							{% csrf_token %}
+							<th><button type="submit" class="btn btn-link">Unregister</button></th>
+						</form>
+					{% else %}
+						<form action="{% url 'jobs:register' job.id %}" method="post">
+							{% csrf_token %}
+							<th><button type="submit" class="btn btn-link">Register</button></th>
+						</form>
+					{% endif %}
+				{% endif %}
 			</tr>
 		{% endfor %}
 	</tbody>

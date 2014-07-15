@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from jobs.models import *
 from jobs.forms import *
+from mentors.models import *
 from planner.models import DojoSession
 from django.core.urlresolvers import reverse_lazy
 from kanri.views import *
+from django.http import Http404
+
 
 # Job #
 class JobCreate(KanriCreateView):
@@ -12,6 +15,13 @@ class JobCreate(KanriCreateView):
 class JobList(KanriListView):
 	model = Job
 	template_name = 'jobs/index.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(JobList, self).get_context_data(**kwargs)
+		m = Mentor.objects.filter(user = self.request.user)
+		if m:
+			context['mentor'] = m[0]
+		return context
 
 class JobDetail(KanriDetailView):
 	model = Job
@@ -23,6 +33,26 @@ class JobUpdate(KanriUpdateView):
 class JobDelete(KanriDeleteView):
 	model = Job
 	success_url = reverse_lazy('jobs:index')
+
+def register(request, pk):
+	job = get_object_or_404(Job, pk = pk)
+	mentor = get_object_or_404(Mentor, user = request.user)
+
+	if request.method == 'POST':
+		mentor.jobs_desired.add(job)
+		mentor.save()
+
+	return redirect('jobs:index')
+
+def unregister(request, pk):
+	job = get_object_or_404(Job, pk = pk)
+	mentor = get_object_or_404(Mentor, user = request.user)
+
+	if request.method == 'POST':
+		mentor.jobs_desired.remove(job)
+		mentor.save()
+
+	return redirect('jobs:index')
 
 
 # Job Allocation #
