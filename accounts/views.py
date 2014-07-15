@@ -102,10 +102,6 @@ def sync(request):
                 'change_attendance',
                 'delete_attendance',
         
-                'add_ninja',
-                'read_ninja',
-                'change_ninja',
-
                 'read_shift',
 
                 'read_dojoterm',
