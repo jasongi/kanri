@@ -108,6 +108,10 @@ def sync(request):
                 'read_dojosession',
 
                 'read_room',
+
+                'read_job',
+
+                'view_mentor_dashboard',
             ]
         }
     ]
