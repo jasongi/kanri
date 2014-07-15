@@ -44,18 +44,27 @@
                         {% if perms.attendance.read_attendance %}
                             <li><a href="{% url 'attendance:index' %}">Attendance</a></li>
                         {% endif %}
+
                         {% if perms.mentors.read_mentor %}
                             <li><a href="{% url 'mentors:index' %}">Mentors</a></li>
                         {% endif %}
+
                         {% if perms.ninjas.read_ninja %}
                             <li><a href="{% url 'ninjas:index' %}">Ninjas</a></li>
                         {% endif %}
+
                         {% if perms.planner.read_dojoterm %}
                         <li><a href="{% url 'planner:terms' %}">Terms</a></li>
                         {% endif %}
+
                         {% if perms.planner.read_room %}
                         <li><a href="{% url 'planner:rooms-list' %}">Rooms</a></li>
                         {% endif %}
+
+                        {% if perms.jobs.read_job %}
+                        <li><a href="{% url 'jobs:index' %}">Jobs</a></li>
+                        {% endif %}
+                        
                         {% if user.is_staff %}
                             <li><a href="{% url 'accounts:admin' %}">Admin</a></li>
                         {% endif %}
