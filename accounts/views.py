@@ -117,7 +117,6 @@ def sync(request):
     ]
     
 
-    group = Group.objects.get_or_create(name = 'Management')[0]
     for s in sync:
         group = Group.objects.get_or_create(name = s['group'])[0]
         group.permissions.clear()
@@ -125,6 +124,7 @@ def sync(request):
             perm = Permission.objects.get(codename = permission)
             group.permissions.add(perm)
             print "Added %s to %s" % (perm, group)
+        group.save()
 
     return redirect('accounts:admin')
     
