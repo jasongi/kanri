@@ -181,6 +181,9 @@ class DojoSession(models.Model):
 
         return t
 
+    def get_jobs_without_allocations(self):
+        return Job.objects.exclude(joballocation__session = self)
+
     def get_absolute_url(self):
         return reverse_lazy('planner:sessions-detail', current_app = 'planner', args = [self.id])
 
