@@ -39,6 +39,11 @@ class Job(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta():
+        permissions = {
+            ('read_job', "Can view a Job entry"),
+        }
+
 class JobAllocation(models.Model):
     job = models.ForeignKey(Job,
         help_text = "The job the mentor will be performing."
@@ -51,6 +56,11 @@ class JobAllocation(models.Model):
     session = models.ForeignKey('planner.DojoSession',
         help_text = "The session during which this job allocation will take place."
     )
+
+    class Meta():
+        permissions = {
+            ('read_joballocation', "Can view a JobAllocation entry"),
+        }
 
     def __unicode__(self):
         return "%s on %s" % (self.mentor, self.job)
