@@ -187,7 +187,6 @@ class DojoSession(models.Model):
             ('read_dojosession', "Can view a DojoSession entry"),
         }
 
-
 class Job(models.Model):
     BEFORE = 'B'
     DURING = 'D'
@@ -217,7 +216,6 @@ class Job(models.Model):
 
     def __unicode__(self):
         return self.name
-
 
 class JobAllocation(models.Model):
     job = models.ForeignKey(Job,
@@ -288,33 +286,3 @@ class Shift(models.Model):
         permissions = {
             ('read_shift', "Can view a Shift entry"),
         }
-
-class Job(models.Model):
-    BEFORE = 'B'
-    DURING = 'D'
-    AFTER = 'A'
-
-    TIME_CHOICES = (
-        (BEFORE, 'Before session'),
-        (DURING, 'During session'),
-        (AFTER, 'After session'),
-    )
-
-    name = models.CharField(
-        max_length = 50,
-        help_text = "The job's name."
-    )
-
-    location = models.CharField(
-        max_length = 50,
-        help_text = "The job's location."
-    )
-
-    time = models.CharField(
-        max_length = 1,
-        choices = TIME_CHOICES,
-        help_text = "The time during a session at which this job can be carried out."
-    )
-
-    def __unicode__(self):
-        return self.name
