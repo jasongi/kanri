@@ -14,6 +14,7 @@ class JobAllocationForm(forms.Form):
 			queryset = Mentor.objects.filter(
 				shift_availabilities = session
 			).exclude(
-				joballocation__session = session
+				joballocation__session = session,
+				joballocation__job__time = job.time,
 			)
 		)
