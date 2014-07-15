@@ -179,10 +179,7 @@ class DojoSession(models.Model):
                 'job_allocations': jobs
             })
 
-        print t
         return t
-
-
 
     def get_absolute_url(self):
         return reverse_lazy('planner:sessions-detail', current_app = 'planner', args = [self.id])
