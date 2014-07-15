@@ -3,6 +3,7 @@ from planner.models import DojoSession, Shift, DojoTerm
 from django.conf import settings
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.utils import timezone
+from jobs.models import Job
 import datetime
 
 class Role(models.Model):
@@ -153,6 +154,8 @@ class Mentor(models.Model):
     )
 
     roles_desired = models.ManyToManyField(Role)
+
+    jobs_desired = models.ManyToManyField(Job)
 
     shift_availabilities = models.ManyToManyField(
         DojoSession,
