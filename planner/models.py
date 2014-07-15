@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.core.urlresolvers import reverse, reverse_lazy
 from ninjas.models import Ninja
 from attendance.models import Attendance
+from jobs.models import *
 import datetime
 
 class DojoTerm(models.Model):
