@@ -36,7 +36,7 @@ urlpatterns = patterns('',
 
     # Job Allocation
     url(r'^allocate/(?P<session_id>\d+)/(?P<job_id>\d+)$',
-        permission_required('job.add_joballocation')
+        permission_required('jobs.add_joballocation')
         (views.allocate_job),
         name = 'allocate'
     ),
@@ -49,13 +49,13 @@ urlpatterns = patterns('',
 
     # Job Registration
     url(r'^register/(?P<pk>\d+)$',
-        permission_required('job.register_for_job')
+        permission_required('jobs.register_for_job')
         (views.register),
         name = 'register'
     ),
 
     url(r'^unregister/(?P<pk>\d+)$',
-        permission_required('job.register_for_job')
+        permission_required('jobs.register_for_job')
         (views.unregister),
         name = 'unregister'
     ),
