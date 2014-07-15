@@ -16,18 +16,22 @@
 				<h2>
 					<div class="dropdown">
 						{{ session }}
-						{% if perms.planner.add_shift %}
+						{% if perms.planner.add_shift or perms.jobs.add_joballocation %}
 							<a data-toggle="dropdown" href="#">+</a>
 							<ul class="dropdown-menu" role="menu">
-							 	<li role="presentation" class="dropdown-header">Add Shift Allocation</li>
-								{% for role in roles %}
-    								<li role="presentation"><a role="menuitem" href="{% url 'planner:allocate' session.id role.id %}">{{ role }}</a></li>
-								{% endfor %}
+								{% if perms.planner.add_shift %}
+							 		<li role="presentation" class="dropdown-header">Add Shift Allocation</li>
+									{% for role in roles %}
+    									<li role="presentation"><a role="menuitem" href="{% url 'planner:allocate' session.id role.id %}">{{ role }}</a></li>
+									{% endfor %}
+								{% endif %}
 
-							 	<li role="presentation" class="dropdown-header">Add Job Allocation</li>
-								{% for job in jobs %}
-    								<li role="presentation"><a role="menuitem" href="{% url 'jobs:allocate' session.id job.id %}">{{ job }}</a></li>
-								{% endfor %}
+								{% if perms.jobs.add_joballocation %}
+							 		<li role="presentation" class="dropdown-header">Add Job Allocation</li>
+									{% for job in jobs %}
+    									<li role="presentation"><a role="menuitem" href="{% url 'jobs:allocate' session.id job.id %}">{{ job }}</a></li>
+									{% endfor %}
+								{% endif %}
 							</ul>
 						{% endif %}
 					</div>
