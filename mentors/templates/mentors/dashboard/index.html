@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block site_title %}Mentor Dashboard{% endblock %}
+{% block body_title %}Mentor <b>Dashboard</b>{% endblock %}
+
+{% block content %}
+
+{% if perms.jobs.register_for_job %}
+	{% include 'mentors/dashboard/jobs_panel.html' %}
+{% endif %}
+
+{% endblock %}

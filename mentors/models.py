@@ -222,8 +222,13 @@ class Mentor(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('mentors:detail', current_app = 'mentors', args = [self.id])
 
+    @classmethod
+    def get_mentor_for_user(cls, user):
+        return cls.objects.get(user = user)
+
     class Meta():
         permissions = {
             ('read_mentor', "Can view a Mentor entry"),
+            ('view_mentor_dashboard', 'Can access the Mentor dashboard'),
         }
         ordering = ['user__first_name']

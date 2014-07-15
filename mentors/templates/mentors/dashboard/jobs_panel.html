@@ -1,0 +1,11 @@
+{% extends 'generic_panel.html' %}
+
+{% block panel_title %}Jobs{% endblock %}
+{% block panel_content %}
+
+<p>You <b>must</b> register for jobs to perform before and after dojo sessions, you can do this on
+the job registration page.</p>
+
+<a href="{% url jobs:index %}" class="btn btn-primary btn-large">Register for Jobs</a>
+
+{% endblock %}

@@ -22,6 +22,12 @@ urlpatterns = patterns('',
         name = 'index'
     ),
 
+    url(r'^dashboard$',
+        permission_required('mentors.view_mentor_dashboard')
+        (views.dashboard),
+        name = 'dashboard'
+    ),
+
     url(r'^(?P<pk>\d+)$',
         permission_required('mentors.read_mentor')
         (views.MentorDetail.as_view()),

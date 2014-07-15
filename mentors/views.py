@@ -172,6 +172,12 @@ class MentorDetail(KanriDetailView):
 	model = Mentor
 	template_name = 'mentors/detail.html'
 
+def dashboard(request):
+	return render(request, 'mentors/dashboard/index.html', {
+		'mentor': Mentor.get_mentor_for_user(request.user)
+	})
+
+
 class MentorUpdate(KanriUpdateView):
 	model = Mentor
 
