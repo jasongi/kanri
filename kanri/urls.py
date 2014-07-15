@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     url(r'^attendance/', include('attendance.urls', namespace = "attendance")),
     url(r'^accounts/', include('accounts.urls', namespace = "accounts")),
     url(r'^mentors/', include('mentors.urls', namespace = "mentors")),
+    url(r'^jobs/', include('jobs.urls', namespace = "jobs")),
 )

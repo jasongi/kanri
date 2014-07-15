@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse_lazy
 
 class Job(models.Model):
     BEFORE = 'B'
@@ -16,7 +17,7 @@ class Job(models.Model):
         help_text = "The job's name."
     )
 
-    description = models.CharField(
+    description = models.TextField(
         max_length = 1024,
         help_text = "A description of the job."
     )
@@ -31,6 +32,9 @@ class Job(models.Model):
         choices = TIME_CHOICES,
         help_text = "The time during a session at which this job can be carried out."
     )
+
+    def get_absolute_url(self):
+    	return reverse_lazy('jobs:detail', args = [self.id])
 
     def __unicode__(self):
         return self.name
