@@ -26,17 +26,23 @@
 
 							 	<li role="presentation" class="dropdown-header">Add Job Allocation</li>
 								{% for job in jobs %}
-    								<li role="presentation"><a role="menuitem" href="{% url 'planner:allocate-job' session.id job.id %}">{{ job }}</a></li>
+    								<li role="presentation"><a role="menuitem" href="{% url 'jobs:allocate' session.id job.id %}">{{ job }}</a></li>
 								{% endfor %}
 							</ul>
 						{% endif %}
 					</div>
 				</h2>
 				<h3>Jobs</h3>
-				{% if session.get_jobs_before %}
+				{% if session.get_jobs_by_time %}
 					<ul>
-						{% for allocation in session.get_jobs_before %}
-							<li>{{ allocation }}</li>
+						{% for time in session.get_jobs_by_time %}
+							<h4>{{ time.time }}</h4>
+							{% for allocation in time.job_allocations %}
+								<li>
+									{{ allocation }}
+									<a href="{% url 'jobs:allocate-delete' allocation.id %}"><span class="glyphicon glyphicon-remove-sign"></span></a>
+								</li>
+							{% endfor %}
 						{% endfor %}
 					</ul>
 				{% endif %}

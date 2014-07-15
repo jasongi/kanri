@@ -53,12 +53,6 @@ urlpatterns = patterns('',
         name = 'allocate'
     ),
 
-    url(r'^roster/allocate/job/(?P<session_id>\d+)/(?P<job_id>\d+)$',
-        permission_required('planner.add_job')
-        (views.allocate_job),
-        name = 'allocate-job'
-    ),
-
     url(r'^roster/(?P<term_id>\d+)$',
         permission_required('planner.read_shift')
         (views.roster),

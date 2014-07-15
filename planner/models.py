@@ -166,13 +166,23 @@ class DojoSession(models.Model):
     def get_duration(self):
         return datetime.datetime.combine(datetime.datetime.now(), self.end) - datetime.datetime.combine(datetime.datetime.now(), self.start)
 
-    def get_jobs_before(self):
-        j = JobAllocation.objects.filter(
-            session = self,
-            job__time = Job.BEFORE
-        )
+    def get_jobs_by_time(self):
+        t = []
+        for time in Job.TIME_CHOICES:
+            jobs = JobAllocation.objects.filter(
+                session = self,
+                job__time = time[0]
+            )
 
-        return j
+            t.append({
+                'time': time[1],
+                'job_allocations': jobs
+            })
+
+        print t
+        return t
+
+
 
     def get_absolute_url(self):
         return reverse_lazy('planner:sessions-detail', current_app = 'planner', args = [self.id])
