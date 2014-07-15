@@ -116,6 +116,7 @@ def sync(request):
     group = Group.objects.get_or_create(name = 'Management')[0]
     for s in sync:
         group = Group.objects.get_or_create(name = s['group'])[0]
+        group.permissions.clear()
         for permission in s['permissions']:
             perm = Permission.objects.get(codename = permission)
             group.permissions.add(perm)
