@@ -55,7 +55,7 @@
 							{% for allocation in time.job_allocations %}
 								<li>
 									{{ allocation }}
-									<a href="{% url 'jobs:allocate-delete' allocation.id %}"><span class="glyphicon glyphicon-remove-sign"></span></a>
+									<a href="{% url 'jobs:allocate-delete' allocation.id %}">x</a>
 								</li>
 							{% endfor %}
 						{% endfor %}
@@ -89,5 +89,4 @@
 			</div>
 		{% endfor %}
 	</div>
-
 {% endblock %}
