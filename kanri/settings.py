@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'ninjas',
     'planner',
     'accounts',
+    'jobs',
     'south',
     'bootstrap3'
 )
