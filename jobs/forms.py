@@ -12,7 +12,7 @@ class JobAllocationForm(forms.Form):
 	
 		self.fields['mentors'] = forms.ModelMultipleChoiceField(
 			queryset = Mentor.objects.filter(
-				shift_availabilities = session,
+				shift__session = session,
 				jobs_desired = job
 			).exclude(
 				joballocation__session = session,
