@@ -29,12 +29,12 @@
 					{% if job in mentor.jobs_desired.all %}
 						<form action="{% url 'jobs:unregister' job.id %}" method="post">
 							{% csrf_token %}
-							<th><button type="submit" class="btn btn-link">Unregister</button></th>
+							<td><button type="submit" class="btn btn-link">Unregister</button></td>
 						</form>
 					{% else %}
 						<form action="{% url 'jobs:register' job.id %}" method="post">
 							{% csrf_token %}
-							<th><button type="submit" class="btn btn-link">Register</button></th>
+							<td><button type="submit" class="btn btn-link">Register</button></td>
 						</form>
 					{% endif %}
 				{% endif %}
