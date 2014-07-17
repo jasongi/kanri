@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from forms import *
-from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
+from django.core.mail import send_mail
+from textwrap import dedent
 
-# Create your views here.
+
 def login(request):
     # check if user has logged in
     if request.user.is_authenticated():
@@ -33,16 +35,15 @@ def admin(request):
     add_management_form = UserSelectionForm()
     remove_management_form = ManagementSelectionForm()
     change_password_form = ChangePasswordForm()
+    reset_password_form = UserSelectionForm()
     return render(request, 'accounts/admin.html', {
         'add_management_form': add_management_form,
         'remove_management_form': remove_management_form,
         'password_form': change_password_form,
+        'reset_password_form': reset_password_form,
         })
 
 def sync(request):
-    #for p in Permission.objects.all():
-    #   print p
-
     sync = [
         {
             'group': 'Management',
@@ -160,5 +161,33 @@ def change_password_admin(request):
     else:
         return redirect('accounts:admin')
 
-def cp(request):
-    return redirect('dashboard:index')
+def admin_reset_password(request):
+    if request.method == 'POST':
+        form = UserSelectionForm(request.POST)
+        if form.is_valid():
+            u = form.cleaned_data['user']
+            pw = get_user_model().objects.make_random_password()
+            u.set_password(pw)
+            u.save()
+
+            message = """Dear %s,
+
+                      Your Kanri password has been reset by %s.
+
+                      Your password has been set to: '%s'.
+
+                      --
+                      Kanri
+                      https://kanriapp.com
+                      """ % (u.first_name, request.user.first_name, pw)
+
+            send_mail(
+                subject = 'Kanri Password Reset',
+                message = dedent(message),
+                from_email = 'kye@kanriapp.com',
+                recipient_list = (u.email,),
+            )
+
+            return redirect('accounts:admin')
+    else:
+        return redirect('accounts:admin')

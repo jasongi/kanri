@@ -28,6 +28,12 @@ urlpatterns = patterns('',
         name = 'admin-password'
     ),
 
+    url(r'^admin/resetpass$',
+        permission_required('accounts.reset_user_password')
+        (views.admin_reset_password),
+        name = 'admin-reset-password'
+   ),
+
     url(r'^admin/sync$',
         permission_required('accounts.sync_permissions')
     	(views.sync),

@@ -18,6 +18,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('KANRI_SECRET_KEY')
 AUSPOST_KEY = os.environ.get('KANRI_AUSPOST_KEY')
+POSTMARK_API_KEY = os.environ.get('KANRI_POSTMARK_KEY')
+POSTMARK_SENDER = os.environ.get('KANRI_POSTMARK_SENDER')
 
 DEBUG = True
 TEMPLATE_DEBUG = True
@@ -99,3 +101,6 @@ STATICFILES_DIRS = (
 )
 
 AUTH_USER_MODEL = 'accounts.KanriUser'
+
+# Postmark Emails
+EMAIL_BACKEND = 'postmark.backends.PostmarkBackend'
