@@ -16,7 +16,6 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             auth_login(request, form.user)
-            print "Logging in!"
             return redirect("home")
     else:
         form = LoginForm()
@@ -28,7 +27,7 @@ def login(request):
 def logout(request):
     if request.method == "POST":
         auth_logout(request)
-        return redirect('dashboard:index')
+        return redirect('home')
     return render(request, 'accounts/logout.html')
 
 def admin(request):
